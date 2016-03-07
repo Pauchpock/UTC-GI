@@ -22,7 +22,7 @@ while (($fichier,$html) = each(%htmls)) {
   print "<bulletin>\n";
   print '<fichier>'.$fichier."</fichier>\n"; # si on donne *.htm en param, argv[0] contient le premier, [1] un autre, etc
   $body = $html;
-  $body=~/<body.*>((.|\n)*)<\/body>/g;
+  $body=~/<body.*?>(.*)<\/body>/sg;
   $body = $1;
 
 
@@ -35,7 +35,7 @@ while (($fichier,$html) = each(%htmls)) {
 
   # DATE
 
-  $body=~/<span class="style42">.*?(\d{2}\/\d{2}\/\d{4})<\/span>/;
+  $body=~/<span class="style42">.*?(\d{1,2}\/\d{1,2}\/\d{4})<\/span>/;
   $date = $1;
   print '<date>'.$date."</date>\n";
 
@@ -66,8 +66,8 @@ while (($fichier,$html) = each(%htmls)) {
   #print join "--\n", @array;
   print "<images>\n";
   pos($body) = 0; # reset cursor position cause /g leave the cursor in the middle of nowhere
-  while ($body =~ /(www\.bulletins-electroniques\.com\/Resources_fm\/actualites.*?\.jpg).*?<strong>(.*?)<\/strong>/sg) {
-      print "<image>".$1."</image>\n";
+  while ($body =~ /(www\.bulletins-electroniques\.com\/Resources_fm\/actualites.*?\.jpg).*?<strong>(.*?)<\/strong>|(streaming.+?\.jpg)/sg) {
+      print "<image>".$1.$3."</image>\n";
       print "<legende>".$2."</legende>\n";
   }
   print "</images>\n";
@@ -87,5 +87,6 @@ while (($fichier,$html) = each(%htmls)) {
     print STDERR "Missing one field";
     exit -1;
   }
+  $fichier = $numero = $date = $rubrique = $titre = $texte = $contact = undef;
 }
 print "</corpus>\n";
