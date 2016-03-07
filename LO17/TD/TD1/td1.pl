@@ -55,6 +55,7 @@ while (($fichier,$html) = each(%htmls)) {
   $texte = $1;
   $texte =~ s/<br \/>\n?<\/span><div style="text-align: center"><img.*?class="style95"><br \/>//gs;
   $texte =~ s/<.*?>//g;
+  $texte =~ s/^\s+|\s+$//g;
   print "<texte>".$texte."</texte>\n";
   # (.*?) makes it greedy (cf http://forums.phpfreaks.com/topic/265751-how-does-it-work/)
 
