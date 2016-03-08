@@ -3,6 +3,7 @@
 
 #include <unistd.h> // for close()
 #include <string.h> // for memset()
+#include <strings.h> // for bzero()
 
 #include <netdb.h> // for gethostbyname()
 #include <sys/socket.h> // for socket(), connect(), send(), recv()
@@ -28,8 +29,14 @@ int main(int argc, char *argv[]) {
   hid = gethostbyname(argv[1]);
   bcopy(hid->h_addr, &(saddrser.sin_addr.s_addr), hid->h_length);
   connect(sd, (struct sockaddr *) &saddrser, sizeof(saddrser));
-  send(sd, "test", strlen("test"), 0);
-  // TODO
+  int i;
+  for (i = 0; i < tablen; i++) {
+    send(sd, &tabObj[i], sizeof(tabObj[i]), 0);
+  }
+  printf("Three obj sent.\n");
+  obj endObj = {"over","finish",-1,123,456.7};
+  send(sd, &endObj, sizeof(endObj), 0);
+  printf("End obj sent.\n");
   close(sd);
 
   return 0;

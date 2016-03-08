@@ -1,6 +1,6 @@
 typedef struct {
-	char char1[12];
-	char char2[24];
+	char id[12];
+	char description[24];
 	int ii;
 	int jj;
 	double dd;

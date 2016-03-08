@@ -3,21 +3,29 @@
 
 #include <unistd.h> // For close()
 #include <string.h> // For memset()
+#include <strings.h> // For bzero
 
 #include <sys/socket.h> // For socket(), bind(), connect()
 #include <arpa/inet.h> // For sockaddr_in(), inet_ntoa()
 
 #include <sys/wait.h> // For waitpid()
 
+#include "defobj.h"
+
 #define MAXPENDING 5 // Maximum outstanding connection requests
 
 // USAGE: %s <Sever Port>
+
+void showObj(obj* o) {
+    printf("Received:\n%s,%s,%d,%d,%f\n",o->id, o->description, o->ii, o->jj, o->dd);
+}
 
 int main(int argc, char *argv[]) {
   printf("Server running\n");
 
   int sd, sds; // Socket descriptors for server and client
   struct sockaddr_in saddr; // Local address
+  obj object; // object being read
 
   // Creates socket for incoming connections
   // - DOMAIN (AF_INET, AF_INET6, etc)
@@ -30,7 +38,7 @@ int main(int argc, char *argv[]) {
     exit(-1);
   }
 
-  bzero(&saddr, sizeof(saddr)); // Zero out the whole structure
+  bzero(&saddr, sizeof(saddr)); // Zeroes out the whole structure
 
   // Some configuration
   saddr.sin_family = AF_INET; // Internet address family
@@ -69,23 +77,35 @@ int main(int argc, char *argv[]) {
   // FATHER
   if (son > 0) {
     waitpid(son, &status, 0);
-    goto father;
+    if (status != EXIT_SUCCESS) {
+        goto father;
+    }
+    else {
+        printf("Shutting down the server, last object received.\n");
+    }
   }
   // CHILD
   else {
-    char echoBuffer[32]; // TODO dans l'idéal, envoie dabord un msg contenant la taille future des msg (donc utiliser un buffer de taille sizeof(int)), et la passer ici ensuite
-    int recvMsgSize; // Size of received message
-
+    int recvMsgSize = sizeof(object); // Size of received message
+    bzero(&object, recvMsgSize);
     do {
-      if (recvMsgSize = recv(sds, echoBuffer, 32, 0) < 0) {
+      printf("Receiving...\n");
+      if ((recvMsgSize = recv(sds, &object, recvMsgSize, 0)) < 0) {
         perror("Error recv() son");
         exit(-1);
       }
-      printf("%s", echoBuffer);
-    } while(recvMsgSize > 0); // 0 indicates end of transmission
+      printf("Received %d bytes.\n", recvMsgSize);
+      if (recvMsgSize == 0) {
+        close(sds);
+        printf("End of transmission.\n");
+        exit(1); // end of transmission whereas we didn't receive object.id == -1
+      }
+      showObj(&object);
+    } while(object.ii != -1);
     close(sds);
     exit(EXIT_SUCCESS);
   }
 
   return 0;
 }
+
