@@ -10,8 +10,7 @@ while (<>) {
   # FILENAME
   $fichier = $ARGV;
   $fichier=~s/.*\///g;
-  # $numero = $fichier;
-  # $numero=~s/\.htm//g;
+  s/\n//;
   if (!defined(@htmls{$fichier})) {
     $htmls{$fichier} = $_;
   }
