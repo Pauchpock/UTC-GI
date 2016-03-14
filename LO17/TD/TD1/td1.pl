@@ -42,7 +42,7 @@ while (($fichier,$html) = each(%htmls)) {
 
   # RUBRIQUE AND TITRE
 
-  $body=~/<p class="style96"><span class="style42">(.+)<br><\/span><span class="style17">(.*)<\/span><\/p>/;
+  $body=~/<p class="style96"><span class="style42">(.+)<br><\/span><span class="style17">(.*?)<\/span><\/p>/;
   $rubrique = $1;
   $titre = $2;
   print '<rubrique>'.$rubrique."</rubrique>\n";
@@ -57,7 +57,7 @@ while (($fichier,$html) = each(%htmls)) {
   $texte =~ s/<.*?>//g;
   $texte =~ s/^\s+|\s+$//g;
   print "<texte>".$texte."</texte>\n";
-  # (.*?) makes it greedy (cf http://forums.phpfreaks.com/topic/265751-how-does-it-work/)
+  # (.*?) makes it lazy (cf http://forums.phpfreaks.com/topic/265751-how-does-it-work/) instead of greedy
 
 
   # IMAGES WITH URL
