@@ -5,5 +5,4 @@
 # grep -o pour compter les occurences de mots, même si plusieurs sont sur la même ligne
 # grep -E pour autoriser les regex complexes
 
-rm output.xml -f ;  ./td1.pl BULLETINS/BULLETINS/*.htm | perl convert.pl > output.xml && { grep "<image>" output.xml } | wc -l && echo "Images parsées en Perl" && { grep -aoE "streaming.+?\.jpg" BULLETINS/BULLETINS/*.htm && grep -aoE "<img.*?www\.bulletins-electroniques\.com\/Resources_fm\/actualites.*?\.jpg" BULLETINS/BULLETINS/*.htm } | wc -l && echo "Images dans les fichiers d'origine";
-
+rm output.xml -f ;  ./td1.pl BULLETINS/*.htm | perl convert.pl > output.xml && { grep "<image>" output.xml } | wc -l && echo "Images parsées en Perl" && { grep -aoE "streaming.+?\.jpg" BULLETINS/*.htm && grep -aoE "<img.*?www\.bulletins-electroniques\.com\/Resources_fm\/actualites.*?\.jpg" BULLETINS/*.htm } | wc -l && echo "Images dans les fichiers d'origine";

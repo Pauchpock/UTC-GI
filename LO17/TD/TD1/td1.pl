@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+use utf8;
+binmode(STDOUT, ":utf8");
+
 # HTML AND BODY
 
 @htmls;
@@ -28,7 +31,7 @@ while (($fichier,$html) = each(%htmls)) {
 
   # NUMERO
 
-  $body=~/<span class="style95" style="color:inherit">(\d+)<\/span><\/a>/;
+  $body=~/<span class="style32">BE France (\d+).*?<\/span>/;
   $numero = $1;
   print '<numero>'.$numero."</numero>\n";
 
@@ -55,7 +58,7 @@ while (($fichier,$html) = each(%htmls)) {
   $texte = $1;
   $texte =~ s/<br \/>\n?<\/span><div style="text-align: center"><img.*?class="style95"><br \/>//gs;
   $texte =~ s/<.*?>//g;
-  $texte =~ s/^\s+|\s+$//g;
+  $texte =~ s/^\s+|\s+$|\n//g;
   print "<texte>".$texte."</texte>\n";
   # (.*?) makes it lazy (cf http://forums.phpfreaks.com/topic/265751-how-does-it-work/) instead of greedy
 
