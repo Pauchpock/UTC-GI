@@ -1,0 +1,29 @@
+\chapter{TD2: Indexation}
+
+Le but de ce second TD est d'utiliser le fichier XML que nous avons produit lors du TD1 afin de créer des index (des fichiers inverses). Pour cela, nous avons à notre disposition plusieurs scripts Perl.
+
+\begin{enumerate}
+  \item \textbf{segmente\_TT.pl}: permet, à partir d'un fichier XML, d'extraire tous les mots individuellement contenus entre les balises \lstinline{<titre>} ou \lstinline{<texte>}.
+  \item \textbf{newcreeFiltre.pl}: permet de ...
+\end{enumerate}
+
+\section{Obtenir les tf}
+
+Grâce au premier script, nous sommes capable d'obtenir la liste des mots contenus dans les textes et titres de tous les documents HTML. Puis, à l'aide des commandes Unix telles que \lstinline{sort} et \lstinline{uniq} (avec l'argument \lstinline{-c}), nous obtenons pour chaque mot son \textbf{tf}.
+
+\fakeshell
+\begin{lstlisting}
+cat ../TD1/output.xml| ./segmente_TT.pl -f | sort | uniq -c | sed -e 's/^\s*//' > tf.txt
+\end{lstlisting}
+
+La commande \lstinline{sed} nous permet de supprimer les espaces inutiles en début de chaîne.
+
+\section{Obtenir les idf}
+
+Ensuite, pour obtenir les \textbf{idf}, nous avons deux possibilités: réutiliser le fichier \textbf{tf.txt} directement ou repartir du fichier XML produit lors du TD1. Voici comment faire à partir du fichier \textbf{tf.txt}:
+
+\begin{lstlisting}
+cat tf.txt | cut -d' ' -f2 | cut -f1 | sort | uniq -c | sed -e 's/^\s*//' > idf.txt
+\end{lstlisting}
+
+La commande \lstinline{cut} nous permet de sélectionner uniquement certaines ``colonnes'' de notre fichier source.
