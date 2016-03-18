@@ -1,0 +1,15 @@
+uv: LO17
+type: Cours
+day: LUNDI
+begin: 8:00
+end: 10:00
+room: FA318
+group: 
+
+uv: SR05
+type: TD
+day: LUNDI
+begin: 10:15
+end: 13:15
+room: J210A
+group: Groupe 1

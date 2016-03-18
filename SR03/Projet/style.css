@@ -1,0 +1,32 @@
+table {
+    border-collapse: collapse;
+    border: none;
+}
+
+tr {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+td {
+    padding: 0 5px 5px 5px;
+}
+
+td span.when {
+    font-size: .7em;
+}
+
+td {
+    border: none;
+    min-width: 10px;
+}
+
+td.lesson, tr td:first-child {
+    border: 1px solid black;
+}
+
+tr td:last-child {
+    border-right: 1px solid black;
+}
+
+
