@@ -8,21 +8,23 @@ tr {
     border-bottom: 1px solid black;
 }
 
-td {
-    padding: 0 5px 5px 5px;
-}
-
 td span.when {
     font-size: .7em;
 }
 
 td {
+    padding: 0 5px 5px 5px;
     border: none;
     min-width: 10px;
+    height: 65px;
 }
 
 td.lesson, tr td:first-child {
     border: 1px solid black;
+}
+
+td.lesson {
+    color: white;
 }
 
 tr td:last-child {
