@@ -1,6 +1,7 @@
 <?php
 $colors = array('#F4511E','#43A047','#E53935','#1E88E5','#6D4C41','#757575','#5E35B1','#8E24AA');
 $uvsColor = array();
+$days = array("LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI");
 
 function getOffset($uv) {
     $start = explode(":", $uv['begin']);
@@ -10,9 +11,10 @@ function getOffset($uv) {
     return ($diff_hours * 4) + ($diff_minutes / 15);
 }
 
-function shouldDisplayNextLesson($uv,$hour,$minutes) {
+function shouldDisplayNextLesson($uv,$day,$hour,$minutes) {
     $start = explode(":", $uv['begin']);
-    return ((int)$start[0]) == $hour && ((int)$start[1]) == $minutes;
+    global $days;
+    return ($uv['day'] == $days[$day] && ((int)$start[0]) == $hour && ((int)$start[1]) == $minutes);
 }
 
 
@@ -20,7 +22,6 @@ if (isset($_GET) && isset($_GET['login']) && !empty($_GET['login'])) { ?>
     <?php
     $json = file_get_contents("https://webapplis.utc.fr/Edt_ent_rest/myedt/result?login=".$_GET['login']);
     $data = json_decode($json, true);
-    $days = array("LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI");
     usort($data, function($a, $b) use ($days) {
         return (array_search($a['day'], $days) - array_search($b['day'], $days)) * 2 + ((intval(str_replace(":","",$a['begin'])) - (intval(str_replace(":","",$b['begin']))) < 0) ? -1 : 1);
     });
@@ -33,7 +34,7 @@ if (isset($_GET) && isset($_GET['login']) && !empty($_GET['login'])) { ?>
         $hour = 8; // < 20
         $minutes = 0; // 0, 15, 30, 45, 0...
         do {
-            if (count($data) > 0 && shouldDisplayNextLesson($data[0],$hour,$minutes)) {
+            if (count($data) > 0 && shouldDisplayNextLesson($data[0],$day,$hour,$minutes)) {
                 $uv = array_shift($data);
 
                 $offset = getOffset($uv);
