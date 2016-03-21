@@ -1,48 +1,5 @@
-1 100b
-2 10ème
-1 11ème
-2 12ème
-1 12mois
-1 13ème
-1 14ème
-1 15ème
-1 16ème
-1 17ème
-2 1a
-2 1b
-18 1er
-16 1ère
-1 200m2
-2 21ème
-2 25ème
-3 2d
-1 2è
-6 2ème
-1 2kg
-1 33ème
-1 33èmes
-1 3bcar
-1 3c
-18 3d
-1 3dau
-1 3e
-8 3ème
-1 41ème
-8 4ème
-2 4i
-1 50ème
-4 5ème
-1 65ème
-3 6ème
-7 7ème
-4 8ème
-7 9ème
 244 a
 326 à
-1 a320
-1 a320neo
-1 a350
-2 a380
 1 aarhus
 1 abandonnées
 2 abandonner
@@ -753,7 +710,6 @@
 2 anormale
 1 anormaux
 14 anr
-1 anru2
 103 ans
 1 ansdepuis
 1 anses
@@ -797,7 +753,6 @@
 1 aon
 9 août
 3 ap
-1 ap1000
 3 aperçu
 1 apix
 1 aplatie
@@ -1189,8 +1144,6 @@
 1 attribués
 1 attribution
 1 atv
-1 atv2
-1 atv3
 4 atypique
 1 atypiques
 285 au
@@ -1355,9 +1308,6 @@
 1 azoture
 4 azur
 4 b
-1 b2b
-1 b2v
-1 b9
 1 babethanol
 6 bac
 4 baccalauréat
@@ -1844,11 +1794,6 @@
 1 by
 181 c
 8 °c
-1 c02
-1 c1
-1 c2ma
-1 c3
-1 c919
 2 ça
 1 cabinet
 1 cabinets
@@ -2069,17 +2014,14 @@
 1 cbs
 3 cci
 1 ccip
-1 ccl2
 2 ccrt
 2 cd
-1 cd36
 1 cdc
 1 cdio
 1 cdte
 1 cdti
 280 ce
 1 °ce
-1 ce2
 50 cea
 1 cecalait
 11 ceci
@@ -2182,7 +2124,6 @@
 52 ceux
 1 cévennes
 1 cfm
-1 cfm56
 1 cfp
 2 cgns
 1 chablis
@@ -2472,7 +2413,6 @@
 8 cluster
 2 clusters
 6 cm
-1 cm1k
 1 cmip
 2 cnam
 1 cnaol
@@ -2483,7 +2423,6 @@
 95 cnrs
 1 cnrst
 27 co
-9 co2
 1 coaching
 2 coag
 2 coagulant
@@ -4324,7 +4263,6 @@
 1 ébauches
 1 ébloui
 1 ebt
-1 ec6
 1 écarts
 1 eccp
 7 échange
@@ -4496,7 +4434,6 @@
 1 élastiques
 1 élastographie
 1 élastomère
-1 elc2
 1 elderly
 1 eldorado
 2 élection
@@ -4570,7 +4507,6 @@
 2 élu
 1 élucider
 2 élus
-1 em2c
 1 emac
 1 émanation
 5 emballage
@@ -4593,7 +4529,6 @@
 1 embouchures
 3 embryon
 1 embûches
-1 emc2
 3 émerge
 6 émergé
 2 émergées
@@ -4623,7 +4558,6 @@
 1 emitting
 1 emlyon
 1 emm
-1 emm2013
 1 emma
 2 emmanuel
 1 emmanuelle
@@ -5384,10 +5318,8 @@
 1 extrémités
 1 extrusion
 3 eyebrain
-1 eyeop1
 1 eyetechcare
 1 eyrolles
-1 f2c
 1 fab
 1 fablab
 1 fabmake
@@ -5816,7 +5748,6 @@
 2 fourniture
 1 fours
 1 foyer
-1 fp7
 1 fpga
 3 fr
 1 frachet
@@ -6479,7 +6410,6 @@
 1 hoppe
 2 horaires
 18 horizon
-1 horizon2015
 3 horizons
 1 horlogerie
 2 hormis
@@ -6502,7 +6432,6 @@
 4 hp
 2 hpc
 1 hpv
-1 hpv16
 1 htm
 4 http
 1 hubble
@@ -6573,7 +6502,6 @@
 1 iasp
 2 ibitec
 1 ibm
-1 ic3k
 2 ican
 1 iccc
 1 icebergs
@@ -6582,7 +6510,6 @@
 1 icmub
 1 icos
 1 icv
-1 id15a
 1 idé
 1 idea
 5 idéal
@@ -6711,7 +6638,6 @@
 1 immunosuppresseur
 2 immunothérapie
 20 impact
-1 impact2c
 1 impactant
 2 impacte
 1 impacté
@@ -7495,7 +7421,6 @@
 1 kit
 1 klorane
 14 km
-1 km2
 1 knocked
 1 knockout
 1 knowledge
@@ -7622,7 +7547,6 @@
 1 las
 1 lasagyl
 9 laser
-1 laser1
 5 lasers
 1 lasik
 2 latécoère
@@ -7646,7 +7570,6 @@
 1 lavandin
 1 lavet
 1 law
-1 lb3m
 1 lbmn
 1 lcpo
 324 le
@@ -7960,8 +7883,6 @@
 2 lyonnais
 4 lyonnaise
 15 m
-7 m2
-1 m2i
 9 ma
 1 mabimprove
 1 mace
@@ -8163,7 +8084,6 @@
 4 massivement
 1 massy
 10 master
-1 master2
 1 mastères
 4 masters
 1 masticateur
@@ -8236,7 +8156,6 @@
 1 mechatronics
 1 méconnues
 1 med
-1 med23
 11 médaille
 1 médailles
 5 médecin
@@ -8409,7 +8328,6 @@
 1 meurtrières
 1 meute
 1 mexique
-1 mgd1
 1 mgp
 4 mi
 2 micalis
@@ -8723,7 +8641,6 @@
 4 moyennes
 18 moyens
 1 mozambique
-1 mp3
 2 mpi
 1 mraihi
 1 ms
@@ -8731,7 +8648,6 @@
 1 msl
 1 msu
 1 mt
-1 mturquoise2
 1 muhammad
 2 mulhouse
 6 multi
@@ -8820,7 +8736,6 @@
 1 nanoélectronique
 2 nanofils
 1 nanoformulation
-1 nanoh2
 1 nanomanipulation
 5 nanomatériaux
 1 nanomédecine
@@ -9493,8 +9408,6 @@
 1 oz
 2 ozone
 2 p
-2 p80
-1 p80fw
 1 pac
 4 paca
 1 pacea
@@ -10972,7 +10885,6 @@
 1 quotidiens
 1 qwip
 2 r
-1 r23ae
 1 rac
 1 raccourcie
 1 rachat
@@ -11093,7 +11005,6 @@
 6 rayonnement
 1 rayonnements
 4 rayons
-1 rb3d
 1 rcp
 1 rcpg
 1 rcuk
@@ -11918,7 +11829,6 @@
 1 royant
 2 royaume
 1 rt
-1 rt2012
 1 rubis
 3 ruche
 2 rude
@@ -12065,7 +11975,6 @@
 4 savons
 1 saxons
 1 sayette
-1 sc13
 1 sca
 2 scale
 1 scalpel
@@ -12222,7 +12131,6 @@
 1 sent
 1 sentez
 1 sentinel
-1 sentinel1
 2 sentinelles
 1 sentions
 1 sentir
@@ -12620,7 +12528,6 @@
 1 spintronique
 1 spir
 4 spiral
-1 spiral2
 1 spirit
 1 spiritueux
 1 spo
@@ -12681,7 +12588,6 @@
 3 stéphane
 1 stériles
 1 steve
-1 sti2d
 1 stigmatiser
 1 stilla
 3 stimulant
@@ -12939,7 +12845,6 @@
 1 systerra
 1 sytis
 119 t
-1 t2
 1 tabagisme
 16 table
 5 tableau
@@ -12985,7 +12890,6 @@
 1 tata
 6 taux
 1 taxibot
-1 tcf4
 1 tchad
 1 tcr
 10 tech
@@ -13542,9 +13446,7 @@
 1 uag
 1 uas
 1 uc
-1 uc3
 1 ucad
-1 ufr1
 1 ugb
 1 ujf
 1 uk
@@ -13594,12 +13496,10 @@
 1 unrpa
 10 uns
 23 up
-1 up1
 1 upec
 14 upmc
 1 upprésident
 4 ups
-1 ur10
 1 uranium
 4 urbain
 4 urbaine
@@ -14116,8 +14016,6 @@
 1 yvelines
 2 yves
 2 yvette
-1 z23
-1 z9a
 1 zébus
 1 zefiro
 2 zélande
