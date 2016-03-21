@@ -11,7 +11,7 @@ use utf8;
 @mots;
 while (<>) {
     if ($ARGV =~ m/idf/) {
-        /(.*?)\t(\d+\.?\d+)/;
+        /(.*?)\s+(\d+(\.\d+)?)/;
         $mots{$1} = $2;
     }
     elsif ($ARGV =~ m/tf/) {
