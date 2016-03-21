@@ -15,11 +15,11 @@ sub log10 {
 
 @mots;
 while (<>) {
-    if ($ARGV eq 'idf.txt') {
+    if ($ARGV =~ m/idf/) {
         /(\d+) (.*)/;
         $mots{$2} = log10(326/$1);
     }
-    elsif ($ARGV eq 'tf.txt') {
+    elsif ($ARGV =~ m/tf/) {
         /(\d+)\s+(.*?)\s+(.*)/;
         $nb = $1;
         $mot = $2;
