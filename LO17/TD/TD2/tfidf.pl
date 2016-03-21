@@ -8,16 +8,11 @@ use utf8;
 
 # Usage: perl % idf.txt tf.txt
 
-sub log10 {
-    my $n = shift;
-    return log($n)/log(10);
-}
-
 @mots;
 while (<>) {
     if ($ARGV =~ m/idf/) {
-        /(\d+) (.*)/;
-        $mots{$2} = log10(326/$1);
+        /(.*?)\t(\d+\.?\d+)/;
+        $mots{$1} = $2;
     }
     elsif ($ARGV =~ m/tf/) {
         /(\d+)\s+(.*?)\s+(.*)/;
