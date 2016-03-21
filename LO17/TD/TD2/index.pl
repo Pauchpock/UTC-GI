@@ -21,11 +21,11 @@ while (<>) {
             $annee = "\t".shift(@date);
 #            print("annee $annee\n");
             $index=$jour.$mois.$annee
-            }
-            $tabindex{$index} .= "$fichier$numero";
-            }
-		$index="";
-	}
+        }
+        $tabindex{$index} .= "$fichier$numero";
+    }
+	$index="";
+}
 
 
 @cleindex = keys %tabindex ;

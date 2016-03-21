@@ -19,4 +19,6 @@
 
 #### TD2
 
-- Dire si on indexe les nombres (oui ou non) et pourquoi
+- Rapport : Dire si on indexe les nombres (oui ou non) et pourquoi
+- Rajouter des chop; dans tous NOS scrips perl?
+- Checker pourquoi newOutput.xml contient "° mondiale", ce qui induit un bug dans le script "putAll..." (une ligne en trop, commençant par '° mondiale')

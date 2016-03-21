@@ -33,3 +33,8 @@ rm -f replaceLemmesInXML.pl; ./newcreeFiltre.pl successeurs.filtered.txt > repla
 
 # Run the script
 rm -f lemmes.xml; ./replaceLemmesInXML.pl ./newOutput.xml > lemmes.xml
+
+# Generate reverse files
+rm -f reverse.date.txt; cat lemmes.xml| ./index.pl "date" > reverse.date.txt
+
+cat newOutput.xml| ./segmente_TT.pl -f | sort -u | sed -r '/(.*?)[0-9]+(.*?)\s+[0-9]+\.htm/d' | ./putAllWordsFromFile.pl
