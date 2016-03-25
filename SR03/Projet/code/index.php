@@ -27,11 +27,30 @@ if (isset($_GET) && isset($_GET['login']) && !empty($_GET['login'])) { ?>
         exit;
     }
     $data = json_decode($json, true);
+    if (count($data) == 0) {
+        header("HTTP/1.1 404 NOT FOUND");
+        exit;
+    }
     usort($data, function($a, $b) use ($days) {
         return (array_search($a['day'], $days) - array_search($b['day'], $days)) * 2 + ((intval(str_replace(":","",$a['begin'])) - (intval(str_replace(":","",$b['begin']))) < 0) ? -1 : 1);
     });
     ?>
     <table>
+    <tr>
+        <td></td>
+        <td colspan="4">8:00</td>
+        <td colspan="4">9:00</td>
+        <td colspan="4">10:00</td>
+        <td colspan="4">11:00</td>
+        <td colspan="4">12:00</td>
+        <td colspan="4">13:00</td>
+        <td colspan="4">14:00</td>
+        <td colspan="4">15:00</td>
+        <td colspan="4">16:00</td>
+        <td colspan="4">17:00</td>
+        <td colspan="4">18:00</td>
+        <td colspan="4">19:00</td>
+    </tr>
     <?php
     for ($day = 0; $day < count($days); $day++) {
         print "<tr>";
@@ -57,11 +76,12 @@ if (isset($_GET) && isset($_GET['login']) && !empty($_GET['login'])) { ?>
                 print "<span class='when'>".$uv['begin']." - ".$uv['end']."</span><br />";
                 print $uv['type']. " " .$uv['uv'];
                 if (!empty($uv['group']))
-                    print " (".$uv['group'].")";
+                    print "<br />".$uv['group'];
                 print "<br />".$uv['room'];
             }
             else {
-                print "<td>";
+                $class = ($minutes == 0 ? " class='hour'" : "");
+                print "<td".$class.">";
                 if ($minutes == 45)
                     $hour++;
                 $minutes = ($minutes + 15) % 60;
@@ -69,6 +89,9 @@ if (isset($_GET) && isset($_GET['login']) && !empty($_GET['login'])) { ?>
             print "</td>";
         } while($hour < 20);
         print "</tr>";
+        if ($days[$day] == "VENDREDI" && count($data) == 0) {
+            break;
+        }
     }
     ?>
     </table>

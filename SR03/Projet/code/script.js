@@ -16,11 +16,15 @@ function ajax(form) {
             return;
         }
         if (xmlhttp.status !== 200) {
-            if (xmlhttp.status === 555) {
-                alert("L'API des emplois du temps n'est pas disponible.");
-            }
-            else {
-                alert('Erreur');
+            switch (xmlhttp.status) {
+                case 555:
+                    alert("L'API des emplois du temps n'est pas disponible.");
+                    break;
+                case 404:
+                    alert("Aucun emploi du temps trouvé pour ce login.");
+                    break;
+                default:
+                    alert('Erreur inconnue.');
             }
             _close(login);
         }
