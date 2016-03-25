@@ -21,6 +21,11 @@ function shouldDisplayNextLesson($uv,$day,$hour,$minutes) {
 if (isset($_GET) && isset($_GET['login']) && !empty($_GET['login'])) { ?>
     <?php
     $json = file_get_contents("https://webapplis.utc.fr/Edt_ent_rest/myedt/result?login=".$_GET['login']);
+    $errorCode = explode(" ", $http_response_header[0])[1];
+    if ($errorCode != "200") {
+        header("HTTP/1.1 555 API NOT REACHABLE");
+        exit;
+    }
     $data = json_decode($json, true);
     usort($data, function($a, $b) use ($days) {
         return (array_search($a['day'], $days) - array_search($b['day'], $days)) * 2 + ((intval(str_replace(":","",$a['begin'])) - (intval(str_replace(":","",$b['begin']))) < 0) ? -1 : 1);
@@ -67,7 +72,7 @@ if (isset($_GET) && isset($_GET['login']) && !empty($_GET['login'])) { ?>
     }
     ?>
     </table>
-    <?php
+<?php
 }
 else { ?>
 <!DOCTYPE html>
@@ -78,37 +83,14 @@ else { ?>
         <link rel="stylesheet" media="all" href="style.css" />
         <link rel="shortcut icon" href="favicon.ico" />
         <title>Emploi du temps</title>
-        <script>
-        function ajax(form) {
-            for (key in form) {
-                console.log(key);
-                console.log(form[key]);
-            }
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.open(form.method, form.action+"?"+form[0].name+"="+form[0].value, true);
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState !== XMLHttpRequest.DONE) {
-                    return;
-                }
-                if (xmlhttp.status !== 200) {
-                    alert('Erreur');
-                }
-                else {
-                    var result = xmlhttp.responseText;
-                    console.log(result);
-                    document.getElementById("edt").innerHTML += ("<br />"+result);
-                }
-            };
-            xmlhttp.send();
-        }
-        </script>
+        <script type="text/javascript" src="script.js"></script>
     </head>
     <body>
         <h1>Emploi du temps</h1>
             <form action="" method="GET" onsubmit="event.preventDefault(); ajax(this);">
               <label for="login">Votre login UTC :</label> <input type="text" id="login" name="login" placeholder="Identifiant" required/> <input type="submit" value="Rechercher" />
             </form>
-            <div id="edt"></div>
+            <div id="edts"></div>
     </body>
 </html>
 <?php

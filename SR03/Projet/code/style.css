@@ -1,6 +1,7 @@
 table {
     border-collapse: collapse;
     border: none;
+    margin-bottom: 20px;
 }
 
 tr {
@@ -29,4 +30,28 @@ td.lesson {
 
 tr td:last-child {
     border-right: 1px solid black;
+}
+
+.edt {
+    position: relative; /* allow close button to be relative to this element */
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+.loader_container {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+h2 {
+    display: inline-block;
+    cursor: pointer;
 }
