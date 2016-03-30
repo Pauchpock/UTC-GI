@@ -46,10 +46,8 @@ tr td:last-child {
 }
 
 .close {
-    position: absolute;
-    top: 0;
-    right: 0;
     cursor: pointer;
+    float: right
 }
 
 .loader_container {

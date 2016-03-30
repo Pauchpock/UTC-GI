@@ -102,7 +102,6 @@ else { ?>
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1.0" />
         <link rel="stylesheet" media="all" href="style.css" />
         <link rel="shortcut icon" href="favicon.ico" />
         <title>Emploi du temps</title>
