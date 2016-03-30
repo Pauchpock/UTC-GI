@@ -2,16 +2,6 @@
 
 ## TODO
 
-### SR03
-
-#### Projet
-
-- Préparer soutenance
-
-### SR03
-
-- Checker que le tableau soit dezoomé sur mobile par défaut et l'input zoomé
-
 ### LO17
 
 #### TD1
