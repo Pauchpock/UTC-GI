@@ -250,6 +250,14 @@
     <span class="author">Steve Lagache, Romain Pellerin</span> · <span class="date">SR03 8 avril 2016</span>
   </footer>
 </section>
+<section id="cahier-des-charges" class="slide level2">
+<h1>Cahier des charges</h1>
+<ul>
+<li>Emploi du temps</li>
+<li>API de l'UTC</li>
+<li>Afficher 2 emplois du temps en même temps</li>
+</ul>
+</section>
 <section id="technos" class="slide level2">
 <h1>Technos</h1>
 <ul>
@@ -262,23 +270,40 @@
 <h1>Architecture</h1>
 <p><img src="assets/arch.png" alt="Architecture" class="w80" /></p>
 </section>
-<section id="mobile" class="slide level2">
-<h1>Mobile</h1>
-<p><img src="assets/mobile_framed.png" alt="Architecture" class="w100" /></p>
-</section>
-<section id="desktop" class="slide level2">
-<h1>Desktop</h1>
-<p><br /> <br /> DEMO</p>
-</section>
 <section id="fonctionnalités" class="slide level2">
 <h1>Fonctionnalités</h1>
 <ul>
 <li>Messages d'erreur (API indispo, mauvais login)</li>
 <li>Plusieurs emplois du temps <strong>uniques</strong></li>
 <li>Emplois du temps cachables ou fermables</li>
-<li>Samedi affiché sur cours</li>
-<li>Loading images</li>
+<li>Samedi affiché si cours</li>
+<li><em>Loading images</em></li>
 </ul>
+</section>
+<section id="mobile" class="slide level2">
+<h1>Mobile</h1>
+<p><img src="assets/mobile_framed.png" alt="Architecture" class="w100" /></p>
+</section>
+<section id="desktop" class="slide level2">
+<h1>Desktop</h1>
+<p><br /> DEMO <br /> <br /> Essayez-moi à : <br /> http://<span id="ip"></span>:8080</p>
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET","http://127.0.0.1:8080/ip.php",true);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState !== XMLHttpRequest.DONE) {
+            return;
+        }
+        if (xmlhttp.status !== 200) {
+            return;
+        }
+        else {
+            hostipInfo = xmlhttp.responseText;
+            document.querySelector("#ip").innerHTML = hostipInfo;
+        }
+    };
+    xmlhttp.send();
+</script>
 </section>
 <section class="slide level2">
 
