@@ -1,10 +1,10 @@
 ﻿-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  distribution license type: Free of charge license for academic and research purpose
- software author(s): Romain Pellerin
+ software author(s):  Bertrand Ducourthial
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ 
 
-
-CONTRAT DE LICENCE 1.0 SUITE LOGICIELLE AIRPLUG
+CONTRAT DE LICENCE 1.0 SUITE LOGICIELLE AIRPLUG 
 LICENSE AGREEMENT 1.0 THE AIRPLUG SOFTWARE SUITE
 
 
@@ -47,17 +47,17 @@ de la Suite Logicielle Airplug.
 
  « Contrat » :  Le   présent  Contrat  de  licence,   ses  éventuelles  versions
  postérieures.
-
+ 
 « Concédant » : désigne l’UTC en tant que personne morale détenant les droits du
 Logiciel.
 
 « Licencié » :  désigne le  ou les  utilisateurs du  Composant ayant  accepté le
 Contrat.
-
+ 
 « Logiciel » :  la Suite  Logicielle  AIRPLUG telle que  déposée  à l’Agence  de
 Protection   des   Programmes,   disponible    sur   le   site   web   suivant :
 http://www.hds.utc.fr/airplug
-
+ 
 « Parties » : désigne  l’UTC, en tant que  Concédant, et le  Licencié du présent
 Contrat de licence.
 
