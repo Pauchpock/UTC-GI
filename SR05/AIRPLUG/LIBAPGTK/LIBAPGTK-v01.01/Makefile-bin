@@ -1,0 +1,17 @@
+# license type: free of charge license for academic and research purpose
+# see license.txt
+# author: Bertrand Ducourthial
+
+# Companion file for layer 3 generic Makefile.
+# This file is specific for applications that does not require any compilation.
+
+
+### COMPILATION RULES ##########################################################
+build depend:
+	@if [ $(TEXT) = "french" ]; then \
+		echo "  ++ $(DIRNAME) : regle $@" ; \
+		echo "*    sans effet ici" ; \
+	else \
+		echo "  ++ $(DIRNAME) : $@ rule" ; \
+		echo "*    no effect here" ; \
+	fi ;

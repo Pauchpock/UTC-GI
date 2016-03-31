@@ -1,0 +1,308 @@
+#    libapg-eve.tk
+#    a library for designing airplug compatible program
+#    authors: Bertrand Ducourthial AT utc.fr, Anthony Buisset
+#    license type: free of charge license for academic and research purpose
+#    see license.txt
+#
+# bibliotheque de gestion de l'affichage des messages
+###############################################################################
+
+APG_vrb_dispnotif "    integration de l'affichage des evenements" "libapg-eve" 4
+
+### VARIABLES DE LIBAPG-EVE ###################################################
+
+# Niveau d'affichage des evenements dans l'interface
+# NB : initialise au niveau de verbose (APG_vrb_level)
+#      Variable differente du niveau de verbose pour permettre
+#      differents affichages successifs de niveaux differents sans changer
+#      le niveau de verbose.
+set ::APG_eve_level 0
+
+# Affichage des warning
+set ::APG_eve_warning false
+
+# Affichage des debug
+set ::APG_eve_debug false
+
+# Mise a jour de la vue verticale lors d'un ajout 
+set ::APG_eve_yview true
+
+# Numero des messages
+set ::APG_eve_nbmsg 0
+
+# Securite pour ne pas stocker ad vitam eternam des donnees
+# TODO : prevoir lien avec sauvegarde
+set ::APG_eve_maxnbmsg 30000
+
+# Format of the procedure name.
+# %-9s => 9 letters, padded with white spaces if necessary.
+# NB : 14 = width of libapg-app-gps, usefull for automatic alignment.
+set ::APG_eve_procnameformat "%-18.18s"
+
+set ::APG_eve_nbmsgformat "%5.5s"
+## Separator between header and message to be displayed
+set ::APG_eve_separator " : "
+
+
+###############################################################################
+
+
+### ZONE GRAPHIQUE DES EVENEMENTS #############################################
+if { $::APG_notk == false } {
+		labelframe .eve -text "Evenements"  -pady 2 -padx 2 -fg $::APG_int_coltitle
+
+		frame .eve.ctl
+		frame .eve.msg
+		pack .eve.ctl -side top -expand false -fill x
+		pack .eve.msg -side top -expand true -fill both
+
+		# Bouton de commande de la zone -------------------------------------------#
+		button .eve.ctl.btraz -text "raz" \
+				-activebackground $::APG_int_colbutton \
+				-foreground $::APG_int_colbutton \
+				-font $::APG_int_fnbutton \
+				-width 4 \
+				-command APG_eve_reset
+
+		pack .eve.ctl.btraz -side left -anchor sw -fill y
+
+		# Reglages pour les evenements --------------------------------------------#
+		labelframe .eve.ctl.disp -text "Affichage des événements"
+		label .eve.ctl.disp.lbvrb -text "verbose :"
+		spinbox .eve.ctl.disp.sbvrb -from -1 -to 6 \
+				-textvariable ::APG_eve_level -justify right -width 2 \
+				-command APG_eve_update
+		checkbutton .eve.ctl.disp.cbwrn \
+				-variable ::APG_eve_warning \
+				-width 7 \
+				-onvalue true \
+				-offvalue false \
+				-text "warning" \
+				-command APG_eve_update
+		checkbutton .eve.ctl.disp.cbdbg \
+				-variable ::APG_eve_debug \
+				-width 5 \
+				-onvalue true \
+				-offvalue false \
+				-text "debug" \
+				-command APG_eve_update
+		checkbutton .eve.ctl.disp.yview \
+				-variable ::APG_eve_yview \
+				-width 7 \
+				-onvalue true \
+				-offvalue false \
+				-text "màj vue" \
+				-command { if { $::APG_eve_yview == true } { .eve.msg.lbx yview end } }
+
+		pack .eve.ctl.disp.lbvrb .eve.ctl.disp.sbvrb .eve.ctl.disp.cbwrn .eve.ctl.disp.cbdbg .eve.ctl.disp.yview -fill y -pady 1 -side left -anchor nw
+		pack .eve.ctl.disp -side left -anchor nw -fill both
+		
+		# Reglages pour le terminal (verbose, debug) ------------------------------#
+		labelframe .eve.ctl.term -text "Réglages du terminal"
+		label .eve.ctl.term.lbvrb -text "verbose :"
+		spinbox .eve.ctl.term.sbvrb -from -1 -to 6 -textvariable ::APG_vrb_level -justify right -width 2
+		checkbutton .eve.ctl.term.cbdbg \
+				-variable ::APG_vrb_debug \
+				-width 5 \
+				-onvalue true \
+				-offvalue false \
+				-text "debug"
+
+		pack .eve.ctl.term.lbvrb .eve.ctl.term.sbvrb .eve.ctl.term.cbdbg -fill y -pady 1 -side left -anchor nw
+		pack .eve.ctl.term -side left -anchor nw -fill both
+		
+		# Zone des messages avec ascenseur ----------------------------------------#
+		listbox .eve.msg.lbx -yscrollcommand ".eve.msg.scr set" -relief flat -height 10 -bg "light grey" -font $::APG_int_fnfixed
+		scrollbar .eve.msg.scr -orient v -command ".eve.msg.lbx yview"
+		
+		pack .eve.msg.scr -side right -fill y
+		pack .eve.msg.lbx -side left -expand true -fill both
+
+}
+# fin du if then else notk
+###############################################################################
+
+
+### PROCEDURES DE L'INTERFACE #################################################
+
+#-- Procedure APG_eve_update -------------------------------------------------#
+# Action : update the event display in case a parameter changed. Called after #
+#          a modification on a widget.                                        #
+# Entry  : nothing                                                            #
+# Return : nothing                                                            #
+#-----------------------------------------------------------------------------#
+proc APG_eve_update { } {
+		APG_eve_reset
+		
+		for { set i 0 } { $i < $::APG_eve_nbmsg } { incr i } {
+				if { $::APG_eve_tabtyp($i) == "wrn" && $::APG_eve_warning == false } { continue }
+				if { $::APG_eve_tabtyp($i) == "dbg" && $::APG_eve_debug == false } { continue }
+
+				if { $::APG_eve_level >= $::APG_eve_tablvl($i) } {
+						# affichage du msg dans la zone
+						.eve.msg.lbx insert end $::APG_eve_tabmsg($i)
+						.eve.msg.lbx itemconfigure end -foreground $::APG_eve_tabcol($i)
+				}
+		}
+		.eve.msg.lbx yview end
+}
+
+#-- Procedure APG_eve_add ----------------------------------------------------#
+# Action : add an event to the display                                        #
+# Entry  : msg, color (optional), level (optional), calling procedure         #
+#          (optional)                                                         #
+# Return : nothing                                                            #
+#-----------------------------------------------------------------------------#
+proc APG_eve_add { msg {col ""} {level 0} {fct "" } } {
+
+		# Si pas d'interface, rien a faire
+		if { $::APG_notk == true } { return }
+
+		# Determination de la couleur au cas ou un code a ete utilise -------------#
+		if { $col == "rcv" } {
+				set color $::APG_int_colmsgrcv
+		} elseif { $col == "snd" } {
+				set color $::APG_int_colmsgsnd
+		} elseif { $col == "wrn" } {
+				set color $::APG_int_colmsgwrn
+		} elseif { $col == "err" } {
+				set color $::APG_int_colmsgerr
+		} elseif { $col == "dbg" } {
+				set color $::APG_int_colmsgdbg
+		} elseif { $col == "evepro" } {
+				# Evenement entree procedure
+				set color $::APG_int_colevepro
+		} elseif { $col == "eveinp" } {
+				# Evenement modification input
+				set color $::APG_int_coleveinp
+		} elseif { $col == "evemod" } {
+				# Event modification parameters
+				set color $::APG_int_colevemod
+		} elseif { $col == "inf" || $col == "eve" || $col == "" } {
+				# Information, any event or not given by the calling procedure
+				set color $::APG_int_colmsgqcq 
+		} else {
+				# On espere que cette couleur est bien definie
+				# TODO : tester la couleur...
+				set color $col
+		}
+
+		# Construction de la chaine msg -------------------------------------------#
+		set str [format $::APG_eve_nbmsgformat $::APG_eve_nbmsg]
+		append str $::APG_vrb_separator[format $::APG_eve_procnameformat $fct]
+		append str $::APG_vrb_separator$msg
+
+		# Stockage ----------------------------------------------------------------#
+		# NB : limite a maxnbmsg pour ne pas stocker des donnees ad vitam eternam
+		# TODO : ameliorer + lien avec libapg-svg
+		if { $::APG_eve_nbmsg <= $::APG_eve_maxnbmsg } {
+				set ::APG_eve_tabtyp($::APG_eve_nbmsg) $col
+				set ::APG_eve_tabmsg($::APG_eve_nbmsg) $str
+				set ::APG_eve_tabcol($::APG_eve_nbmsg) $color
+				set ::APG_eve_tablvl($::APG_eve_nbmsg) $level
+				incr ::APG_eve_nbmsg
+		}
+
+		# Affichage ---------------------------------------------------------------#
+		#  affichage conditionnel des warning
+		if { $col == "wrn" && $::APG_eve_warning == false } { return }
+		#  affichage conditionnel des debogages
+		if { $col == "dbg" && $::APG_eve_debug == false } { return }
+		#  affichage des messages selon le niveau d'affichage
+		#  NB : si level == 0, alors on affiche (signifie que le niveau
+		#       d'affichage n'est pas determinant).
+		#       C'est le cas pour les erreurs, warning et debogages (ie. != notif)
+		if { $::APG_eve_level >= $level } {
+				# affichage du msg dans la zone
+				.eve.msg.lbx insert end $str
+				.eve.msg.lbx itemconfigure end -foreground $color
+				if { $::APG_eve_yview == true } {
+						# Mise a jour de la vue verticale
+						.eve.msg.lbx yview end
+				}
+		}
+}
+
+#-- Procedure APG_eve_reset --------------------------------------------------#
+# Action : reset the display event area                                       #
+# Entry  : nothing                                                            #
+# Return : nothing                                                            #
+#-----------------------------------------------------------------------------#
+proc APG_eve_reset { } {
+    .eve.msg.lbx delete 0 end
+}
+###############################################################################
+
+
+### PROCEDURES ################################################################
+
+#-- Procedure APG_vrb_disperror -- (display error) ---------------------------#
+# Action : affiche un message d'erreur formate                                #
+#          et ajoute un evenement                                             #
+# Remarq.: surcharge de libapg-vrb                                            #
+# Entree : message, eventuellement fonction appelante, eventuellement couleur #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_vrb_disperror { msg {fct ""} {col "err"} } {
+		# Ajout d'un evenement dans l'interface si pas de notk, de type erreur,
+		# sans gestion du niveau d'affichage (=0).
+		APG_eve_add $msg $col 0 $fct
+
+		APG_vrb_displayerror $msg $fct
+}
+
+#-- Procedure APG_vrb_dispwarning -- (display warning) -----------------------#
+# Action : affiche un message d'alerte si le niveau de verbose est >0         #
+#          et ajoute un evenement                                             #
+# Remarq.: surcharge de libapg-vrb                                            #
+# Entree : message, eventuellement fonction appelante, eventuellement couleur #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_vrb_dispwarning { msg {fct ""} {col "wrn"} } {
+		# Ajout d'un evenement dans l'interface si pas de notk, de type erreur,
+		# sans gestion du niveau d'affichage (=0).
+		APG_eve_add $msg $col 0 $fct
+
+		APG_vrb_displaywarning $msg $fct
+}
+
+
+#-- Procedure APG_vrb_dispnotif -- (display notification) --------------------#
+# Action : affiche un message de notification selon son niveau d'importance   #
+#          comparativement au niveau de verbose choisi par l'utilisateur      #
+#          avec l'option --verbose=                                           #
+#          + affichage d'un evenement dans l'interface graphique.             #
+# Remarq.: surchage de libapg-vrb.tk                                          #
+# Entree : message, eventuellement fonction appelante, eventuellement niveau  #
+#          de verbose minimal pour affichage (defaut = 2), eventuellement     #
+#          couleur                                                            #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_vrb_dispnotif { msg {fct ""} {lvl 2} {col "inf"}} {
+
+		# Ajout d'un evenement dans l'interface si pas de notk
+		# avec couleur col (ou inf par defaut, cad couleur par defaut des
+		# informations, de niveau lvl et "" pour la fonction fct.
+		APG_eve_add $msg $col $lvl $fct
+
+		APG_vrb_displaynotif $msg $fct $lvl
+}
+
+
+#-- Procedure APG_vrb_dispdebug -- (display debug) ---------------------------#
+# Action : affiche un message de deboguage si option --debug                  #
+# Remarq.: surchage de libapg-vrb.tk                                          #
+# Entree : message, eventuellement fonction appelante, eventuellement couleur #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_vrb_dispdebug { msg {fct ""} {col "dbg"} } {
+
+		# Ajout d'un evenement dans l'interface si pas de notk, de type "dbg" (ie.
+		# couleur par defaut des messages de debogages, de niveau 0 (ie. pas de
+		# consideration des niveaux) et pour la fonction fct.
+		APG_eve_add $msg $col 0 $fct
+
+		APG_vrb_displaydebug $msg $fct
+}
+
+###############################################################################

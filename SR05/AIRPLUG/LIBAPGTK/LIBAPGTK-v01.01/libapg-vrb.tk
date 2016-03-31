@@ -1,0 +1,250 @@
+#    libapg-vrb.tk
+#    a library for designing airplug compatible program
+#    authors: Bertrand Ducourthial AT utc.fr, Anthony Buisset
+#    license type: free of charge license for academic and research purpose
+#    see license.txt
+#
+# bibliotheque de gestion de l'affichage des messages
+###############################################################################
+
+### VARIABLES DE LIBAPG-VRB ###################################################
+
+### Parametres ---------------------------------------------------------------#
+# Couleurs du shell
+# raz     : "\033\[0;00m"
+# noir    : "\033\[1;30m"
+# rouge   : "\033\[1;31m"
+# vert    : "\033\[1;32m"
+# orange  : "\033\[1;33m"
+# bleu    : "\033\[1;34m"
+# magenta : "\033\[1;35m"
+# cyan    : "\033\[1;36m"
+# blanc   : "\033\[1;37m"
+
+#set APG_vrb_prefix "\n"
+set APG_vrb_prefix ""
+set APG_vrb_colerr "\033\[0;31m"
+set APG_vrb_colwrn "\033\[0;33m"
+set APG_vrb_coldbg "\033\[0;32m"
+set APG_vrb_colntf "\033\[0;00m"
+set APG_vrb_colrst "\033\[0;00m"
+
+## Format of the program name.
+# NB syntax %-3s => 3 letters, padded with white spaces if necessary.
+# NB : 3 letters correspond to wha
+set APG_vrb_prognameformat "%-3.3s"
+## Format of the local instance name (ident).
+# NB syntax %-5s => 5 letters, padded with white spaces if necessary.
+# NB : 5 letters correspond to local
+set APG_vrb_identnameformat "%-5.5s"
+## Format of the procedure name.
+# %-9s => 9 letters, padded with white spaces if necessary.
+# NB : 14 = width of libapg-app-gps, usefull for automatic alignment.
+set APG_vrb_procnameformat "%-18.18s"
+
+## Separator between header and message to be displayed
+set APG_vrb_separator " | "
+
+
+### Variables de controle ----------------------------------------------------#
+
+## Mode de verbose
+# -1 : strictement aucun affichage
+#  0 : uniquement les erreurs
+#  1 : uniquement les erreurs et les warning
+#  2 et plus - erreurs, warnings et notifications, selon leur niveau
+set APG_vrb_level 0
+
+## Mode de debug
+set APG_vrb_debug false
+
+###############################################################################
+
+
+### DECODAGE DES OPTIONS ######################################################
+# NB : fait ici car cette bibliotheque est chargee au tout debut.
+
+# Vrai si presence de l'option --verbose
+set ::APG_vrb_optionverbose false
+
+# Pour prevenir les arguments colles dans un seul...
+set chaine_args [join $argv]
+set liste_args [split $chaine_args " "]
+
+foreach option $liste_args {
+    set name [lindex [split $option "="] 0]
+    set value [lindex [split $option "="] 1]
+    
+    switch -- $name {
+				"--verbose" {
+						set ::APG_vrb_optionverbose true
+						if { $value == "" || $value == 1 } {
+								# niveau de verbose par defaut
+								set APG_vrb_level 1
+						} else {
+								set APG_vrb_level $value
+						}
+				}
+				
+				"--debug" {
+						# mode debug actif
+						set APG_vrb_debug true
+				}
+    }
+}
+###############################################################################
+
+
+### PROCEDURES ################################################################
+
+#-- Procedure APG_vrb_disperror -- (display error) ---------------------------#
+# Action : frontal pour APG_vrb_disperror                                     #
+# Entree : message, eventuellement fonction appelante                         #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_vrb_disperror { msg {fct ""} } {
+		APG_vrb_displayerror $msg $fct
+}
+
+#-- Procedure APG_vrb_displayerror -------------------------------------------#
+# Action : affiche un message d'erreur formate                                #
+# Remarq.: ne devrait etre appele que par APG_vrb_disperror (definie dans     #
+#          libapg-vrb.tk ou surchargee dans libapg-eve.tk                     #
+# Entree : message, eventuellement fonction appelante                         #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_vrb_displayerror { msg fct } {
+    if { $::APG_vrb_level <= -1 } { return } 
+		
+    set str "${::APG_vrb_prefix}${::APG_vrb_colerr}- "
+		append str [format $::APG_vrb_prognameformat $::app]
+		append str "\["
+		append str [format $::APG_vrb_identnameformat $::APG_ident]
+		append str "\]"
+		append str " [format $::APG_vrb_procnameformat $fct]"
+    append str "$::APG_vrb_separator$msg$::APG_vrb_colrst" 
+
+    # NB : affichage de la chaine en une fois et non succession de
+    # puts -nonewline pour eviter que les affichages de plusieurs
+    # applications ne se melangent dans le terminal !
+    puts stderr $str
+    flush stderr
+}
+
+
+
+
+#-- Procedure APG_vrb_dispwarning -- (display warning) -----------------------#
+# Action : frontal pour APG_vrb_displaywarning                                #
+# Entree : message, eventuellement fonction appelante                         #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_vrb_dispwarning { msg {fct ""} } {
+		APG_vrb_displaywarning $msg $fct
+}
+
+#-- Procedure APG_vrb_displaywarning -----------------------------------------#
+# Action : affiche un message d'alerte si le niveau de verbose est >0         #
+# Remarq.: ne devrait etre appele que par APG_vrb_dispwarning (definie dans   #
+#          libapg-vrb.tk ou surchargee dans libapg-eve.tk                     #
+# Entree : message, eventuellement fonction appelante                         #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_vrb_displaywarning { msg fct } {
+    if { $::APG_vrb_level <= 0 } { return } 
+
+    set str "${::APG_vrb_prefix}${::APG_vrb_colwrn}* "
+		append str [format $::APG_vrb_prognameformat $::app]
+		append str "\["
+		append str [format $::APG_vrb_identnameformat $::APG_ident]
+		append str "\]"
+		append str " [format $::APG_vrb_procnameformat $fct]"
+    append str "$::APG_vrb_separator$msg$::APG_vrb_colrst" 
+
+    # NB : affichage de la chaine en une fois et non succession de
+    # puts -nonewline pour eviter que les affichages de plusieurs
+    # applications ne se melangent dans le terminal !
+    puts stderr $str
+    flush stderr
+}
+
+
+
+
+#-- Procedure APG_vrb_dispnotif -- (display notification) --------------------#
+# Action : frontal pour APG_vrb_displaynotif                                  #
+# Entree : message, eventuellement fonction appelante, eventuellement niveau  #
+#          de verbose minimal pour affichage (defaut = 2)                     #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_vrb_dispnotif { msg {fct ""} {lvl 2} } {
+		APG_vrb_displaynotif $msg $fct $lvl
+}
+
+#-- Procedure APG_vrb_displaynotif -------------------------------------------#
+# Action : affiche un message de notification selon son niveau d'importance   #
+#          comparativement au niveau de verbose choisi par l'utilisateur      #
+#          avec l'option --verbose=                                           #
+# Remarq.: ne devrait etre appele que par APG_vrb_dispnotif (definie dans     #
+#          libapg-vrb.tk ou surchargee dans libapg-eve.tk                     #
+# Entree : message, eventuellement fonction appelante, eventuellement niveau  #
+#          de verbose minimal pour affichage (defaut = 2)                     #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_vrb_displaynotif { msg fct lvl } {
+    if { $::APG_vrb_level < $lvl } { return } 
+
+    set str "${::APG_vrb_prefix}${::APG_vrb_colntf}+ "
+		append str [format $::APG_vrb_prognameformat $::app]
+		append str "\["
+		append str [format $::APG_vrb_identnameformat $::APG_ident]
+		append str "\]"
+		append str " [format $::APG_vrb_procnameformat $fct]"
+    append str "$::APG_vrb_separator$msg$::APG_vrb_colrst" 
+
+    # NB : affichage de la chaine en une fois et non succession de
+    # puts -nonewline pour eviter que les affichages de plusieurs
+    # applications ne se melangent dans le terminal !
+    puts stderr $str
+    flush stderr
+}
+
+
+
+
+#-- Procedure APG_vrb_dispdebug -- (display debug) ---------------------------#
+# Action : frontal pour APG_vrb_displaydebug                                  #
+# Entree : message, eventuellement fonction appelante, eventuellement niveau  #
+#          de verbose minimal pour affichage (defaut = 1)                     #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_vrb_dispdebug { msg {fct ""} } {
+		APG_vrb_displaydebug $msg $fct
+}
+
+#-- Procedure APG_vrb_displaydebug -------------------------------------------#
+# Action : affiche un message de debogage si option --debug                   #
+# Remarq.: ne devrait etre appele que par APG_vrb_dispdebug (definie dans     #
+#          libapg.tk ou surchargee dans libapg-eve.tk                         #
+# Entree : message, eventuellement fonction appelante, eventuellement niveau  #
+#          de verbose minimal pour affichage (defaut = 1)                     #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_vrb_displaydebug { msg fct } {
+    if { !$::APG_vrb_debug } { return } 
+
+    set str "${::APG_vrb_prefix}${::APG_vrb_coldbg}# "
+		append str [format $::APG_vrb_prognameformat $::app]
+		append str "\["
+		append str [format $::APG_vrb_identnameformat $::APG_ident]
+		append str "\]"
+		append str " [format $::APG_vrb_procnameformat $fct]"
+    append str "$::APG_vrb_separator$msg$::APG_vrb_colrst" 
+
+    # NB : affichage de la chaine en une fois et non succession de
+    # puts -nonewline pour eviter que les affichages de plusieurs
+    # applications ne se melangent dans le terminal !
+    puts stderr $str
+    flush stderr
+}
+###############################################################################

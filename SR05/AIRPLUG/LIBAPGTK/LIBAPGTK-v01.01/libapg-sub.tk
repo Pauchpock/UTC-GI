@@ -1,0 +1,51 @@
+#    libapg-sub.tk
+#    a library for designing airplug compatible program
+#    authors: Bertrand Ducourthial AT utc.fr
+#    license type: free of charge license for academic and research purpose
+#    see license.txt
+#
+# Procedures pour les abonnements
+
+APG_vrb_dispnotif "    integration de la gestion des abonnements" "libapg-sub" 4
+
+
+### PROCEDURES POUR LES ABONNEMENTS ###########################################
+# Version simplifiee pour les modes != road
+
+#-- Procedure APG_begin_lch --------------------------------------------------#
+# Action : abonne l'application aux messages emis par who a ALL en local      #
+# Entree : l'application who a laquelle il faut s'abonner                     #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_begin_lch { who } {
+    APG_com_begin $who
+}
+
+#-- Procedure APG_begin_air --------------------------------------------------#
+# Action : abonne l'application aux messages emis par who dans le voisinage   #
+# Entree : l'application who a laquelle il faut s'abonner                     #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_begin_air { who } {
+    APG_com_begin $who
+}
+
+#-- Procedure APG_end_lch ----------------------------------------------------#
+# Action : fin d'abonnement aux messages emis par who a ALL en local          #
+# Entree : l'application who a laquelle il faut se desabonner                 #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_end_lch { who } {
+    APG_com_end $who
+}
+
+#-- Procedure APG_end_air ----------------------------------------------------#
+# Action : fin d'abonnement aux messages emis par who dans le voisinage       #
+# Entree : l'application who a laquelle il faut se desabonner                 #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_end_air { who } {
+    APG_com_end $who
+}
+
+

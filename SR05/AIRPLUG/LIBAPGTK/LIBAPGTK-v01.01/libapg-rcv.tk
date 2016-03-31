@@ -1,0 +1,623 @@
+#    libapg-rcv.tk
+#    a library for designing airplug compatible program
+#    authors: Bertrand Ducourthial AT utc.fr
+#    license type: free of charge license for academic and research purpose
+#    see license.txt
+#
+# Procedures pour les receptions
+
+APG_vrb_dispnotif "    integration de la gestion des receptions" "libapg-rcv" 4
+
+set ::APG_rcv_loop_w 0
+set ::APG_rcv_loop_ww 0
+set ::APG_rcv_loop_www 0
+
+
+### PROCEDURES POUR LA RECEPTION ##############################################
+
+#-- Procedure APG_receive_what -----------------------------------------------#
+# Action : reception d'un message                                             #
+# Remarq : Devrait etre surchargee dans l'application                         #
+# Entree : le payload what                                                    #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_receive_what { what } {
+    # Avec le type de communication what, cette fonction aurait du etre
+    # surchargee dans l'application.
+    # Tentative de recuperation si pas d'option --safemode (msg ignore)
+    if { $::APG_safemode } {
+				APG_vrb_disperror "Com. \"what\" et APG_receive_what non surchargee\n \
+                           what=\[$what\]\n \
+	                   option --safemode => arret application\n \
+	                   fin prematuree de l'application" "APG_receive_what"
+				exit
+    } else {
+				APG_vrb_dispwarning "Com. \"what\" et APG_receive_what non surchargee\n \
+                             what=\[$what\]\n \
+	                     absence option --safemode => tentative recuperation :\n \
+                             appel de APG_receive_whatwhowhere avec who=$::APP where=$::APG_com_hst_air" \
+						"APG_receive_what"
+				APG_com_addmsgwrn "APG_receive_what non surchargee => appel de APG_receive_whatwhowhere"
+
+				# Loop detection
+				if { $::APG_rcv_loop_ww == 1 && $::APG_rcv_loop_www == 1 } {
+						APG_vrb_disperror "Loop! It seems that you did not define any APG_receive_xxx procedure." "APG_receive_whatwhowhere"
+						exit
+				}
+				set ::APG_rcv_loop_w 1
+				APG_receive_whatwhowhere $what $::APP $::APG_com_hst_air
+				set ::APG_rcv_loop_w 0
+    }
+}
+
+
+#-- Procedure APG_receive_whatwho --------------------------------------------#
+# Action : reception d'un message                                             #
+# Remarq : Devrait etre surchargee dans l'application                         #
+# Entree : le payload what et l'app emettrice who                             #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_receive_whatwho { what who } {
+
+    # Avec le type de reception whatwho, cette fonction aurait du etre
+    # surchargee dans l'application.
+    # Tentative de recuperation si pas d'option --safemode (message ignore)
+    if { $::APG_safemode == true } {
+				APG_vrb_disperror "Com. \"whatwho\" et APG_receive_whatwho non surchargee\n \
+                           what=\[$what\]\n \
+                           who=\[$who\]\n \
+	                   option --safemode => arret application\n \
+	                   fin prematuree de l'application" "APG_receive_whatwho"
+				exit
+    } else {
+				APG_vrb_dispwarning "Com. \"whatwho\" et APG_receive_whatwho non surchargee\n \
+                             what=\[$what\]\n \
+                             who=\[$who\]\n \
+	                     absence option --safemode => tentative recuperation :\n \
+                             appel de APG_receive_what" \
+						"APG_receive_what"
+				APG_com_addmsgwrn "APG_receive_whatwho non surchargee => appel de APG_receive_what"
+
+				# Loop detection
+				if { $::APG_rcv_loop_w == 1 && $::APG_rcv_loop_www == 1 } {
+						APG_vrb_disperror "Loop! It seems that you did not define any APG_receive_xxx procedure." "APG_receive_whatwhowhere"
+						exit
+				}
+				set ::APG_rcv_loop_ww 1
+				APG_receive_what $what
+				set ::APG_rcv_loop_ww 0
+    }
+}
+
+#-- Procedure APG_receive_whatwhowhere ---------------------------------------#
+# Action : reception d'un message                                             #
+# Remarq : Devrait etre surchargee dans l'application                         #
+# Entree : le payload what, l'app emettrice who, la zone where                #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_receive_whatwhowhere { what who where } {
+
+    # Avec le type de reception whatwhowhere, cette fonction aurait du etre
+    # surchargee dans l'application.
+    # Tentative de recuperation si pas d'option --safemode (message ignore)
+    if { $::APG_safemode == true } {
+				APG_vrb_disperror "Com. \"whatwhowhere\" et APG_receive_whatwhowhere non surchargee\n \
+                           what=\[$what\]\n \
+                           who=\[$who\]\n \
+                           where=\[$where\]\n \
+	                   option --safemode => arret application\n \
+	                   fin prematuree de l'application" \
+						"APG_receive_whatwhowhere"
+				exit
+    } else {
+				APG_vrb_dispwarning "Com. \"whatwhowhere\" et APG_receive_whatwhowhere non surchargee\n \
+                             what=\[$what\]\n \
+                             who=\[$who\]\n \
+                             where=\[$where\]\n \
+	                     absence option --safemode => tentative recuperation :\n \
+                             appel de APG_receive_whatwho (where ignore)" \
+						"APG_receive_whatwhowhere"
+				APG_com_addmsgwrn "APG_receive_whatwhowhere non surchargée => appel de APG_receive_whatwho"
+
+				# Loop detection
+				if { $::APG_rcv_loop_w == 1 && $::APG_rcv_loop_ww == 1 } {
+						APG_vrb_disperror "Loop! It seems that you did not define any APG_receive_xxx procedure." "APG_receive_whatwhowhere"
+						exit
+				}
+				set ::APG_rcv_loop_www 1
+				APG_receive_whatwho $what $who
+				set ::APG_rcv_loop_www 1
+    }
+}
+
+
+
+#-- Procedure APG_receive ----------------------------------------------------#
+# Action : analyse le contenu d'un message recu et appelle la fonction        #
+#          APG_receive_what/who/where en fonction du type de communication.   #
+#          (fonction qui devrait etre surchargee dans l'appli).               #
+#          Implemente la procedure de recuperation si probleme de format ou   #
+#          arrete l'application si option safemode                            #
+# Entree : message                                                            #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_receive { msg } {
+
+    set ::APG_com_rcvall $msg
+
+    # Decoupe du message en champs -------------------------------------------#
+    # NB : on n'utilise APG_msg_split car le message ne commence pas
+    # forcement par un delimiteur ici.
+    set les_champs [split $::APG_com_rcvall $::APG_com_delim]
+    set nb_champs [llength $les_champs]
+
+    # Analyse du nombre de champs --------------------------------------------#
+    set nb_champs_debut $nb_champs
+
+    # Le premier caractere du message est-il le delimiteur ?
+    # non => mode what et detection de delimiteur dans l'arg + tentative
+    #        recuperation par fusion des champs
+    # oui => on ne compte pas le premier champs vide (avant le delimiteur)
+    if { [string index $::APG_com_rcvall 0] != $::APG_com_delim } {
+				# Le message ne commence pas par un delimiteur de champs
+				# => com what ou delimiteur dans les arguments...
+				
+				if { $nb_champs > 1 } {
+						# Le delimiteur se retrouve dans les args !
+						# Si safemode, stop.
+						# Sinon, on considere un seul champs qui contient le delimiteur...
+						# NB : peut se produire avec un encodage (yencode).
+						
+						if { $::APG_safemode == true } {
+								# Anomalie + option safemode => arret
+								APG_vrb_disperror "Reception non conforme (delimiteur) :\n \
+                                   \[$::APG_com_rcvall\]\n  
+                                   option --safemode => arret application\n \
+		                   fin prematuree de l'application" "APG_receive"
+						} else {
+								# Pas de safemode => recuperation
+								APG_vrb_dispwarning "Reception non conforme (delimiteur) :\n \
+                                     \[$::APG_com_rcvall\]\n \
+		                     absence option --safemode => tentative recuperation\n \
+                                     fusion en un seul champs" "APG_receive"
+								set nb_champs 1
+						}
+				}
+    } else {
+				# Le premier champ est vide -> on ne le compte pas
+				incr nb_champs -1
+    }
+    # ^ fin du if then else nb_champs == 1
+    APG_vrb_dispnotif "  $nb_champs_debut champs detecte(s),\
+                       $nb_champs champs considere(s)" "APG_receive" 5
+		
+
+
+    # Aiguillage en fonction du nombre d'arguments ---------------------------#
+    # NB : peut etre mis en defaut si le champs arg contient le delimiteur
+    #      (ce qui n'est pas une bonne idee). Peut etre detecte lors d'un
+    #      test en communication what.
+    switch $nb_champs {
+				1 { #-- 1 champs => comtype devrait etre w ---------------------------#
+						# NB : on sait que ape=apd=APP
+						#      mais on note qu'on n'a pas recu l'info explicitement
+						set ::APG_com_rcvape $::APG_msg_unknown
+						set ::APG_com_rcvapd $::APG_msg_unknown
+						set ::APG_com_rcvhst $::APG_msg_unknown
+						set ::APG_com_rcvarg $::APG_com_rcvall
+						switch -- $::APG_comtype {
+								"w" { #-- 1 champ recu et comtype = w => cas normal ----------#
+										APG_vrb_dispnotif "Reception conforme (com. what, 1 champs recu) :\n \[$::APG_com_rcvall\]" "APG_receive" 5
+										# NB : ici, pas de filtre en reception car pas d'infos sur la app
+										#      emettrice et receptrice
+										APG_receive_what $::APG_com_rcvarg
+										# Fin du cas comtype=w avec 1 champ recu
+								}
+								
+								"ww" { #-- 1 champ recu et comtype = ww => anomalie ----------#
+										if { $::APG_safemode == true } {
+												# Safemode => arret application
+												APG_vrb_disperror "Reception non conforme (com. whatwho, 1 champs recu) :\n \
+                                           \[$::APG_com_rcvall\]\n \
+			                   option --safemode => arret application\n \
+			                   fin prematuree de l'application" "APG_receive"
+												exit
+										} else {
+												# Tentative de recuperation : who = APP
+												APG_vrb_dispwarning "Reception non conforme (com. whatwho, 1 champs recu) :\n \
+                                             \[$::APG_com_rcvall\]\n \
+			                     absence option --safemode => tentative recuperation\n \
+                                             appel de APG_receive_whatwho\n \
+                                             what = \[$::APG_com_rcvarg\]\n \
+                                             who = \[$::APP\]" "APG_receive"
+												# NB : pas de filtre a la reception car ape=APP => message accepte en whatwho
+												APG_receive_whatwho $::APG_com_rcvarg $::APP
+										}
+										# _ Fin du cas comtype=ww avec 1 champ recu
+								}
+								
+								"www" { #-- 1 champ recu et comtype = www => anomalie --------#
+										if { $::APG_safemode == true } {
+												# Safemode => arret application
+												APG_vrb_disperror "Reception non conforme (com. whatwhowhere, 1 champs recu) :\n \
+                                           \[$::APG_com_rcvall\]\n \
+			                   option --safemode => arret application\n \
+			                   fin prematuree de l'application" "APG_receive"
+												exit
+										} else {
+												# Tentative de recuperation : who = APP, where = AIR
+												APG_vrb_dispwarning "Reception non conforme (com. whatwhowhere, 1 champs recu) :\n \
+                                             \[$::APG_com_rcvall\]\n \
+			                     absence option --safemode => tentative recuperation\n \
+                                             appel de APG_receive_whatwhowhere\n \
+                                             what = \[$::APG_com_rcvarg\]\n \
+                                             who = \[$::APP\]\n \
+                                             where = \[$::APG_com_hst_air\]" "APG_receive"
+												APG_receive_whatwhowhere $::APG_com_rcvarg $::APP $::APG_com_hst_air
+										}
+										# _ Fin du cas comtype=www avec 1 champ recu
+								}
+						}
+						# ^ Fin du switch comtype
+						# _ Fin du cas 1 champ recu
+				}
+				
+				2 { #-- 2 champs recus => anomalie -----------------------------------#
+						# Message mal formate. Type what avec delimiteur dans les args ?
+						# TODO : introduire un type whatwho2 ? "2 champs" serait alors whatwho pur
+						# et whatwho2 un whatwho avec gestion des abonnements
+						
+						# Seule recuperation possible : ignorer le message...
+						if { $::APG_safemode == true } {
+								# Safemode => arret application
+								APG_vrb_disperror "Reception non conforme (2 champs recus) :\n \
+                                   \[$::APG_com_rcvall\]\n \
+		                   option --safemode => arret application\n \
+		                   fin prematuree de l'application" "APG_receive"
+								exit
+						} else {
+								# Tentative de recuperation : message ignore
+								APG_vrb_dispwarning "Reception non conforme (2 champs recus) :\n \
+                                     \[$::APG_com_rcvall\]\n \
+                                     absence option --safemode => tentative recuperation\n \
+                                     message ignore" "APG_receive"
+								APG_com_addmsgwrn "message ignore : non conforme (champs)"
+								
+						}
+						# ^ Fin du if then else safemode
+						# _ Fin du cas 2 champs recus
+				}
+				
+				3 { #-- 3 champs recus => comtype devrait etre ww --------------------#
+						set ::APG_com_rcvape [lindex $les_champs 1]
+						set ::APG_com_rcvapd [lindex $les_champs 2]
+						set ::APG_com_rcvhst $::APG_msg_unknown
+						set ::APG_com_rcvarg [lindex $les_champs 3]
+						switch -- $::APG_comtype {
+								"w" { #-- 3 champs recus et comtype = w => anomalie ----------#
+										if { $::APG_safemode == true } {
+												# Safemode => arret application
+												APG_vrb_disperror "Reception non conforme (com. what, 3 champs recus) :\n \
+                                           what=\[$::APG_com_rcvall\]\n \
+			                   option --safemode => arret application\n \
+			                   fin prematuree de l'application" "APG_receive"
+												exit
+										} else {
+												# Tentative de recuperation : who (ape, apd) ignore
+												APG_vrb_dispwarning "Reception non conforme (com. what, 3 champs recus) :\n \
+                                             what=\[$::APG_com_rcvall\]\n \
+			                     absence option --safemode => tentative recuperation\n \
+                                             appel de APG_receive_what\n \
+                                             what = \[$::APG_com_rcvarg\]" "APG_receive"
+												APG_receive_what $::APG_com_rcvarg
+										}
+										# _ Fin du cas comtype=w avec 3 champs recus
+								}
+								"ww" { #-- 3 champs recus et comtype = ww => cas normal ------#
+										# Filtre message a la reception
+										if { [APG_acceptmsg $::APG_com_rcvape $::APG_com_rcvapd] } {
+												# APP est abonnee a l'application emettrice
+												APG_vrb_dispnotif "Reception conforme (com. whatwho, 3 champs recus) :\n \
+                                           \[$::APG_com_rcvall\]\n \
+                                           $::APP abonnee a $::APG_com_rcvape => message accepte" "APG_receive" 5
+												APG_receive_whatwho $::APG_com_rcvarg $::APG_com_rcvape
+										} else {
+												APG_vrb_dispnotif "Reception conforme (com. whatwho, 3 champs recus) :\n \
+                                           \[$::APG_com_rcvall\]\n \
+                                           message ignore (filtre reception)" "APG_receive" 5
+												APG_com_addmsgwrn "message ignore (filtre reception)"
+										}
+										# _ Fin du cas comtype=ww avec 3 champs recus
+								}
+								"www" { #-- 3 champs recus et comtype = www => anomalie ------#
+										if { $::APG_safemode == true } {
+												# Safemode => arret application
+												APG_vrb_disperror "Reception non conforme (com. whatwhowhere, 3 champs recus) :\n \
+                                           \[$::APG_com_rcvall\]\n \
+			                   option --safemode => arret application\n \
+			                   fin prematuree de l'application" "APG_receive"
+												exit
+										} else {
+												# Tentative de recuperation : where devine
+												if { $::APG_com_rcvape == $::APG_com_rcvapd } {
+														set where $::APG_com_hst_air
+												} else {
+														set where $::APG_com_hst_lch
+												}
+												# Filtre message a la reception
+												if { [APG_acceptmsg $::APG_com_rcvape $::APG_com_rcvapd $where] } {
+														# Filtre ok => reception possible
+														APG_vrb_dispwarning "Reception non conforme (com. whatwhowhere, 3 champs recus) :\n \
+                                             \[$::APG_com_rcvall\]\n \
+			                     absence option --safemode => tentative recuperation\n \
+                                             appel de APG_receive_whatwhowhere (filtre reception ok)\n \
+                                             what = \[$::APG_com_rcvarg\]\n \
+                                             who = \[$::APG_com_rcvape\]\n \
+                                             where = \[$where\]" "APG_receive"
+														APG_receive_whatwhowhere $::APG_com_rcvarg $::APG_com_rcvape $where
+												} else {
+														# Filtre pas ok => message ignore
+														APG_vrb_dispwarning "Reception non conforme (com. whatwhowhere, 3 champs recus) :\n \
+                                             \[$::APG_com_rcvall\]\n \
+			                     absence option --safemode => tentative recuperation\n \
+                                             appel de APG_receive_whatwhowhere refuse (filtre reception)\n \
+                                               what = \[$::APG_com_rcvarg\]\n \
+                                               who = \[$::APG_com_rcvape\]\n \
+                                               where = \[$where\]\n \
+                                             message ignore" "APG_receive"
+												}
+										}
+										# _ Fin du cas comtype=ww avec 4 champs recus
+								}
+						}
+				}
+				
+				4 { #-- 4 champs recus => comtype devrait etre www -------------------#
+						set ::APG_com_rcvape [lindex $les_champs 1]
+						set ::APG_com_rcvapd [lindex $les_champs 2]
+						set ::APG_com_rcvhst [lindex $les_champs 3]
+						set ::APG_com_rcvarg [lindex $les_champs 4]
+						switch -- $::APG_comtype {
+								"w" { #-- 4 champs recus et comtype = w => anomalie ----------#
+										if { $::APG_safemode == true } {
+												# Safemode => arret application
+												APG_vrb_disperror "Reception non conforme (com. what, 4 champs recus) :\n \
+                                           \[$::APG_com_rcvall\]\n \
+			                   option --safemode => arret application\n \
+			                   fin prematuree de l'application" "APG_receive"
+												exit
+										} else {
+												# Tentative de recuperation : who (ape, apd) et where ignores
+												APG_vrb_dispwarning "Reception non conforme (com. what, 4 champs recus) :\n \
+                                             $::APG_com_rcvall\n \
+			                     absence option --safemode => tentative recuperation\n \
+                                             appel de APG_receive_what\n \
+                                             what = \[$::APG_com_rcvarg\]" "APG_receive"
+												APG_receive_what $::APG_com_rcvarg
+										}
+										# _ Fin du cas comtype=w avec 4 champs recus
+								}
+								"ww" { #-- 4 champs recus et comtype = ww => anomalie --------#
+										if { $::APG_safemode == true } {
+												# Safemode => arret application
+												APG_vrb_disperror "Reception non conforme (com. whatwho, 4 champs recus) :\n \
+                                           \[$::APG_com_rcvall\]\n \
+			                   option --safemode => arret application\n \
+			                   fin prematuree de l'application" "APG_receive"
+												exit
+										} else {
+												# Tentative de recuperation : where ignore
+												# Filtre message a la reception
+												if { [APG_acceptmsg $::APG_com_rcvape $::APG_com_rcvapd] } {
+														APG_vrb_dispwarning "Reception non conforme (com. whatwho, 4 champs recus) :\n \
+                                             \[$::APG_com_rcvall\]\n \
+			                     absence option --safemode => tentative recuperation\n \
+                                             appel de APG_receive_whatwho (filtre reception ok)\n \
+                                             what = \[$::APG_com_rcvarg\]\n \
+                                             who = \[$::APG_com_rcvape\]" "APG_receive"
+														APG_receive_whatwho $::APG_com_rcvarg $::APG_com_rcvape
+												} else {
+														APG_vrb_dispwarning "Reception non conforme (com. whatwho, 4 champs recus) :\n \
+                                             \[$::APG_com_rcvall\]\n \
+			                     absence option --safemode => tentative recuperation\n \
+                                             appel de APG_receive_whatwho refuse (filtre reception)\n \
+                                               what = \[$::APG_com_rcvarg\]\n \
+                                               who = \[$::APG_com_rcvape\]\n \
+                                             message ignore" "APG_receive"
+												}
+										}
+										# _ Fin du cas comtype=ww avec 4 champs recus
+								}
+								"www" { #-- 4 champs recus et comtype = wwww => cas normal ---#
+										# Test abonnement
+										if { [APG_acceptmsg $::APG_com_rcvape $::APG_com_rcvapd $::APG_com_rcvhst] } {
+												# APP est abonnee a l'application emettrice
+												APG_vrb_dispnotif "Reception conforme (com. whatwhowhere, 4 champs recus) :\n \
+                                           \[$::APG_com_rcvall\]\n \
+                                           $::APP abonnee a $::APG_com_rcvape => message accepte" "APG_receive" 5
+												APG_receive_whatwhowhere $::APG_com_rcvarg $::APG_com_rcvape $::APG_com_rcvhst
+										} else {
+												APG_vrb_dispnotif "Reception conforme (com. whatwhowhere, 4 champs recus) :\n \
+                                           \[$::APG_com_rcvall\]\n \
+                                           message ignore (filtre reception)" "APG_receive" 5
+												APG_com_addmsgwrn "message ignore (filtre reception)"
+										}
+										# _ Fin du cas comtype=www avec 4 champs recus
+								}
+						}
+				}
+				
+				default { #-- plus de 4 champs recu => anomalie ----------------------#
+						# Plus de 4 champs recus => delimiteur dans le champs arg...
+						# Tentative de recuperation : sur la base du type de communication
+						# choisi par l'utilisateur...
+						# NB : risque mais peut servir pour les tests d'encodage (yencode).
+						# TODO : valider cette recuperation.
+						if { $::APG_safemode == true } {
+								APG_vrb_disperror "Reception non conforme (com. $::APG_comtype, $nb_champs champs recus) :\n \
+                                   \[$::APG_com_rcvall\]\n \
+                                   option --safemode => arret application\n \
+                                   fin prematuree de l'application" "APG_receive"
+								exit
+						} else {
+								switch -- $::APG_comtype {
+										"w" { 
+												# Plus de 4 champs recus et comtype = w et safemode = false
+												set ::APG_com_rcvape $::APG_msg_unknown
+												set ::APG_com_rcvapd $::APG_msg_unknown
+												set ::APG_com_rcvhst $::APG_msg_unknown
+												set ::APG_com_rcvarg [join [lrange $les_champs 4 end-1] $::APG_com_delim]
+												APG_vrb_dispwarning "Reception non conforme (com. $::APG_comtype, $nb_champs recus) :\n \
+                                             \[$::APG_com_rcvall\]\n \
+		                             absence option --safemode => tentative recuperation\n \
+			                     appel de APG_receive_what\n \
+                                             what = \[$::APG_com_rcvarg\]" "APG_receive"
+												APG_receive_what $::APG_com_rcvarg
+												# _ Fin du cas plus de 4 champs recus et rctype = w et safemode = false
+										}
+										"ww" {
+												# Plus de 4 champs recus et comtype = ww et safemode = false
+												set ::APG_com_rcvape [lindex $les_champs 1]
+												set ::APG_com_rcvapd [lindex $les_champs 2]
+												set ::APG_com_rcvhst $::APG_msg_unknown
+												set ::APG_com_rcvarg [join [lrange $les_champs 3 end-1] $::APG_com_delim]
+												# Filtre message a la reception
+												if { [APG_acceptmsg $::APG_com_rcvape $::APG_com_rcvapd] } {
+														# Filtre ok => reception possible
+														APG_vrb_dispwarning "Reception non conforme (com. $::APG_comtype, $nb_champs recus) :\n \
+                                             \[$::APG_com_rcvall\]\n \
+		                             absence option --safemode => tentative recuperation (filtre reception ok)\n \
+			                     appel de APG_receive_whatwho\n \
+                                             what = \[$::APG_com_rcvarg]\n \
+                                             who = \[$::APG_com_rcvape\]" "APG_receive"
+														APG_receive_whatwho $::APG_com_rcvarg $::APG_com_rcvape
+												} else {
+														# Filtre pas ok => message ignore
+														APG_vrb_dispwarning "Reception non conforme (com. $::APG_comtype, $nb_champs recus) :\n \
+                                             \[$::APG_com_rcvall\]\n \
+		                             absence option --safemode => tentative recuperation\n \
+			                     appel de APG_receive_whatwho refuse (filtre reception)\n \
+                                               what = \[$::APG_com_rcvarg]\n \
+                                               who = \[$::APG_com_rcvape\]\n \
+                                             message ignore" "APG_receive"
+												}
+												# _ Fin du cas plus de 4 champs recus et rctype = ww et safemode = false
+										}
+										"www" {
+												# Plus de 4 champs recus et comtype = www et safemode = false
+												set ::APG_com_rcvape [lindex $les_champs 1]
+												set ::APG_com_rcvapd [lindex $les_champs 2]
+												set ::APG_com_rcvhst [lindex $les_champs 3]
+												set ::APG_com_rcvarg [join [lrange $les_champs 4 end-1] $::APG_com_delim]
+												# Filtre message a la reception
+												if { [APG_acceptmsg $::APG_com_rcvape $::APG_com_rcvapd $::APG_com_rcvhst] } {
+														APG_vrb_dispwarning "Reception non conforme (com. $::APG_comtype, $nb_champs recus) :\n \
+                                             \[$::APG_com_rcvall\]\n \
+		                             absence option --safemode => tentative recuperation\n \
+			                     appel de APG_receive_whatwhowere (filtre reception ok)\n \
+                                             what = \[$::APG_com_rcvarg\]\n \
+                                             who = \[$::APG_com_rcvape\]\n \
+                                             where = \[$::APG_com_rcvhst\]" "APG_receive"
+														APG_receive_whatwhowhere $::APG_com_rcvarg $::APG_com_rcvape $::APG_com_rcvhst
+												} else {
+														# Filtre pas ok => message ignore
+														APG_vrb_dispwarning "Reception non conforme (com. $::APG_comtype, $nb_champs recus) :\n \
+                                             \[$::APG_com_rcvall\]\n \
+		                             absence option --safemode => tentative recuperation\n \
+			                     appel de APG_receive_whatwhowere refuse (filtre reception)\n \
+                                               what = \[$::APG_com_rcvarg\]\n \
+                                               who = \[$::APG_com_rcvape\]\n \
+                                               where = \[$::APG_com_rcvhst\]\n \
+                                             message ignore" "APG_receive"
+												}
+												# _ Fin du cas plus de 4 champs recus et rctype = www et safemode = false
+										}
+								}
+								# ^ Fin switch comtype
+								# _ Fin if then else safemode
+						}
+						# _ Fin case default
+				}
+    }
+    # ^ Fin switch nombre de champs
+}
+
+
+proc APG_acceptmsg { ape apd {where ""} } {
+
+    if { $where == $::APG_com_hst_lch } {
+				# reception en zone LCH
+				if { $ape == $::APP } {
+						APG_vrb_dispnotif "  message refuse : reception de son propre message localement" "APG_acceptmsg" 5
+						APG_vrb_dispwarning "Reception d'un message de $::APP par $::APP en zone LCH (ignore)" "APG_acceptmsg"
+						return false
+				}
+				if { $apd == $::APP } {
+						# reception d'une requete directe locale emise par ape!=APP
+						# => accepte sans abonnement
+						APG_vrb_dispnotif "  message accepte : requete locale" "APG_acceptmsg" 5
+						return true
+				}
+				if { $apd == $::APG_com_hst_all  &&  [APG_com_subscribed $ape] } {
+						# abonnement a un flot diffuse localement a ALL par ape!=APP
+						APG_vrb_dispnotif "  message accepte : abonnement a un flux local" "APG_acceptmsg" 5
+						return true
+				}
+    }
+		
+    if { $where == $::APG_com_hst_air  ||  $where == "" } {
+				# reception en zone AIR ou zone absente (mode whatwho)
+				if { $apd == $::APP  &&  [APG_com_subscribed $ape] } {
+						# reception d'une requete directe distante
+						# (par une ape qui pourrait ou non etre une autre instance de APP)
+						# => accepte si abonnement
+						APG_vrb_dispnotif "  message accepte : abonnement a une application distante" "APG_acceptmsg" 5
+						return true
+				}
+				if { $apd == $::APG_com_hst_all  &&  [APG_com_subscribed $ape] } {
+						# abonnement a un flot diffuse a distance a ALL par ape!=APP
+						# NB : existe ?
+						APG_vrb_dispnotif "  message accepte : abonnement a un flux distant" "APG_acceptmsg" 5
+						return true
+				}
+    }
+    
+    # tous les autres cas : rejet
+    APG_vrb_dispnotif "  message rejete. apd=\[$apd\], ape=\[$ape\], where=\[$where\]" "APG_acceptmsg" 5
+    return false
+}
+
+proc APG_acceptmsg_old { ape apd {where ""} } {
+		
+    if { $ape == $::APP } {
+				# Une instance de l'application APP accepte les messages
+				# emis par d'autres instances de l'application APP
+				# sans s'occuper de la zone.
+				APG_vrb_dispnotif "Message accepte (ape = \[$ape\])" "APG_acceptmsg" 5
+				return true
+    }
+		
+    if { $where == "" } {
+				# Communication de type whatwho
+				# Soit apd == ALL et APP est abonnee a APE
+				# Soit apd == APP (confiance en local)
+				if { ($apd == $::APG_com_hst_all && [APG_com_subscribed $ape]) \
+								 || ($apd == $::APP) } {
+						APG_vrb_dispnotif "Message accepte (ape = \[$ape\], apd = \[$apd\])" "APG_acceptmsg" 5
+						return true
+				}
+    } else {
+				# Communication de type whatwhowhere
+				# La difference, c'est qu'on n'accepte une requete directe d'une autre appli qu'en local
+				if { ($apd == $::APG_com_hst_all && [APG_com_subscribed $ape]) \
+								 || ($where == $::APG_com_hst_lch && $apd == $::APP) } {
+						APG_vrb_dispnotif "Message accepte (ape = \[$ape\], apd = \[$apd\], where = \[$where\])" "APG_acceptmsg" 5
+						return true
+				}
+    }
+		
+    APG_vrb_dispnotif "Message non accepte (ape = $ape, apd = $apd, where=$where)" "APG_acceptmsg" 5
+		
+    return false
+}
+	

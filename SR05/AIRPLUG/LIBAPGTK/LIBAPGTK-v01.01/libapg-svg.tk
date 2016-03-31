@@ -1,0 +1,431 @@
+#    libapg-svg.tk
+#    a library for designing airplug compatible program
+#    authors: Bertrand Ducourthial AT utc.fr
+#    license type: free of charge license for academic and research purpose
+#    see license.txt
+#
+#    revision: 04/2012
+#
+### SAVING LIBRARY ############################################################
+
+APG_vrb_dispnotif "    integration de la gestion des sauvegardes" "libapg-svg" 4
+
+## VARIABLES ##################################################################
+# Descripteur du fichier de sauvegarde
+# NB : si non nul, un fichier est ouvert.
+set ::APG_svg_fd ""
+
+# Nom du fichier de sauvegarde
+# NB : nouveau nom genere a chaque lancement de sauvegarde.
+
+set ::APG_svg_filename $::APG_PATH/output/$::app/svg-$::APG_ident-[clock format [clock scan now] -format "%Y-%m-%d-%H-%M-%S"].$::app
+
+# NB : la frequence et frequence par defaut definies dans libapg.tk car
+#      utilisation pour le decodage des options
+
+# Flush dans le fichier quand flushindex atteint flushindexmax
+set ::APG_svg_flushindex 0
+set ::APG_svg_flushindexmax 256
+
+# Delimiteur de champs dans le tableur
+# NB : permet de recuperer les donnees sauvegardees directement dans des colonnes
+#      separees.
+set ::APG_svg_delim ":"
+
+###############################################################################
+
+
+## ZONE GRAPHIQUE POUR LA SAUVEGARDE ##########################################
+if { $::APG_notk == true } {
+    APG_vrb_dispnotif "  option notk => pas de creation de la zone d'interface de sauvegarde" "libapg-svg" 5
+} else {
+
+		labelframe .svg -pady 2 -padx 2 -text "Sauvegardes" -fg $::APG_int_coltitle
+
+		button .svg.btstart -text "Début" \
+				-activebackground $::APG_int_colbutton \
+				-foreground $::APG_int_colbutton \
+				-font $::APG_int_fnbutton \
+				-width 8 \
+				-command APG_svg_btstart
+
+		button .svg.btbrowse -text "Parcourir" \
+				-activebackground $::APG_int_colbutton \
+				-foreground $::APG_int_colbutton \
+				-font $::APG_int_fnbutton \
+				-width 8 \
+				-command {
+						set ::APG_svg_filename [tk_getSaveFile \
+																				-title "Fichier de sauvegarde pour $::APP" \
+																				-initialdir "$::APG_PATH/output/$app" \
+																				-initialfile $::APG_svg_filename \
+																				-defaultextension ".$::app" ]
+						.svg.fn.v configure -text $::APG_svg_filename
+				}
+		
+		labelframe .svg.fn -text "Nom du fichier"
+		label .svg.fn.v -text $::APG_svg_filename 
+		pack .svg.fn.v
+
+		# TODO : prevoir de relancer les sauvegardes periodiques lorsqu'on passe de period=0 a period!=0
+		labelframe .svg.frq -text "Période (ms)"
+		spinbox .svg.frq.v \
+				-values "$::APG_svg_period 500 800 1000 2000 3000 5000 10000" \
+				-width 6 -textvariable ::APG_svg_period\
+				-justify right \
+				-command APG_svg_changefrq
+		
+		pack .svg.frq.v
+		
+		pack .svg.btstart .svg.btbrowse -side left -fill both -pady 2 -expand false
+		pack .svg.fn   -side left -fill x -pady 2 -expand true
+		pack .svg.frq   -side left -fill x -pady 2 -expand false
+}
+# fin du else du if notk
+###############################################################################
+
+
+## PROCEDURES DE L'INTERFACE ##################################################
+# Ces procedures ne devraient pas etre directement appelees par les
+# applications.
+
+#-- Procedure APG_svg_btstart ------------------------------------------------#
+# Action : procedure associee au bouton Départ/Fin des sauvegardes. Permet de #
+#          gerer manuellement le flag APG_saving. Selon sa valeur, lance      #
+#          ou stoppe les sauvegardes.                                         #
+# Entree : rien                                                               #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_svg_btstart { } {
+    if { $::APG_saving == false } {
+				# Entree dans le mode sauvegarde
+				set ::APG_saving true
+				
+				# Demarrage des sauvegardes si pas deja fait
+				# NB : test necessaire a cause des interactions entre mode automatique
+				#      ie option --saving et mode manuel (interface)
+				#      exemple : --saving et pas d'appel a APG_svg_autostart et
+				#                utilisation de l'interface
+				if { $::APG_svg_fd == "" } {
+						APG_svg_start
+				}
+    } else {
+				# Sortie du mode sauvegarde
+				set ::APG_saving true
+
+				# Fermeture du fichier s'il etait ouvert
+				if { $::APG_svg_fd != "" } {
+						APG_svg_stop
+				}
+    }
+}
+
+#-- Procedure APG_svg_changefrq ----------------------------------------------#
+# Action : procedure associee au bouton Départ/Fin des sauvegardes. Permet de #
+#          gerer manuellement le flag APG_svg_btstart. Selon sa valeur, lance #
+#          ou stoppe les sauvegardes.                                         #
+# Entree : rien                                                               #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_svg_changefrq { } {
+    if { $::APG_svg_fd != "" } {
+				# Une sauvegarde est en cours
+
+				# Deprogrammation des sauvegardes periodiques eventuelles
+				after cancel APG_svg_periodicsave2file
+
+				if { $::APG_svg_period != 0 } {
+						APG_svg_periodicsave2file
+				}
+		}
+		
+}
+###############################################################################
+
+
+## PROCEDURES INTERNES A LA BIBLIOTHEQUE ######################################
+# Ces procedures ne devraient pas etre directement appelees par les
+# applications.
+
+#-- Procedure APG_svg_start --------------------------------------------------#
+# Action : ouvre et configure le fichier de sauvegarde. Ecrit entete dans     #
+# fichier avec APG_svg_formatfirstdata. Lance les sauvegardes periodiques si  #
+# frequence non nulle. Modifie interface si pas notk.                         #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_svg_start { } {
+    if { $::APG_svg_fd == "" } {
+				# Modification de l'eventuelle interface
+				if { $::APG_notk != true } {
+						# Changement de l'etat du bouton de sauvegarde
+						.svg.btstart configure -text "Fin"
+						
+						# impossible de changer de fichier pendant la sauvegarde
+						.svg.btbrowse configure -state disable
+				}
+
+				# Pas de sauvegarde en cours => on lance la sauvegarde
+				if { $::APG_svg_filename != "" } {
+
+						# Creation du repertoire s'il n'existe pas
+						if { [ catch { file mkdir $::APG_PATH/output/$::app } ] } {
+								if { $::APG_vrb_debug == true } {
+										APG_vrb_disperror "Cannot create directory $::APG_PATH/output/$::app\n \
+                                       Please check the file system \n \
+                                       error: $::errorCode" "libapg-svg"
+								} else {
+										APG_vrb_disperror "Cannot create directory $::APG_PATH/output/$::app\n \
+                                       Please check the file system." "libapg-svg"
+								}
+								return
+						}
+						
+						# un nom de fichier a ete specifie
+						set ::APG_svg_fd [open $::APG_svg_filename w]
+
+						# TODO : test d'ouverture
+
+						# buffering de une ligne seulement
+						fconfigure $::APG_svg_fd -buffering line
+						
+						# Sauvegardes d'informations initiales (legendes...)
+						# formatees par APG_svg_formatfirstdata (a surcharger)
+						# NB : ajout des legendes date et heure qui sont ajoutees automatiquement
+						#      par la bibliotheque svg
+						APG_svg_write2file [APG_svg_formatfirstdata]
+						
+						# Si frequence non nulle, debut des sauvegardes periodiques
+						if { $::APG_svg_period != 0 } {
+								APG_svg_periodicsave2file
+						}
+				} else {
+						APG_vrb_dispwarning "lancement sauvegarde impossible sans nom fichier"
+				}
+    } else {
+				APG_vrb_dispwarning "un fichier de sauvegarde est deja ouvert -> ignore" "APG_svg_start"
+		}
+}
+
+#-- Procedure APG_svg_stop ---------------------------------------------------#
+# Action : arrete les sauvegardes, ecrit les bilans formates avec             #
+# APG_svg_formatlastdata. Ferme le fichier.                                   #
+# Entree : rien                                                               #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_svg_stop { } {
+
+    if { $::APG_svg_fd != "" } {
+				# Deprogrammation des sauvegardes periodiques eventuelles
+				after cancel APG_svg_periodicsave2file
+
+				# Regeneration d'un nom de fichier de sauvegarde (pour eviter de l'ecraser)
+				# NB : nom different si intervalle click bouton > seconde
+				set ::APG_svg_filename $::APG_PATH/output/$::app/svg-$::APG_ident-[clock format [clock scan now] -format "%Y-%m-%d-%H-%M-%S"].$::app
+
+				# Modification de l'eventuelle interface
+				if { $::APG_notk != true } {
+						# Affichage du nouveau non de fichier dans l'interface
+						.svg.fn.v configure -text $::APG_svg_filename
+						
+						# De nouveau possible de changer le fichier
+						.svg.btbrowse configure -state disable
+						
+						# Restauration de l'etat du bouton de sauvegarde
+						.svg.btstart configure -text "Début"
+				}
+
+				
+				# Sauvegarde des informations finales (calculs finaux...) formatees par
+				# APG_svg_formatlastdata (a surcharger)
+				puts $::APG_svg_fd [APG_svg_formatlastdata]
+	
+				# Fermeture du fichier
+				close $::APG_svg_fd
+				set ::APG_svg_fd ""
+
+				# Fin des sauvegardes automatiques
+				set ::APG_saving false
+
+				# Remise a zero de la "memoire" des erreurs
+				# NB : le pb d'ecriture disque pourrait se regler entre temps
+				catch {
+						unset ::APG_svg_error_cannotwrite
+						unset ::APG_svg_error_savingmustbeenstartedbefore
+				}
+
+    } else {
+				APG_vrb_dispwarning "aucun fichier de sauvegarde ouvert -> ignore" "APG_svg_stop"
+		}
+}
+
+#-- Procedure APG_svg_write2file ---------------------------------------------#
+# Action : procedure qui ecrit une donnee dans le fichier, suppose ouvert, en #
+#          ajoutant la date. Flush si le compteur a atteint la borne max.     #
+# Entree : donnee a sauvegarder                                               #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_svg_write2file { data } {
+
+		if { [ catch {
+				set systemTime [clock seconds]
+				set str [clock format $systemTime -format %D]
+				append str $::APG_svg_delim [clock format $systemTime -format {%Hh%Mm%Ss}]
+				append str $::APG_svg_delim [clock microseconds]
+				append str $::APG_svg_delim $data
+				puts $::APG_svg_fd $str
+				
+				
+				# Flush si flushindex atteint flushindexmax
+				# TODO : voir utilite avec option fconfigure $::APG_svg_fd -buffering line
+				if { $::APG_svg_flushindex > $::APG_svg_flushindexmax } {
+						flush $::APG_svg_fd 
+						set ::APG_svg_flushindex 0
+				}
+				incr ::APG_svg_flushindex
+		} ] } {
+				# Permet de n'avoir qu'un seul affichage de l'erreur
+				if { [info exists ::APG_svg_error_cannotwrite] } {
+						APG_vrb_disperror "Cannot write to saving file" "write2file"
+						set ::APG_svg_error_cannotwrite true
+				}
+		}
+}
+
+#-- Procedure APG_svg_periodicsave2file --------------------------------------#
+# Action : sauvegarde une donnee formatee par APG_svg_formatdata si le        #
+# fichier est ouvert. Programme la prochaine sauvegarde periodique.           #
+# Entree : rien                                                               #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_svg_periodicsave2file { } {
+    if { $::APG_saving == true } {
+				if { $::APG_svg_fd == "" } {
+						# Permet de n'avoir qu'un seul affichage
+						if { [ info exists ::APG_svg_error_savingmustbeenstartedbefore ] } {
+								APG_vrb_disperror "Saving must been started before (by using APG_svg_autostart)" "APG_svg_periodicsave2file"
+								set ::APG_svg_error_savingmustbeenstartedbefore true
+						}
+				}
+    } else {
+				# Pas de sauvegarde
+				return
+    }
+
+    # Sauvegarde de la donnee datee produite par APG_svg_formatdata
+		APG_svg_write2file [APG_svg_formatdata]
+		
+    # Programmation prochaine sauvegarde si le parametrage n'a pas change
+    # (ie. s'il est toujours question de sauvegarde periodique)
+    # Ce parametrage peut changer avec l'interface.
+    if { $::APG_svg_period != 0 } {
+				after $::APG_svg_period APG_svg_periodicsave2file
+    }
+}
+
+###############################################################################
+
+
+
+
+## PROCEDURES DE L'API LIBAPG-SVG.TK ##########################################
+# Ces procedures sont a utiliser dans l'application.
+
+#-- Procedure APG_svg_save2file ----------------------------------------------#
+# Action : sauvegarde une donnee datee dans le fichier de sauvegarde s'il est #
+# ouvert. Sauvegarde de type event-driven.                                    #
+# Entree : donnee a sauvegarder. Si pas de donnee fournie, alors la donnee    #
+#          sera fournie par la procedure APG_svg_formatdata (a surcharger)    #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_svg_save2file { {data ""} } {
+    if { $::APG_saving == true } {
+				if { $::APG_svg_fd == "" } {
+
+						# Permet de n'avoir qu'un seul affichage
+						if { [ info exists ::APG_svg_error_savingmustbeenstartedbefore ] } {
+								APG_vrb_disperror "saving must been started before (by using APG_svg_autostart)" "APG_svg_save2file"
+								set ::APG_svg_error_savingmustbeenstartedbefore true
+						}
+				}
+    } else {
+				# Pas de sauvegarde
+				return
+    }
+		
+		# Si aucune donnee produite, on sauvegarde celle produite par APG_svg_formatdata
+    if { $data == "" } {
+				set data [APG_svg_formatdata]
+    }
+    # Ecriture de la donnee dans le fichier
+		APG_svg_write2file $data
+}
+
+#-- Procedure APG_svg_autostart ----------------------------------------------#
+# Action : procedure permettant le lancement automatique des sauvegardes avec #
+# l'option --saving. Utilisee dans APG_start.                                 #
+# Entree : rien                                                               #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_svg_autostart { } {
+    if { $::APG_saving == true } {
+				APG_svg_start
+    }
+}
+
+#-- Procedure APG_svg_autostop -----------------------------------------------#
+# Action : procedure permettant l'arret automatique des sauvegardes quand     #
+# l'option --saving est utilisee. Utilisee dans APG_stop.                     #
+# Entree : rien                                                               #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_svg_autostop { } {
+    if { $::APG_saving == true } {
+				APG_svg_stop
+    }
+}
+###############################################################################
+
+## PROCEDURES A SURCHARGER DANS LES APPLICATIONS ##############################
+# Ces procedures devraient etre surchargees dans l'application si elles sont
+# appelees.
+
+#-- Procedure APG_svg_formatdata ---------------------------------------------#
+# Action : formate les donnees pour les sauvegardes evenementielles. Permet   #
+# par exemple de sauvegarder certaines variables espacees par des ; pour      #
+# exploitation ulterieure dans un tableur.                                    #
+# Remarq : devrait etre surchargee dans l'application.                        #
+# Entree : rien                                                               #
+# Retour : donnee formatee, qui sera ecrite dans le fichier de sauvegarde.    #
+#-----------------------------------------------------------------------------#
+proc APG_svg_formatdata { } {
+    return "Default APG_svg_formatdata.\
+            Should be rewritten in the calling program for specializing the
+            saving (eg. saving specific variables)"
+}
+
+#-- Procedure APG_svg_formatfirstdata ----------------------------------------#
+# Action : formate l'entete du fichier de sauvegarde. Permet par exemple de   #
+# mettre des titres de colonnes lors d'une post-analyse dans un tableur, ou   #
+# sauvegarder les conditions de l'execution (parametres)                      #
+# Remarq : devrait etre surchargee dans l'application.                        #
+# Entree : rien                                                               #
+# Retour : donnee formatee, qui sera ecrite dans le fichier de sauvegarde.    #
+#-----------------------------------------------------------------------------#
+proc APG_svg_formatfirstdata { } {
+    return "Date $::APG_svg_delim Hour $::APG_svg_delim Microseconds $::APG_svg_delim \
+            (Default APG_svg_formatfirstdata procedure; should be rewritten in the calling program for eg. adding legends)"
+}
+
+#-- Procedure APG_svg_formatlastdata -----------------------------------------#
+# Action : formate la derniere ecriture dans le fichier. Permet par exemple   #
+# de sauvegarder des calculs finaux, des moyennes...                          #
+# Remarq : devrait etre surchargee dans l'application.                        #
+# Entree : rien                                                               #
+# Retour : donnee formatee, qui sera ecrite dans le fichier de sauvegarde.    #
+#-----------------------------------------------------------------------------#
+proc APG_svg_formatlastdata { } {
+    return "Default APG_svg_formatlastdata.\
+            Should be rewritten in the calling program for eg post-computation\
+            before closing the saving file."
+}
+###############################################################################

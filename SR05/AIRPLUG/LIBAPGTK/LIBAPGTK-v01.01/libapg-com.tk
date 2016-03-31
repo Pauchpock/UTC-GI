@@ -1,0 +1,622 @@
+#    libapg-com.tk
+#    a library for designing airplug compatible program
+#    authors: Bertrand Ducourthial AT utc.fr
+#    license type: free of charge license for academic and research purpose
+#    see license.txt
+#
+#    revision: 28/06/2012
+#
+### INTER-APPLICATIONS LIBRARY ################################################
+
+APG_vrb_dispnotif "    integration de la gestion des communications" "libapg-com" 4
+
+## VARIABLES DE LA BIBLIOTHEQUE ###############################################
+
+#-- Mots-cles et jockers standards -------------------------------------------#
+
+# Mots cles pour toutes les applications
+set ::APG_com_app_all "ALL"
+
+# Mots cles pour les hosts
+set ::APG_com_hst_lch "LCH"
+set ::APG_com_hst_air "AIR"
+set ::APG_com_hst_all "ALL"
+
+# Delimiteur de champs de messages
+# NB : ne pas confondre avec le delimiteur de couples mnemonique~valeur dans
+#      le payload (::APG_msg_delim)
+#set ::APG_com_delim "_"
+# This character can be printed and does not interfere with uuencoded payloads.
+# Bell charactere (should not be used by communication protocols)
+# WARNING: this delimitor should be the same as the one used by APG and defined in
+#          LIBAPGC/LIBAPG/src-libapgiac/libapgiac.c, variable iac_delim.
+# WARNING: you should the same delimitor for APG <-> APG communication. This
+#          delimitor is defined in APG/APG/src/apg-udp.c, variable udp_delim.
+set ::APG_com_delim \7
+# Those characters does not interfere with uuencode and can be printed too
+# depending on the configuration (\x80 is euro symbol) (not ascii 7bit).
+#set ::APG_com_delim "\x80"
+#set ::APG_com_delim "é"
+
+#-- Variables pour l'interface------------------------------------------------#
+# Application destination
+set ::APG_com_sndapd $::APG_msg_unknown
+# Zone/host destination
+set ::APG_com_sndhst $::APG_msg_unknown
+# Payload
+set ::APG_com_sndarg $::APG_msg_unknown
+
+# liste des applications proposees dans la zone .msg
+# TODO : mettre a jour automatiquement
+set ::APG_com_lstapp "$::APG_msg_unknown $::APG_com_app_all ALT BAS COL GRP GPS GTW HOP NET NTK SKT VIC WHA WHO WHE"
+# liste des destinations proposees dans la zone .msg
+set ::APG_com_lsthst "$::APG_msg_unknown $::APG_com_hst_lch $::APG_com_hst_air $::APG_com_hst_all"
+# liste des applications auxquelles APP est abonnee
+set ::APG_com_lstabn [list ]
+# application prise en argument pour les boutons abonner/desabonner
+set ::APG_com_appabn ""
+
+# Affichage avec des clics : zone Emission manuelle .com.snd
+set ::APG_com_snddisplayed true
+# Affichage avec des clics : zone Affichage du trafic .com.aff
+set ::APG_com_affdisplayed true
+# Affichage avec des clics : zone Abonnement .com.abn
+set ::APG_com_abndisplayed true
+###############################################################################
+
+
+
+## ZONES DE L'INTERFACE #######################################################
+if { $::APG_notk == true } {
+    APG_vrb_dispnotif "    option notk => pas de creation de la zone d'interface de communication" "libapg-com" 5
+} else {
+    labelframe .com -pady 2 -padx 2 -text "Communications - mode $::APG_mode" -fg $::APG_int_coltitle
+
+    ## Decoupe en deux zones (emission et affichage) ou trois (abonnement) ---#
+    labelframe .com.snd -text "Emission manuelle pour deboguage (type de communication $::APG_comtype)" -padx 2 -pady 2
+    labelframe .com.aff -text "Traffic messages stdin --> $::APP --> stdout" -padx 2 -pady 2
+    if { $::APG_comtype == "ww" || $::APG_comtype == "www" } {
+				labelframe .com.abn -text "Gestion des abonnements" -padx 2 -pady 2
+				pack .com.snd .com.abn -fill x -expand false -side top
+				pack .com.aff -fill both -expand true -side bottom
+    } else {
+				pack .com.snd -fill x -expand true -side top
+				pack .com.aff -fill both -expand false -side bottom
+    }
+
+    ## Zone emission manuelle ------------------------------------------------#
+		frame .com.snd.f
+
+		#  Bouton d'emission
+    button .com.snd.f.btsend -text "Envoyer" \
+				-activebackground $::APG_int_colbutton \
+				-foreground $::APG_int_colbutton \
+				-font $::APG_int_fnbutton \
+				-width 6 \
+				-command APG_com_btsend
+    
+    pack .com.snd.f.btsend -side left -expand false -fill y
+
+		#  Zone application si type de communication ww ou www
+    if { $::APG_comtype == "ww" || $::APG_comtype == "www" } {
+				labelframe .com.snd.f.apd -text "App. dest."
+				spinbox .com.snd.f.apd.v -values $::APG_com_lstapp -width 6 -textvariable ::APG_com_sndapd
+				pack .com.snd.f.apd.v -expand no
+				pack .com.snd.f.apd -side left -expand false -fill y
+    }
+		
+    if { $::APG_comtype == "www" } {
+				labelframe .com.snd.f.hst -text "Zone"
+				spinbox .com.snd.f.hst.v -values $::APG_com_lsthst -width 4 -textvariable ::APG_com_sndhst
+				pack .com.snd.f.hst.v -expand false
+				pack .com.snd.f.hst -side left -expand false -fill y
+    }
+		
+		#  Zone contenu du message
+    labelframe .com.snd.f.arg -text "Contenu (cf. menu \"Contenu msg\")"
+    entry .com.snd.f.arg.v -textvariable ::APG_com_sndarg -width 32
+    pack .com.snd.f.arg.v -expand true -fill both
+    pack .com.snd.f.arg -side left -expand true -fill both
+
+
+    # Zone vide pour que la zone .com.snd.f libere l'espace en cas de clic.
+    frame .com.snd.empty
+    pack .com.snd.empty -side top
+
+		#  Affichage conditionnel de la zone d'emission manuelle
+		if { $::APG_com_snddisplayed == true } {
+				pack .com.snd.f -side top -fill x -expand true -padx 2
+		}
+    #  Clic souris => cache/fait apparaitre la zone emission manuelle
+    bind .com.snd <ButtonPress> {
+				if { $::APG_com_snddisplayed == true } {
+						set ::APG_com_snddisplayed false
+						pack forget .com.snd.f
+				} else {
+						set ::APG_com_snddisplayed true
+						pack .com.snd.f -side top -fill x -expand true -padx 2
+				}
+				update
+    }
+    
+    ## Zone affichage du traffic ---------------------------------------------#
+		frame .com.aff.f
+
+    #  Messages avec ascenceur
+    listbox .com.aff.f.msg -yscrollcommand " .com.aff.f.sbar set "  -height 5
+    scrollbar .com.aff.f.sbar -command " .com.aff.f.msg yview "
+    pack .com.aff.f.msg .com.aff.f.sbar -side left -fill both
+    pack configure .com.aff.f.msg -expand true
+
+    #  Zone vide pour que la zone .com.aff.f libere l'espace en cas de clic.
+    frame .com.aff.empty
+    pack .com.aff.empty -side top
+
+		#  Affichage conditionnel de la zone message
+		if { $::APG_com_affdisplayed == true } {
+				pack .com.aff.f -side top -fill both -expand true -padx 2
+		}
+    #  Clic souris => cache/fait apparaitre la zone emission manuelle
+    bind .com.aff <ButtonPress> {
+				if { $::APG_com_affdisplayed == true } {
+						set ::APG_com_affdisplayed false
+						pack forget .com.aff.f
+				} else {
+						set ::APG_com_affdisplayed true
+						pack .com.aff.f -side top -fill both -expand true -padx 2
+				}
+				update
+    }
+    
+    ## Zone abonnement (si type de com. ww ou www) ---------------------------#
+
+
+    if { $::APG_comtype == "ww" || $::APG_comtype == "www" } {
+				frame .com.abn.f
+
+				# Bouton d'abonnement
+				button .com.abn.f.btbeg -text "Abonner" \
+						-activebackground $::APG_int_colbutton \
+						-foreground $::APG_int_colbutton \
+						-font $::APG_int_fnbutton \
+						-width 6 \
+						-command { APG_com_begin $::APG_com_appabn }
+
+				# Bouton de desabonnement
+				button .com.abn.f.btend -text "Désabonner" \
+						-activebackground $::APG_int_colbutton \
+						-foreground $::APG_int_colbutton \
+						-font $::APG_int_fnbutton \
+						-width 8 \
+						-command { APG_com_end $::APG_com_appabn }
+
+				# Entree application (argument pour l'action du bouton)
+				labelframe .com.abn.f.app -text "App."
+				entry .com.abn.f.app.v -textvariable ::APG_com_appabn -width 4
+				pack .com.abn.f.app.v -expand true -side left -fill x
+
+				# Resultat des actions abonnements/desabonnement
+				labelframe .com.abn.f.lst -text "Applications auxquelles $::APP est abonnée"
+				label .com.abn.f.lst.v -textvariable ::APG_com_lstabn -anchor w
+				pack .com.abn.f.lst.v -expand true -side left -fill x
+
+				pack .com.abn.f.btbeg .com.abn.f.btend .com.abn.f.app -side left -fill y
+				pack .com.abn.f.lst -side left -fill both -expand true
+
+
+				# Zone vide pour que la zone .com.snd.f libere l'espace en cas de clic.
+				frame .com.abn.empty
+				pack .com.abn.empty -side top
+
+				#  Affichage conditionnel de la zone d'emission manuelle
+				if { $::APG_com_abndisplayed == true } {
+						pack .com.abn.f -side top -fill x -expand true -padx 2
+				}
+				#  Clic souris => cache/fait apparaitre la zone abonnement
+				bind .com.abn <ButtonPress> {
+						if { $::APG_com_abndisplayed == true } {
+								set ::APG_com_abndisplayed false
+								pack forget .com.abn.f
+						} else {
+								set ::APG_com_abndisplayed true
+								pack .com.abn.f -side top -fill x -expand true -padx 2
+						}
+						update
+				}
+
+    }
+
+}
+# ^ fin du else du if notk
+###############################################################################
+
+
+
+### PROCEDURES DE LA BIBLIOTHEQUE POUR L'INTERFACE ############################
+
+#-- Procedure APG_com_addmsg -------------------------------------------------#
+# Action : ajoute un message avec couleur dans la zone des messages,          #
+#          sauvegarde le message si sauvegarde evenementielle en cours.       #
+# Entree : message, couleur                                                   #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_com_addmsg { msg color } {
+    if { $::APG_notk != true } {
+				# affichage du msg dans la zone b.msg
+				.com.aff.f.msg insert end $msg
+				.com.aff.f.msg itemconfigure end -foreground $color
+				.com.aff.f.msg yview end
+    }
+
+    # Sauvegarde eventuelle du message emis dans un fichier de log
+		#    if { $::APG_saving && $::APG_svg_fd != "" && $::APG_svg_period == 0 } {
+		#    # sauvegarde evenementielle en cours
+		#		 # NB : pour eliminer les lignes messages... du fichier de sauvegarde,
+	  #		 #      faire grep -v "message".
+		# NB : \" \" en cas de caractere APG_svg_delim dans msg
+		APG_svg_save2file "<I/O> $::APG_svg_delim \"$msg\""
+		# }
+}
+
+proc APG_com_addmsgsnd { msg } {
+    return [APG_com_addmsg "$::APP > stdout : $msg" $::APG_int_colmsgsnd]
+}
+
+proc APG_com_addmsgrcv { msg } {
+    return [APG_com_addmsg "stdin > $::APP : $msg" $::APG_int_colmsgrcv]
+}
+
+proc APG_com_addmsgwrn { msg } {
+    return [APG_com_addmsg "$msg" $::APG_int_colmsgwrn]
+}
+
+#-- Procedure APG_com_btsend -------------------------------------------------#
+# Action : emet le message compose des informations saisies dans l'interface. #
+# Entree : rien                                                               #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_com_btsend { } {
+    switch -- $::APG_comtype {
+				"w" { APG_send_what $::APG_com_sndarg }
+				"ww" { APG_send_whatwho $::APG_com_sndarg $::APG_com_sndapd }
+				"www" { APG_send_whatwhowhere $::APG_com_sndarg $::APG_com_sndapd $::APG_com_sndhst }
+    }
+}
+###############################################################################
+
+
+
+### PROCEDURES DE LA BIBLIOTHEQUE POUR LES ABONNEMENTS ########################
+
+# TODO : preciser l'abonnement local/air dnas l'affichage
+# TODO : exploiter les retours faux quand APG_com_begin etc. retournent faux ?
+
+#-- Procedure APG_com_isavalidappname ----------------------------------------#
+# Action : teste que l'argument app est un nom d'application bien forme.      #
+# Entree : nom d'une application                                              #
+# Retour : vrai si le nom est bien forme, faux sinon                          #
+#-----------------------------------------------------------------------------#
+proc APG_com_isavalidappname { app } {
+
+		# app doit etre une chaine non vide.
+		if { $app == "" } { return false }
+
+		# app doit etre une chaine differente de la convention Airplug designant
+		# une chaine non renseignee.
+		if { $app == $::APG_msg_unknown } { return false }
+
+		# app doit etre composee de chiffres et de lettres uniquement
+		if { ! [string is alnum $app] } { return false }
+
+		# app ne doit pas commence par un chiffre (convention Airplug)
+		if { [string is digit [string index $app 0] ] } { return false }
+
+		return true
+}
+
+#-- Procedure APG_com_begin --------------------------------------------------#
+# Action : ajoute une application dans la liste des applications auxquelles   #
+#          l'application appelante est abonnee, si type!=what.                #
+# Entree : application a laquelle il faut s'abonner.                          #
+# Retour : vrai si ok, faux si probleme                                       #
+#-----------------------------------------------------------------------------#
+proc APG_com_begin { who } {
+		# Les abonnements ne sont utiles qu'en com de type whatwho et whatwhowhere.
+		# Ils ne sont pas geres en com de type what.
+    if { $::APG_comtype == "ww" || $::APG_comtype == "www" } {
+				# Verification que l'argument who est un nom d'application valide
+				if { [APG_com_isavalidappname $who] == false } {
+						if { $::APG_safemode == true } {
+								# Nom d'application invalide + safemode => stop
+								APG_vrb_disperror "Nom d'application invalide (app=\[$who\]).\n \
+                                   option --safemode => arret application\n \
+		                   fin prematuree de l'application" "APG_com_begin"
+								exit
+						} else {
+								# Nom d'application invalide => erreur + fin procedure
+								APG_vrb_disperror "Nom d'application invalide (app=\[$who\])." "APG_com_begin"
+								return false
+						}
+				}
+
+				# Recherche de l'application who dans la liste des applications auquelles
+				# app est abonnee
+				if { [lsearch $::APG_com_lstabn $who] >= 0 } {
+						APG_vrb_dispwarning "Demande d'abonnement a $who mais $::APP y est deja abonnee." "APG_com_begin"
+				} else {
+						lappend ::APG_com_lstabn $who
+						APG_vrb_dispnotif "Abonnement a $who" "APG_com_begin" 5
+
+						if { $::APG_mode == $::APG_mode_live } {
+								# TODO: abonnement local mais pourquoi pas aussi par AIR ?
+								APG_begin_lch $who
+						}
+				}
+		} else {
+				if { $::APG_safemode == true } {
+						# Mode what + action d'abonnement + safemode => stop
+						APG_vrb_disperror "Abonnements non geres en communication de type what (app=\[$who\]).\n \
+                                   option --safemode => arret application\n \
+		                   fin prematuree de l'application" "APG_com_begin"
+						exit
+				} else {
+						# Mode what + action d'abonnement => warning
+						APG_vrb_dispwarning "Abonnements non geres en communication de type what (app=\[$who\])." "APG_com_begin"
+						return false
+				}
+		}
+
+		return true
+}
+
+#-- Procedure APG_com_end ----------------------------------------------------#
+# Action : supprime une application dans la liste des applications            #
+#          auxquelles l'application appelante est abonnee, si type!=what.     #
+# Entree : application a laquelle il faut se desabonner.                      #
+# Retour : vrai si ok, faux si probleme                                       #
+#-----------------------------------------------------------------------------#
+proc APG_com_end { who } {
+		# Les abonnements ne sont utiles qu'en com de type whatwho et whatwhowhere.
+		# Ils ne sont pas geres en com de type what.
+    if { $::APG_comtype == "ww" || $::APG_comtype == "www" } {
+				# Verification que l'argument who est un nom d'application valide
+				if { [APG_com_isavalidappname $who] == false } {
+						if { $::APG_safemode == true } {
+								# Nom d'application invalide + safemode => stop
+								APG_vrb_disperror "Nom d'application invalide (app=\[$who\]).\n \
+                                   option --safemode => arret application\n \
+		                   fin prematuree de l'application" "APG_com_begin"
+								exit
+						} else {
+								# Nom d'application invalide => erreur + fin procedure
+								APG_vrb_dispwarning "Nom d'application invalide (app=\[$who\])." "APG_com_begin"
+								return false
+						}
+				}
+
+				# Recherche de l'application who dans la liste des applications auquelles
+				# app est abonnee
+				set index [lsearch $::APG_com_lstabn $who]
+				if { $index < 0 } {
+						APG_vrb_dispwarning "Demande de desabonnement a $who mais $::APP n'y est pas abonnee." "APG_com_end"
+				} else {
+						# suppression de l'application de la liste
+						set ::APG_com_lstabn [lreplace $::APG_com_lstabn $index $index]
+						APG_vrb_dispnotif "Desabonnement a $who" "APG_com_end" 5
+				}
+		} else {
+				if { $::APG_safemode == true } {
+						# Mode what + action d'abonnement + safemode => stop
+						APG_vrb_disperror "Abonnements non geres en communication de type what (app=\[$who\]).\n \
+                                   option --safemode => arret application\n \
+		                   fin prematuree de l'application" "APG_com_end"
+						exit
+				} else {
+						# Mode what + action d'abonnement => warning
+						APG_vrb_dispwarning "Abonnements non geres en communication de type what (app=\[$who\])." "APG_com_end"
+						return false
+				}
+		}
+		return true
+}
+
+#-- Procedure APG_com_subscribed ---------------------------------------------#
+# Action : teste la presence d'une application dans la liste des applications #
+#          auxquelles l'application appelante est abonnee.                    #
+# Entree : application dont il faut tester l'appartenance a la liste          #
+# Retour : vrai si l'application est dans la liste, faux sinon                #
+#-----------------------------------------------------------------------------#
+proc APG_com_subscribed { who } {
+		# Les abonnements ne sont utiles qu'en com de type whatwho et whatwhowhere.
+		# Ils ne sont pas geres en com de type what.
+    if { $::APG_comtype == "ww" || $::APG_comtype == "www" } {
+				# Verification que l'argument who est un nom d'application valide
+				if { [APG_com_isavalidappname $who] == false } {
+						if { $::APG_safemode == true } {
+								# Nom d'application invalide + safemode => stop
+								APG_vrb_disperror "Nom d'application invalide (app=\[$who\]).\n \
+                                   option --safemode => arret application\n \
+		                   fin prematuree de l'application" "APG_com_subscribed"
+								exit
+						} else {
+								# Nom d'application invalide => erreur + fin procedure
+								APG_vrb_dispwarning "Nom d'application invalide (app=\[$who\])." "APG_com_subscribed"
+								return false
+						}
+				}
+
+				# Recherche de l'application who dans la liste des applications auquelles
+				# app est abonnee
+				set index [lsearch $::APG_com_lstabn $who]
+				if { $index < 0 } {
+						return false
+				} else {
+						return true
+				}
+		} else {
+				if { $::APG_safemode == true } {
+						# Mode what + action d'abonnement + safemode => stop
+						APG_vrb_disperror "Abonnements non geres en communication de type what (app=\[$who\]).\n \
+                                   option --safemode => arret application\n \
+		                   fin prematuree de l'application" "APG_com_subscribed"
+						exit
+				} else {
+						# Mode what + action d'abonnement => warning
+						APG_vrb_dispwarning "Abonnements non geres en communication de type what (app=\[$who\])." "APG_com_subscribed"
+						return false
+				}
+		}
+}
+
+#-- Procedure APG_com_autobegin ----------------------------------------------#
+# Action : procedure permettant l'abonnement automatique aux applications     #
+#          indiquees via l'option de la ligne de commande --begin=            #
+# Entree : rien                                                               #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_com_autobegin { } {
+		# Les abonnements ne sont utiles qu'en com de type whatwho et whatwhowhere.
+		# Ils ne sont pas geres en com de type what.
+
+		APG_vrb_dispnotif "  Automatic subscribing" "APG_com_autobegin" 3
+		if { [llength $::APG_com_lstappautobegin] == 0 } {
+				APG_vrb_dispnotif "    No application given by --begin= command line option" "APG_com_autobegin" 4
+				return
+		}
+
+    if { $::APG_comtype == "ww" || $::APG_comtype == "www" } {
+				APG_vrb_dispnotif "    Subscribing to applications \[$::APG_com_lstappautobegin\]" "APG_com_autobegin" 4
+				foreach whozone [split $::APG_com_lstappautobegin ","] {
+						# Au cas ou une zone est precisee derriere l'appli
+						# eg. --begin=ALT:air,VIC:lch
+						# who designe l'application uniquement.
+						set who [lindex [split $whozone ":"] 0]
+						if { $who != "" } { APG_com_begin $who }
+				}
+		} else {
+				if { $::APG_safemode == true } {
+						# Mode what + action d'abonnement + safemode => stop
+						APG_vrb_disperror "Subscribing not managed in what communication (lstapp=\[$::APG_com_lstappautobegin\]).\n \
+                                   --safemode option => stopping the application\n \
+		                   prematurely ending the application" "APG_com_autobegin"
+						exit
+				} else {
+						# Mode what + action d'abonnement => warning
+						APG_vrb_dispwarning "Subscribing not managed in what communication (lstapp=\[$::APG_com_lstappautobegin\])." "APG_com_autobegin"
+				}
+		}
+}
+###############################################################################
+
+
+
+### PROCEDURES DE LA BIBLIOTHEQUE POUR LES COMMUNICATIONS #####################
+
+
+#-- Procedure APG_com_receive ------------------------------------------------#
+# Action : handler de l'evenement stdin readable. Appelle la fonction de      #
+# reception APG_receive_what/whatwho/whatwhowhere selon type de communication #
+# Entree : rien                                                               #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_com_receive { } {
+    
+    # Suppression temporaire du handler --------------------------------------#
+    # NB : un test avec une variable globale busy mise a vrai a l'entree dans le
+    # handler APG_receive et remise a faux a la sortie, test de sa valeur et
+    # execution du handler que si busy est faux + affichages, montre que le
+    # handler peut etre interrompu lui-meme lorsque emission avec appli WTR en
+    # mode automatique, frequence d'une ms. En outre, on entre dans une boucle
+    # infinie car il n'y a plus le temps de lire et de remettre busy a faux
+    # avant l'interruption.  => une solution : enlever l'appel du handler a
+    # l'entree dans le handler, avec fileevent stdin readable "" et restauration
+    # a la sortie.  Test ok. Nota : en theorie possibilite de boucle infinie si
+    # appel du handler avant qu'il soit enleve, ceci indefiniment. Mais en
+    # pratique ce phenomene ne peut durer un temps infini. Et rien de facheux se
+    # produirait si cela se produit un certain temps.
+    fileevent stdin readable ""
+
+    # Recuperation du message ------------------------------------------------#
+    # NB : read -nonewline stdin peut retourner plusieurs lignes en même temps
+    # c'est a dire plusieurs messages => gets stdin
+		# NB : catch pour eviter erreur en cas de cassure de stdin pendant la lecture
+    if { [ 
+					catch { set msg [gets stdin] }
+				 ] } {
+				return
+		}
+    set ::APG_com_rcvall $msg
+
+    APG_vrb_dispnotif "Reception sur stdout \[$::APG_com_rcvall\]" "APG_com_receive" 4
+    APG_com_addmsgrcv "$::APG_com_rcvall"
+
+    # TODO : surcharger dans libapg-emu ?
+    if { $::APG_mode == $::APG_mode_emulanim } {
+				APG_emu_show_receive
+    }
+
+    # TODO : ignorer le message si l'application n'a pas demarree ??
+
+    # Defini dans libapg-rcv.tk.
+    # Appelle les APG_receive_what/who/where surchargees dans l'application,
+    # selon le type de communication.
+    APG_receive $msg
+
+
+    # Mise a jour affichages
+    update
+    
+    # restauration du handler
+    fileevent stdin readable APG_com_receive
+}
+
+
+#-- Procedure APG_com_send ---------------------------------------------------#
+# Action : ecrit le message sur la sortie standard et l'affiche dans la zone  #
+#          com.                                                               #
+# Entree : rien                                                               #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_com_send { from header payload } {
+    set msg $from$header$payload
+    APG_com_addmsgsnd $msg
+		# Precaution au cas ou stdout a ete casse
+    catch { puts stdout $msg }
+}
+###############################################################################
+
+### PROCEDURES SURCHARGEES SI MODE EMU ########################################
+# pour compatibilite des applications integrant les directives pour EMU
+# au cas ou l'application soit utilisee en mode term.
+proc APG_emu_show_send { } { }
+proc APG_emu_show_receive { } { }
+proc APG_emu_send_color { color } { }
+proc APG_emu_send_shape { shape } { }
+proc APG_emu_send_size { size } { }
+proc APG_emu_send_label { label } { }
+proc APG_emu_send_label_color { color } { }
+proc APG_emu_send_msg { key value } { }
+proc APG_emu_send_barnew { height color } { }
+proc APG_emu_send_barupdate { barnum height {color ""} } { }
+###############################################################################
+
+
+#### LECTURES ASYNCHRONES DE STDIN ############################################
+#fconfigure stdin -blocking off -translation {binary}
+fconfigure stdin -blocking off
+
+if { $::APG_stdbin == true } {
+    fconfigure stdout -encoding binary -translation binary
+    fconfigure stdin -encoding binary  -translation binary
+    APG_vrb_dispnotif "    stdin et stdout binaires" "" 5
+}
+
+# NB: the following instruction is now reported in APG_init to avoid any
+#     reception of messages by an application AAA that did not source its
+#     aaa-rcv.tk file with the re-definition of APG_receive_xxx procedures
+#     
+#fileevent stdin readable APG_com_receive
+#APG_vrb_dispnotif "    reception asynchrone sur stdin => APG_com_receive" "libapg-com" 5
+
+###############################################################################
+

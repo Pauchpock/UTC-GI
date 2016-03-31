@@ -1,0 +1,148 @@
+#    libapg-int.tk
+#    a library for designing airplug compatible program
+#    authors: Bertrand Ducourthial AT utc.fr
+#    license type: free of charge license for academic and research purpose
+#    see license.txt
+#
+# bibliotheque de gestion de l'interface standard airplug
+# (zones, boutons, menu bouton...)
+
+APG_vrb_dispnotif "    integrating the autostart (Wish/Tclsh)" "libapg-sta" 4
+
+# NB : The vwait command cannot be placed outside a procedure in this file
+#      because this would prevent the reading of the rest of the source files.
+#      See ntk.tk for an example of use.
+
+
+#-- Procedure APG_init -------------------------------------------------------#
+# Action : Initialise la boucle d'evenement si necessaire.                    #
+#          Lance le demarrage automatique si option --auto                    #
+# Entree : rien                                                               #
+# Sortie : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_init { } {
+
+		APG_vrb_dispnotif "Initializing the application starting" "APG_init" 2
+
+		# Asynchronous receptions on stdin will now call APG_com_receive
+		fileevent stdin readable APG_com_receive
+		APG_vrb_dispnotif "  Starting asynchronous reception on stdin" "APG_init" 3
+
+		# Lancement de la boucle d'attente Tcl si notk
+		if { $::APG_notk == true } {
+				APG_vrb_dispnotif "  Waiting for events --- Tcl event-loop with vwait" "APG_init" 3
+
+				# Will start the Tcl event-loop after calling the APP_start procedure
+				# in case it ends.
+		} else {
+				APG_vrb_dispnotif "  Waiting for events --- Tk event-loop with wish" "APG_init" 3
+		}
+
+		# Lancement 
+		if { $::APG_auto == true } {
+				if { $::APG_delay <= 0 } {
+						APG_vrb_dispnotif "  Automatic starting of the application \[auto, delay=0\]" "APG_init" 3
+						APG_start
+				} else {
+						APG_vrb_dispnotif "  Automatic delayed starting of the application \[auto, delay=$::APG_delay\]" "APG_init" 3
+						after $::APG_delay APG_start
+				}
+		} else {
+				APG_vrb_dispnotif "  Waiting for manual starting \[not auto\]" "APG_init" 3
+		}
+
+		# Lancement de la boucle d'attente Tcl si notk
+		if { $::APG_notk == true } {
+				# Now starting Tcl event-loop, in case all is done in the application,
+				# that is, in case 
+				vwait forever
+		}
+}
+
+
+#-- Procedure APG_start ------------------------------------------------------#
+# Action : Demarre l'application. Realise les abonnements dus a --begin=,     #
+#          lance la procedure de demarrage specifique de l'application si     #
+#          elle existe.                                                       #
+# Entree : rien                                                               #
+# Sortie : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_start { } {
+
+		APG_int_add2status "Starting..."
+		APG_vrb_dispnotif "Starting the application" "APG_start" 2
+
+		if { $::APG_remote == true } {
+				APG_vrb_dispnotif "  Mode remote => connecting to RMT on port \[$::APG_rmt_port\]" "APG_start" 3
+				if { [APG_rmt_connect2RMT] == false } {
+						APG_vrb_disperror "Connection to RMT on port $::APG_rmt_port failed => end of the application" "APG_start"
+						exit
+				}
+				APG_vrb_dispnotif "  Application connected to RMT" "APG_start" 3
+		}
+
+
+    # Desactivation du bouton Start
+		if { $::APG_notk != true } {
+				.ctl.panel.bt.start configure -state disable
+		}
+
+		# Abonnement automatique au demarrage via l'option Airplug --begin
+		APG_com_autobegin
+
+		# Lancement des sauvegardes si option --saving
+		APG_svg_autostart
+
+		# Appel de la procedure de l'application si elle existe
+		APG_vrb_dispnotif "  Calling ${::APG_savedappname}_start" "APG_start" 3
+		if { [ catch { ${::APG_savedappname}_start } ] } {
+				APG_vrb_dispwarning "${::APG_savedappname}_start not found or generating error (use --debug)" "APG_start"
+				if { $::APG_vrb_debug == true } {
+						APG_vrb_dispwarning "error: $::errorInfo\n \
+	                   concerned code: $::errorCode" "APG_start"
+				}
+		}
+}
+
+#-- Procedure APG_stop -------------------------------------------------------#
+# Action : Termine l'application.                                             #
+#          Lance la procedure de terminaison specifique de l'application si   #
+#          elle existe.                                                       #
+# Entree : rien                                                               #
+# Sortie : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_stop { } {
+
+		APG_int_add2status "stopping..."
+
+		APG_vrb_dispnotif "Stopping the application" "APG_stop" 2
+
+		# Desactivation du bouton Stop
+		# NB : utile en cas de longue activite dans APP_stop
+		if { $::APG_notk != true } {
+				.ctl.panel.bt.stop configure -state disable
+		}
+
+		# Appel de la procedure de l'application si elle existe
+		APG_vrb_dispnotif "  Calling ${::APG_savedappname}_stop" "APG_stop" 3
+		if { [ catch { ${::APG_savedappname}_stop } ] } {
+				APG_vrb_dispwarning "${::APG_savedappname}_stop not found or generating error (use --debug)" "APG_stop"
+				if { $::APG_vrb_debug == true } {
+						APG_vrb_dispwarning "error: $::errorInfo\n \
+	                   concerned code: $::errorCode" "APG_stop"
+				}
+		}
+
+    # Arret d'une eventuelle sauvegarde en cours
+    APG_svg_autostop
+
+		# TODO : procedure APG_com_autoend pour se desabonner automatiquement
+
+		# Fin de l'interface s'il y en avait une
+		if { $::APG_notk != true } {
+				destroy .
+		}
+
+		# Fin de l'application
+		exit
+}

@@ -1,0 +1,77 @@
+# license type: free of charge license for academic and research purpose
+# see license.txt
+# author: Bertrand Ducourthial
+
+# Configuration file for layer 2 Makefile.
+#  - distributed in the skeleton distribution (the nest)
+#  - not distributed in the binary distribution (or as binary package)
+#    (Application that does not require compilation)
+# This file is NOT standard: specific for LIBAPGTK (LIB and SOURCES variables)
+
+
+### APPLICATION DEPENDENT VARIABLES ############################################
+
+#-- TCLTK APPLICATION COMPONENTS ----------------------------------------------#
+# NB: adding a new module or a new file to the application does not require
+#     to adapt the variables values below providing the file has been named
+#     according to the rule: nameoftheapplication-nameofthemodule.tk
+
+# RC is either empty or equal to rc-$(OUTPUT).tk if it exists
+RC = $(shell if [ -e rc-$(OUTPUT).tk ] ; then echo rc-$(OUTPUT).tk ; else echo "" ; fi )
+
+## LIB is either empty or equal to libapg-app-$(OUTPUT).tk if it exists
+## LIB = $(shell if [ -e libapg-app-$(OUTPUT).tk ] ; then echo libapg-app-$(OUTPUT).tk ; else echo "" ; fi )
+
+# LIB contains all files libapg-xxx.tk which are not symbolic links.
+LIB = $(shell find  libapg-???.tk -type f )
+
+# NB:
+# - Common libraries are currently libapg-int.tk libapg-eve.tk libapg-svg.tk
+#   libapg-msg.tk libapg-com.tk libapg-sta.tk
+# - Term mode libraries are libapg-snd.tk libapg-rcv.tk libapg-sub.tk
+# - Emu mode libraries are Term mode libraries + libapg-emu.tk (provided by
+#   EMU, ie. symbolic link)
+# - Live mode libraries are Term mode libraries (except sub) + libapg-apg.tk
+#   (provided by APG, ie. symbolic link)
+
+# SOURCES stands for all sources files belonging to the application
+# NB : wildcard does the immediat expansion.
+# SOURCES = $(wildcard $(OUTPUT)*.tk) $(RC) $(LIB) 
+SOURCES = libapg.tk $(RC) $(LIB)
+
+# NB: no OUTPUT.
+
+
+#-- FILES FOR APPLICATION PACKAGING--------------------------------------------#
+
+# List of all files for the public archive
+# NB: any file in the bin/doc/icons or input subdirectory of the application
+#     will be installed (with symlink) in the bin/doc/icons or input/$(OUTPUT)
+#     of the distribution.
+# NB: if one of these subdirectories is listed here while they do not exist,
+#     it is ignored silently.
+# NB: Be aware to add directory_name/* (such as bin/*) and not directory_name
+#     nor directory_name/ 
+#
+TGZ_PUB = \
+	Makefile Makefile-var Makefile-bin \
+	license.txt \
+	README.pub \
+	tgz-history.txt \
+	$(SOURCES) \
+	bin/* \
+	doc/* \
+	input/* \
+	icons/*
+
+# List of all files for the devel archive
+TGZ_DEV = $(TGZ_PUB) \
+	README.dev \
+	icon/*obj
+
+# List of all files for the distribution skeleton archive
+TGZ_SKL = $(TGZ_PUB)
+
+# List of all files for the binary distribution
+TGZ_BIN =
+

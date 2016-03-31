@@ -1,0 +1,277 @@
+#    libapg-snd.tk
+#    a library for designing airplug compatible program
+#    authors: Bertrand Ducourthial AT utc.fr
+#    license type: free of charge license for academic and research purpose
+#    see license.txt
+#
+# Procedures pour les emissions
+
+APG_vrb_dispnotif "    integration de la gestion des emissions" "libapg-snd" 4
+
+### PROCEDURES POUR L'EMISSION ################################################
+
+#-- Procedure APG_send_what --------------------------------------------------#
+# Action : emission d'un message, selon type de communication                 #
+# Entree : le payload what                                                    #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_send_what { what } {
+    # Test de la presence d'un delimiteur dans le champs what
+    if { [string first $::APG_com_delim $what] != -1 } {
+				# Delimiteur trouve => anomalie
+				if { $::APG_safemode } {
+						# Anomalie et safemode => stop
+						APG_vrb_disperror "delimiteur dans le payload\n \
+	                       option --safemode => arret application\n \
+	                       fin prematuree de l'application" "APG_send_what"
+						exit
+				} else {
+						# Pas de safemode => juste un warning
+						APG_vrb_dispwarning "delimiteur dans le payload\n \
+	                         pas d'option --safemode => poursuite." "APG_send_what"
+				}
+    }
+		
+    # Verification conformite type de com + recuperation eventuelle
+    switch -- $::APG_comtype  {
+				"w" {
+						# Correspondance ok
+						set from ""
+						set header ""
+						set payload $what
+						APG_com_send $from $header $what
+				}
+				"ww"  {
+						# Pb entre format demande et procedure appelee.
+						# Safemode => arret
+						if { $::APG_safemode == true } {
+								APG_vrb_disperror "appel de APG_send_what non conforme (com. whatwho)\n \
+                                   what=\[$what\]\n \
+		                   option --safemode => arret application\n \
+		                   fin prematuree de l'application" "APG_send_what"
+								exit
+						}
+						
+						# Pas de safemode => tentative de recuperation :
+						#  completion : who = APP
+						APG_vrb_dispwarning "appel de APG_send_what non conforme (com. whatwho)\n \
+                                 what=\[$what\]\n \
+	                         absence option --safemode => tentative recuperation\n \
+	                         appel de APG_send_whatwho, who=\[$::APP\]"  "APG_send_what"
+						APG_send_whatwho $what $::APP
+				}
+				"www" {
+						# Pb entre format demande et procedure appelee.
+						# Safemode => arret
+						if { $::APG_safemode == true } {
+								APG_vrb_disperror "appel de APG_send_what non conforme (com. whatwhowhere)\n  what=\[$what\]"  "APG_send_what"
+								APG_vrb_disperror "option --safemode => arret application"  "APG_send_what"
+								APG_vrb_disperror "fin prematuree de l'application"  "APG_send_what"
+								exit
+						}
+						
+						# Pas de safemode => tentative de recuperation :
+						#  completion : who = APP et where = AIR
+						APG_vrb_dispwarning "appel de APG_send_what non conforme (com. whatwhowhere)\n  what=\[$what\]"  "APG_send_what"
+						APG_vrb_dispwarning "absence option --safemode => tentative recuperation" "APG_send_what" 
+						APG_vrb_dispwarning "appel de APG_send_whatwhowhere,\
+                                 who=\[$::APP\], where=\[$::APG_com_hst_air\]"  "APG_send_what"
+						APG_send_whatwhowhere $what $::APP $::APG_com_hst_air
+				}
+    }
+}   
+
+#-- Procedure APG_send_whatwho -----------------------------------------------#
+# Action : emission d'un message, selon type de communication                 #
+# Entree : le payload what et l'app destinataire who                          #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_send_whatwho { what who } {
+
+    # Test de la presence d'un delimiteur dans le champs what
+    if { [string first $::APG_com_delim $what] != -1 } {
+				# Delimiteur trouve => anomalie
+				if { $::APG_safemode } {
+						# Anomalie et safemode => stop
+						APG_vrb_disperror "delimiteur dans le payload\n \
+	                       option --safemode => arret application\n \
+	                       fin prematuree de l'application" "APG_send_whatwho"
+						exit
+				} else {
+						# Pas de safemode => juste un warning
+						APG_vrb_dispwarning "delimiteur dans le payload\n \
+	                         pas d'option --safemode => poursuite." "APG_send_whatwho"
+				}
+    }
+		
+    # Verification conformite type de com + recuperation eventuelle
+    switch -- $::APG_comtype  {
+				"w" {
+						# Pb entre format demande et procedure appelee.
+						# Safemode => arret
+						if { $::APG_safemode == true } {
+								APG_vrb_disperror "appel de APG_send_whatwho non conforme (com. what)\n \
+                                   what=\[$what\]\n \
+                                   who=\[$who\]\n \
+		                   option --safemode => arret application\n \
+		                   fin prematuree de l'application" "APG_send_whatwho"
+								exit
+						}
+						
+						# Pas de safemode => tentative de recuperation :
+						#  degradation conditionnee : si who == APP, appel de APG_send_what
+						#  (who ignore) sinon message ignore (on suppose que l'application.
+						#  est executee dans un environnement ou elle est seule).
+						if { $who == $::APP } {
+								APG_vrb_dispwarning "appel de APG_send_whatwho non conforme (com. what)\n \
+                                     what=\[$what\]\n \
+                                     who=\[$who\]\n \
+		                     absence option --safemode => tentative recuperation :\n \
+                                     appel de APG_send_what (who == APP)" "APG_send_whatwho"
+								APG_send_what $what
+						} else {
+								APG_vrb_dispwarning "appel de APG_send_whatwho non conforme (com. what)\n \
+                                     what=\[$what\]\n \
+                                     who=\[$who\]\n \
+		                     absence option --safemode => tentative recuperation :\n \
+                                     message ignore (who != APP)" "APG_send_whatwho"
+								APG_com_addmsgwrn "appel de APG_send_whatwho non conforme au format what => message ignore"
+						}
+				}
+				"ww"  {
+						# Correspondance ok
+						# MODIF le 21/10/2011 from=APP et non who
+						set from    $::APG_com_delim$::APP
+						set header  $::APG_com_delim$who
+						set payload $::APG_com_delim$what
+						APG_com_send $from $header $payload
+				}
+				"www" {
+						# Pb entre format demande et procedure appelee.
+						# Safemode => arret
+						if { $::APG_safemode == true } {
+								APG_vrb_disperror "appel de APG_send_whatwho non conforme (com. whatwhowhere)\n \
+                                   what=\[$what\]\n \
+                                   who=\[$who\]\n \
+		                   option --safemode => arret application\n \
+                                   fin prematuree de l'application" "APG_send_whatwho"
+								exit
+						}
+						
+						# Pas de safemode => tentative de recuperation :
+						#  completion : si who == APP, a priori zone AIR, sinon zone LCH.
+						if { $who == $::APP } {
+								# Meme application => a priori, zone AIR
+								set where $::APG_com_hst_air
+								APG_vrb_dispwarning "appel de APG_send_whatwho non conforme (com. whatwhowhere)\n \
+                                 what=\[$what\]\n \
+                                 who=\[$who\]\n \
+	                         absence option --safemode => tentative recuperation :\n \
+                                 appel de APG_send_whatwhowhere, where=\[$where\] (who == APP)" "APG_send_whatwho"
+						} else {
+								# Meme application => a priori, zone LCH
+								set where $::APG_com_hst_lch
+								APG_vrb_dispwarning "appel de APG_send_whatwho non conforme (com. whatwhowhere)\n \
+                                 what=\[$what\]\n \
+                                 who=\[$who\]\n \
+	                         absence option --safemode => tentative recuperation :\n \
+                                 appel de APG_send_whatwhowhere, where=\[$where\] (who != APP)" "APG_send_whatwho"
+						}
+						APG_send_whatwhowhere $what $who $where
+				}
+    }
+}   
+
+#-- Procedure APG_send_whatwhowhere ------------------------------------------#
+# Action : emission d'un message, selon type de communication                 #
+# Entree : le payload what, l'app destinataire who, la zone where             #
+# Retour : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_send_whatwhowhere { what who where } {
+
+    # Test de la presence d'un delimiteur dans le champs what
+    if { [string first $::APG_com_delim $what] != -1 } {
+				# Delimiteur trouve => anomalie
+				if { $::APG_safemode } {
+						# Anomalie et safemode => stop
+						APG_vrb_disperror "delimiteur dans le payload\n \
+	                       option --safemode => arret application\n \
+	                       fin prematuree de l'application" "APG_send_whatwhowhere"
+						exit
+				} else {
+						# Pas de safemode => juste un warning
+						APG_vrb_dispwarning "delimiteur dans le payload\n \
+	                         pas d'option --safemode => poursuite." "APG_send_whatwhowhere"
+				}
+    }
+		
+    # Verification conformite type de com + recuperation eventuelle
+    switch -- $::APG_comtype  {
+				"w" {
+						# Pb entre format demande et procedure appelee.
+						# Safemode => arret
+						if { $::APG_safemode == true } {
+								APG_vrb_disperror "appel de APG_send_whatwhowhere non conforme (com. what)\n \
+                                   what=\[$what\]\n \
+                                   who=\[$who\]\n \
+                                   where=\[$where\]\n \
+		                   option --safemode => arret application\n \
+		                   fin prematuree de l'application" "APG_send_whatwhowhere"
+								exit
+						}
+						
+						# Pas de safemode => tentative de recuperation
+						#  degradation conditionnee : si who == APP, appel de APG_send_what
+						#  (who ignore) sinon message ignore (on suppose que l'application
+						#  est executee dans un environnement ou elle est seule).
+						if { $who == $::APP } {
+								APG_vrb_dispwarning "appel de APG_send_whatwhowhere non conforme (com. what)\n \
+                                     what=\[$what\]\n \
+                                     who=\[$who\]\n \
+                                     where=\[$where\]\n \
+		                     absence option --safemode => tentative recuperation :\n \
+                                     appel de APG_send_what (who == APP)" "APG_send_whatwhowhere"
+								APG_send_what $what
+						} else {
+								APG_vrb_dispwarning "appel de APG_send_whatwhowhere non conforme (com. what)\n \
+                                 what=\[$what\]\n \
+                                 who=\[$who\]\n \
+                                 where=\[$where\]\n \
+		                 absence option --safemode => tentative recuperation :\n \
+                                 message ignore (who != APP)" "APG_send_whatwhowhere"
+								APG_com_addmsgwrn "appel de APG_send_whatwhowhere non conforme au format what => message ignore"
+						}
+				}
+				"ww"  {
+						# Pb entre format demande et procedure appelee.
+						# Safemode => arret
+						if { $::APG_safemode == true } {
+								APG_vrb_disperror "appel de APG_send_whatwhowhere non conforme (com. whatwho)\n \
+                                   what=\[$what\]\n \
+                                   who=\[$who\]\n \
+                                   where=\[$where\]\n \
+		                   option --safemode => arret application\n \
+		                   fin prematuree de l'application" "APG_send_whatwhowhere"
+								exit
+						}
+						
+						# Pas de safemode => tentative de recuperation
+						#  degradation : where ignore, appel de APG_send_whatwho.
+						APG_vrb_dispwarning "appel de APG_send_whatwhowhere non conforme (com. whatwho)\n \
+                                 what=\[$what\]\n \
+                                 who=\[$who\]\n \
+                                 where=\[$where\]\n \
+	                         absence option --safemode => tentative recuperation :\n \
+                                 appel de APG_send_whatwho" "APG_send_whatwhowhere"
+						APG_send_whatwho $what $who
+				}
+				"www" {
+						# Correspondance ok
+						set from    $::APG_com_delim$::APP
+						set header  $::APG_com_delim$who$::APG_com_delim$where
+						set payload $::APG_com_delim$what
+						APG_com_send $from $header $payload
+				}
+    }
+}
+

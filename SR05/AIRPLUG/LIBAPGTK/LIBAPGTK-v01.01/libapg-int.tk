@@ -1,0 +1,384 @@
+#    libapg-int.tk
+#    a library for designing airplug compatible program
+#    authors: Bertrand Ducourthial AT utc.fr
+#    license type: free of charge license for academic and research purpose
+#    see license.txt
+#
+# bibliotheque de gestion de l'interface standard airplug
+# (zones, boutons, menu bouton...)
+
+APG_vrb_dispnotif "    integration de la gestion de l'interface graphique" "libapg-int" 4
+
+### VARIABLES DE LA BIBLIOTHEQUE ##############################################
+
+# Police de caractere avec largeur fixe des caracteres (pour alignements...)
+set ::APG_int_fnfixed -*-courier-medium-r-*-*-14-*-*-*-*-*-*-*
+# Police de caractere avec largeur fixe de petite taille
+set ::APG_int_fnfixedsmall -*-courier-medium-r-*-*-12-*-*-*-*-*-*-*
+#set ::APG_int_fnfixed -misc-fixed-*-r-*-*-12-*-*-*-*-*-*-*
+# Police de caractere pour les boutons
+set ::APG_int_fnbutton -misc-*-*-r-*-*-14-*-*-*-*-*-*-*
+# Police de caractere pour les petits boutons
+set ::APG_int_fnbuttonsmall -misc-*-*-r-*-*-8-*-*-*-*-*-*-*
+# Couleur des zones graphiques de la bibliotheque
+# NB : permet de les distinguer des zones de l'application
+set ::APG_int_colzone Gray
+# Couleur des titres de zone
+set ::APG_int_coltitle Blue
+# Couleur des sous-titres de zone
+set ::APG_int_colsubtitle DarkBlue
+# Couleur des textes des boutons
+set ::APG_int_colbutton SeaGreen4
+# Couleur des messages quelconques
+set ::APG_int_colmsgqcq "black"
+# Couleur des messages recus (notamment affiches dans la zone .com ou .rmt)
+set ::APG_int_colmsgrcv "royal blue"
+# Couleur des messages emis (notamment affiches dans la zone .com ou .rmt)
+set ::APG_int_colmsgsnd "SeaGreen4"
+# Couleur des warning affiches dans la zone .com ou .rmt
+set ::APG_int_colmsgwrn "DarkOrange"
+# Couleur des erreurs
+set ::APG_int_colmsgerr "Red"
+# Couleur des debogages
+set ::APG_int_colmsgdbg "green4"
+# Couleur rouge pour le bouton depart
+set ::APG_int_colbtstart "indian red"
+
+# Couleur pour une modification des parametres (a priori importante)
+# (utilisee pour les evenements eve)
+set ::APG_int_colevemod "dark magenta"
+# Couleur pour une modification des entrees
+# (utilisee pour les evenements eve)
+set ::APG_int_coleveinp "maroon"
+# Couleur pour un debut de procedure
+# (utilisee pour les evenements eve)
+set ::APG_int_colevepro "purple"
+
+## variables communes des messages d'aide et d'a propos.
+set ::APG_int_msghelp \
+"Consult https://www.hds.utc.fr/airplug for general help on Airplug softwares.
+
+
+"
+
+set ::APG_int_msgapropos \
+"The Airplug Software Distribution
+
+Université de Technologie de Compiègne
+Lab. Heudiasyc, UMR CNRS 7253
+
+(C) Bertrand.Ducourthial AT utc.fr
+
+---------------------------------------
+
+Application $::APP
+"
+
+## Variables qui devraient etre surchargees dans l'application
+set ::APP_msghelp "Pas d'aide prévue pour $::APP.
+Faire set ::APP_msghelp \"Aide..\""
+
+set ::APP_msgapropos "Pas d'apropos prévu pour $::APP.
+Faire set ::APP_msgapropos
+\"$::APP version xx, (C) yy, license zz\""
+
+
+# liste des zones
+set ::APG_int_lstzones [list ]
+
+# tableau des zones, indiquant si elles doivent etre affichees ou non
+array set ::APG_int_tabzones [list ]
+
+# tableau des parametres des zones (fill, expand...)
+array set ::APG_int_tabprmzones [list ]
+
+# position du prochain icone
+set ::APG_int_posico 0
+
+###############################################################################
+
+if { $::APG_notk == true } {
+    APG_vrb_dispnotif "  option notk => pas de creation de la zone d'interface de controle" "libapg-int" 5
+} else {
+
+### ZONE GRAPHIQUE DE CONTROLE (BOUTONS, PANEL) ###############################
+frame .ctl -padx 2 -pady 2 -width 400
+pack .ctl -fill x
+
+image create photo ivc -file $::APG_PATH/icons/$::APG_appiconname
+#canvas .ctl.ivc -bd 0 -width [image width ivc] -height [image height ivc]
+#canvas .ctl.ivc -bd 0 -width 64 -height 64
+#.ctl.ivc create image 0 0 -anchor nw -image ivc
+
+menubutton .ctl.ivc \
+		-image ivc \
+		-activebackground blue \
+		-foreground blue \
+		-font $::APG_int_fnbutton \
+		-direction below \
+		-relief raised \
+		-menu .ctl.ivc.m \
+		-bd 2 -padx 4 -pady 3
+
+menu .ctl.ivc.m -tearoff 1 -title "$::APP - Display"
+
+frame .ctl.panel
+
+pack .ctl.ivc  -side left
+pack .ctl.panel -fill both -side right -expand true -anchor ne
+
+frame .ctl.panel.bt
+
+# Pour affichage d'information
+frame .ctl.panel.status -relief ridge
+
+# Messages avec ascenceur
+listbox .ctl.panel.status.lb -relief flat -height 2 -bg "light grey" -font $::APG_int_fnfixedsmall
+pack .ctl.panel.status.lb -expand true -fill both -side left
+
+
+pack .ctl.panel.bt -anchor ne -expand false -side top
+pack .ctl.panel.status -expand true -fill both -side top
+
+button .ctl.panel.bt.stop -text "Stop" \
+		-activebackground red \
+		-foreground red \
+		-font $::APG_int_fnbutton \
+		-width 8 \
+		-command APG_stop
+
+button .ctl.panel.bt.hlp -text "Help" \
+		-activebackground orange \
+		-foreground orange \
+		-font $::APG_int_fnbutton \
+		-width 8 \
+		-command APG_int_bthelp
+
+button .ctl.panel.bt.apr -text "About" \
+		-activebackground orange \
+		-foreground orange \
+		-font $::APG_int_fnbutton \
+		-width 8 \
+		-command APG_int_btapropos
+
+#TODO : faire en sorte que le menubouton affichage ait les memes dimensions
+# que les autres
+menubutton .ctl.panel.bt.zones -text "Display" \
+		-activebackground blue \
+		-foreground blue \
+		-font $::APG_int_fnbutton \
+		-direction below \
+		-relief raised \
+		-width 9 \
+		-menu .ctl.panel.bt.zones.m \
+		-bd 2 -padx 4 -pady 3 -height 1
+
+menu .ctl.panel.bt.zones.m -tearoff 1 -title "$::APP - Display"
+
+button .ctl.panel.bt.start -text "Start" \
+		-activebackground $::APG_int_colbtstart \
+		-foreground $::APG_int_colbtstart \
+		-font $::APG_int_fnbutton \
+		-width 8 \
+		-command APG_start
+
+pack .ctl.panel.bt.stop .ctl.panel.bt.apr .ctl.panel.bt.hlp -side right -anchor ne -pady 1 -padx 0
+pack .ctl.panel.bt.zones -fill y -side right -anchor ne -pady 2 -padx 1
+pack .ctl.panel.bt.start -side right -anchor ne -pady 1 -padx 0
+
+#### ZONE GRAPHIQUE ICONES DE SPONSORS ########################################
+canvas .ico -bd 0 -height 60 -bg $::APG_int_colzone
+
+
+}
+# fin du if then else notk
+###############################################################################
+
+
+### PROCEDURES ################################################################
+
+
+### PROCEDURES D'AJOUT ########################################################
+
+#-- Procedure APG_int_addicon ------------------------------------------------#
+# Action : Ajoute une image dans la zone des icones                           #
+# Remarq : L'image doit etre dans le repertoire icons de la distrib Airplug.  #
+#          Formats admits : GIF, PPM/PGM...                                   #
+# Entree : rien                                                               #
+# Sortie : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_int_addicon { nom_image } {
+    if { $::APG_notk != true } {
+				image create photo $nom_image -file $::APG_PATH/icons/$nom_image
+				.ico create image $::APG_int_posico 0 -anchor nw -image $::nom_image
+				set ::APG_int_posico [expr $::APG_int_posico + [image width $nom_image]]
+    }
+}
+
+#-- Procedure APG_int_add2status ---------------------------------------------#
+# Action : Ajoute un message a la zone status (sous les boutons)              #
+# Entree : message, couleur du message (facultatif)                           #
+# Sortie : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_int_add2status { msg {color ""} } {
+    
+    # Affichage eventuel du msg dans la zone status
+    if { !$::APG_notk } {
+				.ctl.panel.status.lb insert end $msg
+				if { $color != "" } {
+						.ctl.panel.status.lb itemconfigure end -foreground $color
+				}
+				# Mise a jour de la vue verticale
+				.ctl.panel.status.lb yview end
+    }
+}
+
+
+### PROCEDURES LIEES AUX ZONES ################################################
+
+#-- Procedure APG_int_displayzones -------------------------------------------#
+# Action : Affiche les zones en fonction des valeurs de tabzones              #
+# Entree : rien                                                               #
+# Sortie : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_int_displayzones { } {
+
+    if { $::APG_notk != true } {
+				set listezone ""
+				foreach Z $::APG_int_lstzones {
+						pack forget ".$Z"
+						if { $::APG_int_tabzones($Z) == 1 || [ismember $::APG_lstdisplay $Z] } {
+								append listezone "$Z" "(1) "
+								if { $::APG_int_tabprmzones($Z) == "" } {
+										pack ".$Z" -fill x -pady 2
+								} else {
+										eval "pack .$Z $::APG_int_tabprmzones($Z)"
+								}
+						} else {
+								append listezone "$Z" "(0) "
+						}
+				}
+				APG_vrb_dispnotif "Affichage des zones $listezone" "APG_int_displayzones" 5
+    } else {
+				APG_vrb_dispnotif "Option --notk => pas d'affichage des zones graphiques" "APG_int_displayzones" 5
+    }
+}
+
+#-- Procedure APG_int_addzone ------------------------------------------------#
+# Action : Ajoute une zone graphique                                          #
+# Entree : rien                                                               #
+# Sortie : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_int_addzone { zone nom aff {prm ""} } {
+    set ::APG_int_tabzones($zone) $aff
+    set ::APG_int_tabprmzones($zone) $prm
+    set ::APG_int_lstzones "$::APG_int_lstzones $zone"
+
+    if { $::APG_notk != true } {
+				.ctl.panel.bt.zones.m add check -label $nom -variable ::APG_int_tabzones($zone) \
+						-command APG_int_displayzones
+				.ctl.ivc.m add check -label $nom -variable ::APG_int_tabzones($zone) \
+						-command APG_int_displayzones
+    }
+}
+
+#-- Procedure APG_int_addseparator -------------------------------------------#
+# Action : Ajoute un separateur dans le menu                                  #
+# Entree : rien                                                               #
+# Sortie : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_int_addseparator { } {
+    if { $::APG_notk != true } {
+				.ctl.panel.bt.zones.m add separator
+				.ctl.ivc.m add separator
+    }
+}
+
+
+### PROCEDURES LIEES AUX BOUTONS ##############################################
+
+#-- Procedure APG_int_disablebtstart -----------------------------------------#
+# Action : Rend inactif le bouton Start                                       #
+# Entree : rien                                                               #
+# Sortie : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_int_disablebtstart { } {
+		if { $::APG_notk != true } {
+				.ctl.panel.bt.start configure -state disable
+		}
+}
+
+#-- Procedure APG_int_enablebtstart ------------------------------------------#
+# Action : Rend actif le bouton Start                                         #
+# Entree : rien                                                               #
+# Sortie : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_int_enablebtstart { } {
+		if { $::APG_notk != true } {
+				.ctl.panel.bt.start configure -state normal
+		}
+}
+
+#-- Procedure APG_int_bthelp -------------------------------------------------#
+# Action : Affiche l'aide                                                     #
+# Entree : rien                                                               #
+# Sortie : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_int_bthelp {} {
+    if { $::APG_notk != true } {
+				catch {destroy .help}
+				toplevel .help
+				wm title .help "Aide de \"$::APP\""
+				wm iconname .help "$::app"
+				
+				message .help.msg -justify left -text $::APG_int_msghelp$::APP_msghelp -font $::APG_int_fnbutton 
+				button .help.bt \
+						-text {OK} \
+						-activebackground orange \
+						-foreground orange \
+						-font $::APG_int_fnbutton \
+						-command {wm withdraw .help}
+				
+				pack .help.msg .help.bt -side top -pady 5 -padx 5
+    }
+}
+
+
+#-- Procedure APG_int_btapropos ----------------------------------------------#
+# Action : Affiche l'apropos                                                  #
+# Entree : rien                                                               #
+# Sortie : rien                                                               #
+#-----------------------------------------------------------------------------#
+proc APG_int_btapropos {} {
+    if { $::APG_notk != true } {
+				catch {destroy .apropos}
+				toplevel .apropos
+				wm title .apropos "A propos de \"$::APP\""
+				wm iconname .apropos "$::app"
+				
+				message .apropos.msg -justify left -text $::APG_int_msgapropos$::APP_msgapropos -font $::APG_int_fnbutton
+				
+				button .apropos.bt \
+						-text {OK} \
+						-activebackground orange \
+						-foreground orange \
+						-font $::APG_int_fnbutton \
+						-command {wm withdraw .apropos}
+				
+				pack .apropos.msg .apropos.bt -side top -pady 5 -padx 5
+    }
+}
+###############################################################################
+
+
+# anciens noms de variables conserves pour compatibilite
+set ::APG_fonte_bt  $::APG_int_fnbutton
+set ::APG_clrttl    $::APG_int_coltitle
+set ::APG_clrbt     $::APG_int_colbutton
+set ::APG_colmsgrcv $::APG_int_colmsgrcv
+set ::APG_colmsgsnd $::APG_int_colmsgsnd
+set ::APG_colmsgwrn $::APG_int_colmsgwrn
+set ::APG_colmsgerr $::APG_int_colmsgerr
+
+###############################################################################
+
