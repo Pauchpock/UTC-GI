@@ -1,5 +1,5 @@
 # Create tf.txt and remove leading spaces and remove lines containing at least one number
-rm -f tf.txt idf.txt; cat ../TD1/output.xml| ./segmente_TT.pl -f | sort | uniq -c | sed 's/^\s*//' | sed -r '/.*?\s.*?[0-9].*?\s.*/d' > tf.txt
+rm -f tf.txt idf.txt; cat $1| ./segmente_TT.pl -f | sort | uniq -c | sed 's/^\s*//' | sed -r '/.*?\s.*?[0-9].*?\s.*/d' > tf.txt
 
 # Create df.txt
 cat tf.txt | cut -d' ' -f2 | cut -f1 | sort | uniq -c | sed -e 's/^\s*//' > df.txt
@@ -20,7 +20,7 @@ rm -f stoplist.txt; ./extractWordsBelowSpecificTFIDF.pl tfidf.txt > stoplist.txt
 rm -f removeWordsFromXML.pl; ./newcreeFiltre.pl stoplist.txt > removeWordsFromXML.pl && chmod +x removeWordsFromXML.pl
 
 # Create new XML without the words from the stop list
-rm -f newOutput.xml; ./removeWordsFromXML.pl ./../TD1/output.xml > newOutput.xml
+rm -f newOutput.xml; ./removeWordsFromXML.pl $1 > newOutput.xml
 
 # Create the successors and remove lines containing at least one number
 rm -f successeurs.txt; cat newOutput.xml| ./segmente_TT.pl | sort -u | sed '/[0-9]/d' | ./successeurs_P16.pl > successeurs.txt
@@ -37,4 +37,4 @@ rm -f lemmes.xml; ./replaceLemmesInXML.pl ./newOutput.xml > lemmes.xml
 # Generate reverse files
 rm -f reverse.date.txt; cat lemmes.xml| ./index.pl "date" > reverse.date.txt
 
-cat newOutput.xml| ./segmente_TT.pl -f | sort -u | sed -r '/(.*?)[0-9]+(.*?)\s+[0-9]+\.htm/d' | ./putAllWordsFromFile.pl
+rm -f final_output.txt; cat newOutput.xml| ./segmente_TT.pl -f | sort -u | sed -r '/(.*?)[0-9]+(.*?)\s+[0-9]+\.htm/d' | ./putAllWordsFromFile.pl > final_output.txt
