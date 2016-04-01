@@ -88,4 +88,46 @@ public interface LogoVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFcc(LogoParser.FccContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code haz}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitHaz(LogoParser.HazContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code aroule}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAroule(LogoParser.ArouleContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code mutl}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMutl(LogoParser.MutlContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code sum}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSum(LogoParser.SumContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code int}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInt(LogoParser.IntContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code parenthese}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParenthese(LogoParser.ParentheseContext ctx);
 }

@@ -1,4 +1,4 @@
-// Generated from grammar/Logo.g4 by ANTLR 4.5
+// Generated from Logo.g4 by ANTLR 4.4
 
   package logoparsing;
 
@@ -19,228 +19,228 @@ public class LogoBaseListener implements LogoListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterProgramme(LogoParser.ProgrammeContext ctx) { }
+	@Override public void enterHaz(@NotNull LogoParser.HazContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitProgramme(LogoParser.ProgrammeContext ctx) { }
+	@Override public void exitHaz(@NotNull LogoParser.HazContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterListe_instructions(LogoParser.Liste_instructionsContext ctx) { }
+	@Override public void enterBc(@NotNull LogoParser.BcContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitListe_instructions(LogoParser.Liste_instructionsContext ctx) { }
+	@Override public void exitBc(@NotNull LogoParser.BcContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAv(LogoParser.AvContext ctx) { }
+	@Override public void enterFcc(@NotNull LogoParser.FccContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAv(LogoParser.AvContext ctx) { }
+	@Override public void exitFcc(@NotNull LogoParser.FccContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTd(LogoParser.TdContext ctx) { }
+	@Override public void enterSum(@NotNull LogoParser.SumContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTd(LogoParser.TdContext ctx) { }
+	@Override public void exitSum(@NotNull LogoParser.SumContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTg(LogoParser.TgContext ctx) { }
+	@Override public void enterParenthese(@NotNull LogoParser.ParentheseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTg(LogoParser.TgContext ctx) { }
+	@Override public void exitParenthese(@NotNull LogoParser.ParentheseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLc(LogoParser.LcContext ctx) { }
+	@Override public void enterInt(@NotNull LogoParser.IntContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLc(LogoParser.LcContext ctx) { }
+	@Override public void exitInt(@NotNull LogoParser.IntContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBc(LogoParser.BcContext ctx) { }
+	@Override public void enterVe(@NotNull LogoParser.VeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBc(LogoParser.BcContext ctx) { }
+	@Override public void exitVe(@NotNull LogoParser.VeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVe(LogoParser.VeContext ctx) { }
+	@Override public void enterTd(@NotNull LogoParser.TdContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVe(LogoParser.VeContext ctx) { }
+	@Override public void exitTd(@NotNull LogoParser.TdContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRe(LogoParser.ReContext ctx) { }
+	@Override public void enterAroule(@NotNull LogoParser.ArouleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitRe(LogoParser.ReContext ctx) { }
+	@Override public void exitAroule(@NotNull LogoParser.ArouleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFpos(LogoParser.FposContext ctx) { }
+	@Override public void enterListe_instructions(@NotNull LogoParser.Liste_instructionsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFpos(LogoParser.FposContext ctx) { }
+	@Override public void exitListe_instructions(@NotNull LogoParser.Liste_instructionsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFcc(LogoParser.FccContext ctx) { }
+	@Override public void enterTg(@NotNull LogoParser.TgContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFcc(LogoParser.FccContext ctx) { }
+	@Override public void exitTg(@NotNull LogoParser.TgContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterHaz(LogoParser.HazContext ctx) { }
+	@Override public void enterRe(@NotNull LogoParser.ReContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitHaz(LogoParser.HazContext ctx) { }
+	@Override public void exitRe(@NotNull LogoParser.ReContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAroule(LogoParser.ArouleContext ctx) { }
+	@Override public void enterMutl(@NotNull LogoParser.MutlContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAroule(LogoParser.ArouleContext ctx) { }
+	@Override public void exitMutl(@NotNull LogoParser.MutlContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMutl(LogoParser.MutlContext ctx) { }
+	@Override public void enterAv(@NotNull LogoParser.AvContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMutl(LogoParser.MutlContext ctx) { }
+	@Override public void exitAv(@NotNull LogoParser.AvContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSum(LogoParser.SumContext ctx) { }
+	@Override public void enterLc(@NotNull LogoParser.LcContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSum(LogoParser.SumContext ctx) { }
+	@Override public void exitLc(@NotNull LogoParser.LcContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInt(LogoParser.IntContext ctx) { }
+	@Override public void enterProgramme(@NotNull LogoParser.ProgrammeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInt(LogoParser.IntContext ctx) { }
+	@Override public void exitProgramme(@NotNull LogoParser.ProgrammeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParenthese(LogoParser.ParentheseContext ctx) { }
+	@Override public void enterFpos(@NotNull LogoParser.FposContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParenthese(LogoParser.ParentheseContext ctx) { }
+	@Override public void exitFpos(@NotNull LogoParser.FposContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEveryRule(ParserRuleContext ctx) { }
+	@Override public void enterEveryRule(@NotNull ParserRuleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitEveryRule(ParserRuleContext ctx) { }
+	@Override public void exitEveryRule(@NotNull ParserRuleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void visitTerminal(TerminalNode node) { }
+	@Override public void visitTerminal(@NotNull TerminalNode node) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void visitErrorNode(ErrorNode node) { }
+	@Override public void visitErrorNode(@NotNull ErrorNode node) { }
 }

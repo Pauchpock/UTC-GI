@@ -138,4 +138,76 @@ public interface LogoListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFcc(LogoParser.FccContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code haz}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterHaz(LogoParser.HazContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code haz}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitHaz(LogoParser.HazContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code aroule}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterAroule(LogoParser.ArouleContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code aroule}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitAroule(LogoParser.ArouleContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code mutl}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterMutl(LogoParser.MutlContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code mutl}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitMutl(LogoParser.MutlContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code sum}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterSum(LogoParser.SumContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code sum}
+	 * labeled alternative in {@link LogoParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitSum(LogoParser.SumContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code int}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterInt(LogoParser.IntContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code int}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitInt(LogoParser.IntContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code parenthese}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterParenthese(LogoParser.ParentheseContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code parenthese}
+	 * labeled alternative in {@link LogoParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitParenthese(LogoParser.ParentheseContext ctx);
 }

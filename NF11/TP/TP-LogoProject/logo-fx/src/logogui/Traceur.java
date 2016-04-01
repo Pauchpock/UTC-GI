@@ -32,6 +32,10 @@ public class Traceur {
 		return (int) Math.round(a);
 	}
 	
+	/**
+	 * Avancer
+	 * @param r Distance
+	 */
 	public void avance(double r) {
 		double a = posx + r * Math.cos(teta) ;
 		double b = posy - r * Math.sin(teta) ;
@@ -48,37 +52,67 @@ public class Traceur {
 		posy = b;
 	}
 	
+	/**
+	 * Reculer
+	 * @param r Distance
+	 */
 	public void re(double r) {
 		avance(-r);
 	}
 	
+	/**
+	 * Tourne droite
+	 * @param r Rotation (angle en deg)
+	 */
 	public void td(double r) {
 		angle = (angle - toInt(r)) % 360;
 		setTeta();
 	}
 	
+	/**
+	 * Tourne gauche
+	 * @param r Rotation
+	 */
 	public void tg(double r) {
 		angle = (angle + toInt(r)) % 360;
 		setTeta();
 	}
 	
+	/**
+	 * Lève le crayon
+	 */
 	public void lc() {
 		leve_crayon = true;
 	}
 	
+	/**
+	 * Baisse le crayon
+	 */
 	public void bc() {
 		leve_crayon = false;
 	}
 	
+	/**
+	 * Efface l'écran
+	 */
 	public void ve() {
 		g.getChildren().clear();
 	}
 	
+	/**
+	 * Changer position absolue
+	 * @param x
+	 * @param y
+	 */
 	public void fpos(double x, double y) {
 		posx = x;
 		posy = y;
 	}
 	
+	/**
+	 * Changer couleur
+	 * @param c
+	 */
 	public void fcc(int c) {
 		switch (c) {
 		case 1:
