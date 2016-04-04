@@ -25,5 +25,7 @@ public class Lexique {
 		return s.toLowerCase();
 	}
 	
-	
+	public String getLemme(String s) {
+		return lexique.get(s);
+	}
 }

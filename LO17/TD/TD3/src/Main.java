@@ -9,8 +9,9 @@ public class Main {
 		System.out.println("Done.");
 		
 		System.out.println("Instantiating the lexique...");
+		Lexique lex = null;
 		try {
-			Lexique lex = new Lexique(read);
+			lex = new Lexique(read);
 		}
 		catch(Exception e) {
 			System.err.println("Error while instantiation the lexique.");
@@ -19,8 +20,21 @@ public class Main {
 		}
 		System.out.println("Done.");
 		
-		//Saisie s = new Saisie(System.in);
-		//s.read();
+		Saisie s = new Saisie(System.in);
+		s.prompt();
+		
+		String prompt = Lexique.toLowerCase(s.getChaine());
+		String tokens[] = prompt.split("\\s+");
+		
+		for (String str : tokens) {
+			String lemme = lex.getLemme(str);
+			if (lemme != null) {
+				System.out.println("Lemme trouvé pour le mot "+str+" : "+lemme);
+			}
+			else {
+				System.out.println("No lemme found for the word: "+str);
+			}
+		}
 	}
 
 }
