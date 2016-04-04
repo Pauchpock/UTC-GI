@@ -1,22 +1,32 @@
 import java.io.*;
+import java.util.StringTokenizer;
 
 class Saisie{
-     public static void main(String[] args) {
-     BufferedReader br=null;
-     String chaine;
-     try {
-          try {
-              br = new BufferedReader(new InputStreamReader(System.in));
-              System.out.print("saisie : ");
-              chaine=br.readLine();
-              System.out.println("j'ai saisi "+chaine);
-               } 
-          catch(EOFException e) {
-               br.close();
-               }
-          } 
-     catch(IOException e) {
-          System.out.println("IO Exception");
-          }
-     }
+	private InputStream in;
+	
+	public Saisie(InputStream in) {
+		this.in = in;
+	}
+	
+	public void read() {
+		BufferedReader br = null;
+		String chaine;
+		try {
+			try {
+				br = new BufferedReader(new InputStreamReader(this.in));
+		        System.out.print("Request: ");
+		        chaine=br.readLine();
+		        System.out.println("Processing \""+chaine+"\"...");
+		        
+		        //StringTokenizer st = new StringTokenizer(chaine); // not recommended according to official doc (Oracle)
+		        String[] tokens = chaine.split("\\s");
+		    } 
+		    catch(EOFException e) {
+		        br.close();
+		    }
+		} 
+		catch(IOException e) {
+		    System.out.println("IO Exception");
+		}
+	}
 }
