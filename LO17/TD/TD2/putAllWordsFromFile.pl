@@ -7,7 +7,7 @@ use utf8;
 
 @words;
 while (<>) {
-    /(.*?)\s+(.*)/; # $1 = word, $2 = file
+    /(.*)\s+(.*\.htm)/; # $1 = word, $2 = file
     $words{$2} .= $1."\t";
 }
 

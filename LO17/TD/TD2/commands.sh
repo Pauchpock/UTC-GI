@@ -37,4 +37,5 @@ rm -f lemmes.xml; ./replaceLemmesInXML.pl ./newOutput.xml > lemmes.xml
 # Generate reverse files
 rm -f reverse.date.txt; cat lemmes.xml| ./index.pl "date" > reverse.date.txt
 
-rm -f final_output.txt; cat newOutput.xml| ./segmente_TT.pl -f | sort -u | sed -r '/(.*?)[0-9]+(.*?)\s+[0-9]+\.htm/d' | ./putAllWordsFromFile.pl > final_output.txt
+# Generate reverse file for words and remove words containing at least one digit
+rm -f final_output.txt; cat ./lemmes.xml| ./segmente_TT.pl -f | sort -u | sed -r '/(.*?)[0-9]+(.*?)\s+[0-9]+\.htm/d' | ./putAllWordsFromFile.pl > final_output.txt
