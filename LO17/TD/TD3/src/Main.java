@@ -33,6 +33,9 @@ public class Main {
 			}
 			else {
 				System.out.println("No lemme found for the word: "+str);
+				for (String ss :lex.findBestLemmes(str)) {
+					System.out.println("Found this lemme as an alternative: "+ss);
+				}
 			}
 		}
 	}
