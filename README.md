@@ -13,4 +13,4 @@
 
 - Rapport : Dire si on indexe les nombres (oui ou non) et pourquoi: on ne les indexe pas
 - Rajouter des chop; dans tous NOS scrips perl?
-- Checker pourquoi newOutput.xml contient "° mondiale", ce qui induit un bug dans le script "putAll..." (une ligne en trop, commençant par '° mondiale')
+- ~~Checker pourquoi newOutput.xml contient "° mondiale", ce qui induit un bug dans le script "putAll..." (une ligne en trop, commençant par '° mondiale')~~

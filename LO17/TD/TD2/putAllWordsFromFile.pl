@@ -12,6 +12,7 @@ while (<>) {
 }
 
 while (($file,$wordss) = each(%words)) {
+    chop $wordss;
     print $file.": ".$wordss."\n";
 }
 
