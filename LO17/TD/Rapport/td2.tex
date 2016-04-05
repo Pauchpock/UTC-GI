@@ -4,26 +4,79 @@ Le but de ce second TD est d'utiliser le fichier XML que nous avons produit lors
 
 \begin{enumerate}
   \item \textbf{segmente\_TT.pl}: permet, à partir d'un fichier XML, d'extraire tous les mots individuellement contenus entre les balises \lstinline{<titre>} ou \lstinline{<texte>}.
-  \item \textbf{newcreeFiltre.pl}: permet de ...
+  \item \textbf{newcreeFiltre.pl}: permet de créer un script Perl à partir d'un fichier à une ou deux colonnes : ce script généré remplacera les mots de la première colonne par ceux de la seconde (ou par rien s'il n'y a qu'une colonne) dans un fichier donné en paramètre à ce script.
+  \item \textbf{successeurs.pl} et \textbf{filtronc.pl} ; ces deux scripts s'utilisent de pair, afin de :
+  \begin{enumerate}
+    \item Générer la liste des succésseurs pour chaque lettre des mots d'une liste de mots.
+    \item Créer à partir des résultats obtenus à un fichier à deux colonnes associant un mot à un lemme.
+  \end{enumerate}
+  \item \textbf{index.pl}: permet de créer à partir d'un corpus (XML) un fichier inverse sur une balise donnée en argument
+  \item \textbf{indexText.pl} ; permet de créer un fichier inverse à partir d'un flux de données (entrée standard) de la forme ``mot rubrique fichier numéro''.
 \end{enumerate}
 
 \section{Obtenir les tf}
-
-Grâce au premier script, nous sommes capable d'obtenir la liste des mots contenus dans les textes et titres de tous les documents HTML. Puis, à l'aide des commandes Unix telles que \lstinline{sort} et \lstinline{uniq} (avec l'argument \lstinline{-c}), nous obtenons pour chaque mot son \textbf{tf}.
-
 \fakeshell
+
+Grâce au premier script, nous sommes capable d'obtenir la liste des mots contenus dans les textes et titres de tous les documents HTML. Puis, à l'aide des commandes Unix telles que \lstinline{sort} et \lstinline{uniq} (avec l'argument \lstinline{-c}), nous obtenons pour chaque mot son \textbf{tf} (nombre d'occurences).
+
 \begin{lstlisting}
 cat ../TD1/output.xml| ./segmente_TT.pl -f | sort | uniq -c | sed -e 's/^\s*//' > tf.txt
 \end{lstlisting}
 
-La commande \lstinline{sed} nous permet de supprimer les espaces inutiles en début de chaîne.
+La commande \lstinline{sed} nous permet de supprimer les espaces inutiles en début de chaîne, qui sont automatiquement générés par les commandes.
 
-\section{Obtenir les idf}
+\section{Obtenir les df}
 
-Ensuite, pour obtenir les \textbf{idf}, nous avons deux possibilités: réutiliser le fichier \textbf{tf.txt} directement ou repartir du fichier XML produit lors du TD1. Voici comment faire à partir du fichier \textbf{tf.txt}:
+Ensuite, pour obtenir les \textbf{idf} (nombre de fichiers dans lesquel un mot apparaît), nous avons deux possibilités: réutiliser le fichier \textbf{tf.txt} directement ou repartir du fichier XML produit lors du TD1. Voici comment faire à partir du fichier \textbf{tf.txt}:
 
 \begin{lstlisting}
-cat tf.txt | cut -d' ' -f2 | cut -f1 | sort | uniq -c | sed -e 's/^\s*//' > idf.txt
+cat tf.txt | cut -d' ' -f2 | cut -f1 | sort | uniq -c | sed -e 's/^\s*//' > df.txt
 \end{lstlisting}
 
-La commande \lstinline{cut} nous permet de sélectionner uniquement certaines ``colonnes'' de notre fichier source.
+Ici à nouveau nous retirons les espaces en début de chaine. La commande \lstinline{cut} nous permet de sélectionner uniquement certaines ``colonnes'' de notre fichier source.
+
+\section{idf}
+
+Ensuite, nous devons calculer les \textbf{idf} des mots. Cela implique notamment de calculer un logarithme 10. Nous avons donc créer un script Perl qui prend en argument notre fichier texte contenant les df. Le sortie standard de ce script est redirigée vers un fichier \lstinline{idf.txt}.
+
+\perl
+\begin{lstlisting}
+sub log10 {
+    my $n = shift;
+    return log($n)/log(10);
+}
+
+while (<>) {
+    /(\d+)\s+(.*)/;
+    print $2."\t".log10(326/$1)."\n";
+}
+\end{lstlisting}
+
+\section{tf*idf}
+
+La dernière étape avant de passer aux stop-lists est de caculer le quotient \textbf{tf*idf}. Cela se fait très facilement grâce à un script Perl utilisant un tableau associatif. Le script traite d'abord un fichier texte contenant les idf, en les stockant dans ce tableau. Ensuite, le script traire le fichier concernant les tf: c'est la que la multiplication est faite et que le résultat est affiché sur la sortie standard (que l'on va bien sûr rediriger vers un fichier).
+
+\begin{lstlisting}
+# Usage: perl % idf.txt tf.txt
+
+@mots;
+while (<>) {
+    if ($ARGV =~ m/idf/) {
+        /(.*?)\s+(\d+(\.\d+)?)/;
+        $mots{$1} = $2;
+    }
+    elsif ($ARGV =~ m/tf/) {
+        /(\d+)\s+(.*?)\s+(.*)/;
+        $nb = $1;
+        $mot = $2;
+        $file = $3;
+        $tfidf = $nb * ($mots{$mot});
+        print $file."\t".$mot."\t".$tfidf."\n";
+    }
+}
+\end{lstlisting}
+\fakeshell
+
+\section{Lemmes}
+
+Maintenant, il s'agit de générer une stoplist afin de filtrer le fichier XML généré lors du TD1.
