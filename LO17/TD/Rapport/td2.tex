@@ -77,6 +77,36 @@ while (<>) {
 \end{lstlisting}
 \fakeshell
 
-\section{Lemmes}
+\section{Stop-liste}
 
-Maintenant, il s'agit de générer une stoplist afin de filtrer le fichier XML généré lors du TD1.
+Maintenant, il s'agit de générer une stoplist afin de filtrer le fichier XML généré lors du TD1. Nous avons choisi un seuil en dessous duquel les mots seront ajoutés à la stop liste car considérés comme n'apportant rien au document (par exemple des déterminantes, des mots de liaison, etc.). Une script Perl nous permet de faire cela :
+
+\perl
+\begin{lstlisting}
+# Usage: perl % tfidf.txt
+
+@words;
+while (<>) {
+    /(.*?)\s(.*?)\s(\d+(\.\d+)?)/;
+    if ($3 lt '0.79189260882435') {
+        $words{$2} = 1;
+    }
+}
+
+while (($key,$value) = each(%words)) {
+    print $key."\n";
+}
+\end{lstlisting}
+
+Puis, à l'aide du script fourni n°2, nous pouvons créer un script Perl qui supprimera automatiquement les mots présents dans notre stop-liste, afin de filtrer le fichier XML.
+
+\fakeshell
+\begin{lstlisting}
+# Create script to remove words
+rm -f removeWordsFromXML.pl; ./newcreeFiltre.pl stoplist.txt > removeWordsFromXML.pl && chmod +x removeWordsFromXML.pl
+
+# Create new XML without the words from the stop list
+rm -f newOutput.xml; ./removeWordsFromXML.pl corpus.xml > newOutput.xml
+\end{lstlisting}
+
+
