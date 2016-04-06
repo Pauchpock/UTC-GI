@@ -50,7 +50,7 @@ DEMO
 <br />
 Essayez-moi à :
 <br />
-http://<span id="ip"></span>:8080
+<a target="_blank" id="ip_a" href="">http://<span id="ip"></span>:8080</a>
 
 <script>
     var xmlhttp = new XMLHttpRequest();
@@ -65,6 +65,7 @@ http://<span id="ip"></span>:8080
         else {
             hostipInfo = xmlhttp.responseText;
             document.querySelector("#ip").innerHTML = hostipInfo;
+            document.querySelector("#ip_a").href = "http://"+hostipInfo+":8080";
         }
     };
     xmlhttp.send();

@@ -286,7 +286,7 @@
 </section>
 <section id="desktop" class="slide level2">
 <h1>Desktop</h1>
-<p><br /> DEMO <br /> <br /> Essayez-moi à : <br /> http://<span id="ip"></span>:8080</p>
+<p><br /> DEMO <br /> <br /> Essayez-moi à : <br /> <a target="_blank" id="ip_a" href="">http://<span id="ip"></span>:8080</a></p>
 <script>
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET","http://127.0.0.1:8080/ip.php",true);
@@ -300,6 +300,7 @@
         else {
             hostipInfo = xmlhttp.responseText;
             document.querySelector("#ip").innerHTML = hostipInfo;
+            document.querySelector("#ip_a").href = "http://"+hostipInfo+":8080";
         }
     };
     xmlhttp.send();
