@@ -3,6 +3,7 @@
 \usepackage[T1]{fontenc} % font encoding, allows accents (T1 font encoding is an 8-bit encoding)
 \usepackage[top=2.5cm,bottom=2.5cm,outer=2.5cm,inner=2.5cm]{geometry} % http://tex.stackexchange.com/questions/62311/a4paper-where-should-i-declare-it-in-document-class-or-geometry // another option: papersize={21cm,29.7cm}
 \usepackage[french]{babel} % translate everything in the desired language: table of contents, etc. 'english' can be replaced with 'francais'
+\usepackage[toc,page,header]{appendix} % cool appendices
 \usepackage{graphicx} % images management
 \usepackage{wrapfig} % floating images
 \usepackage[format=plain,labelfont=bf,font=small,justification=centering,margin=10pt]{caption} % allow multiline captions in figures,
@@ -55,4 +56,9 @@
 \input{td1}
 \input{td2}
 \input{conclusion}
+
+\begin{appendices}
+\input{appendices}
+\end{appendices}
+
 \end{document}

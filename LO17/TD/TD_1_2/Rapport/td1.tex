@@ -1,17 +1,17 @@
 \chapter{TD1: Génération XML}
 
-L'objectif de ce TD était de s'initier au ``\textit{parsing}'' en Perl et d'être capable d'extraire certaines informations (uniques ou non) d'un seul document d'abord, puis ensuite de plusieurs. Nous avions un peu plus de 300 pages HTML contenant toute un article issu d'un même site scientifique. Il nous fallait extraire des données ``uniques'' comme le numéro de l'article ou sa rubrique, et des données présentes une (parfois zéro) ou plusieurs fois, comme les paragraphes du texte principal ou les images présentes.
+L'objectif de ce TD était de s'initier au ``\textit{parsing}'' en Perl et d'être capable d'extraire certaines informations (uniques ou non) d'un seul document d'abord, puis ensuite de plusieurs. Nous avions un peu plus de 326 pages HTML contenant toutes un article issu d'un même site scientifique. Il nous fallait extraire des données ``uniques'' comme le numéro de l'article ou sa rubrique, et des données présentes une (parfois zéro) ou plusieurs fois, comme les paragraphes du texte principal ou les images présentes.
 
 \section{Méthodologie employée}
 
 Pour la totalité des éléments à récupérer, nous avons utilisé des \textit{regex} (sauf pour le nom du fichier que nous récupérerions dans \lstinline{$ARGV}).
 
-Pour produire notre XML, nous avons décidé de tout afficher sur la sortie standard. Il s'agira ensuite de rédiriger cette sortie standard dans un fichier grâce à l'opérateur \lstinline{>} d'Unix.
+Pour produire notre XML, nous avons décidé de tout afficher sur la sortie standard. Il s'agira ensuite de rédiriger cette sortie standard dans un fichier grâce à l'opérateur \lstinline{>} d'Unix. Cela est bien plus simple que manipuler l'écriture de fichier(s) en Perl.
 
 \subsection{Repérer un élémént d'intérêt}
 
-Pour chaque élément unique qu'il nous fallait récupérer, nous avons essayer de trouver la structure de balises HTML avoisinante qui soit unique. Pour cela, nous avons beaucoup fait appel à la structure \lstinline{.*?} (n'importe quel caractère zéro, une ou plusieurs fois) dans son mode \textit{lazy}. Cela nous a permis de simplifier nos \textit{regex}.\\
-Voyons quelques exemples. Pour récupérer le numéro, la structure HTML autour était suffisamment simple pour ne pas utiliser ``n'importe quel caractère'' :
+Pour chaque élément unique qu'il nous fallait récupérer, nous avons essayé de trouver la structure de balises HTML avoisinante qui soit unique. Pour cela, nous avons beaucoup fait appel à la structure \lstinline{.*?} (n'importe quel caractère zéro, une ou plusieurs fois) dans son mode \textit{lazy}. Cela nous a permis de simplifier nos \textit{regex}. Voyons quelques exemples.\\
+Pour récupérer le numéro, la structure HTML autour était suffisamment simple pour ne pas avoir besoin d'utiliser \lstinline{.*?} :
 
 \perl
 \begin{lstlisting}
@@ -23,6 +23,7 @@ En revanche, nous en avons eu besoin pour la partie contact :
 \begin{lstlisting}
 $body =~ /Pour en savoir plus, contacts :.*?<p class="style44"><span class="style85">(.*?)<\/span>/s;
 \end{lstlisting}
+L'utilisation de parenthèses nous permet d'identifier le ou les groupes d'intérêt.
 
 \subsection{Lecture du contenu d'un fichier}
 
@@ -30,7 +31,7 @@ Nous avons été capables de récupérer le contenu d'un fichier donné en argum
 
 \subsection{Lecture du contenu de plusieurs fichiers}
 
-Pour pouvoir récupérer toutes les lignes de chaque fichier tout en dissociant les fichiers, nous avons du opter pour une technique légèrement différente.
+Pour pouvoir récupérer toutes les lignes de chaque fichier tout en dissociant les fichiers, nous avons du opter pour une technique légèrement différente :
 
 \begin{enumerate}
   \item Nous créons une tableau.
@@ -63,14 +64,14 @@ while (($fichier,$html) = each(%htmls)) {
 print "</corpus>\n";
 \end{lstlisting}
 
-À noter que nous n'avons pas utilisé la fonction \lstinline{chop} pour les lignes de l'\textit{input}. Cela n'a pas beaucoup d'incidence, il nous faudra seulement penser dans nos futurs regex à prendre en compte le caractère \lstinline{\n} (souvent en utilisant l'option \lstinline{/s}).
+À noter que nous n'avons pas utilisé la fonction \lstinline{chop} pour les lignes de l'\textit{input}. Cela n'a pas beaucoup d'incidence, il nous faudra seulement penser dans nos futures regex à prendre en compte le caractère \lstinline{\n} (souvent en utilisant l'option \lstinline{/s}).
 
 \section{Commandes Unix}
 
 \subsection{Génération du XML}
 \fakeshell
 
-Voici la commande Unix utilisée pour récupérer la sortie standard de notre programme et la rediriger dans un fichier XML. Il faut également préciser que nous avons rendu notre programme exécutable grâce à \lstinline{chmod}. De plus, nous utilisons le script \lstinline{convert.pl} pour convertir les entités HTML en caractère Unicode.
+Voici la commande Unix utilisée pour récupérer la sortie standard de notre programme et la rediriger dans un fichier XML. Il faut également préciser que nous avons rendu notre programme exécutable grâce à \lstinline{chmod}. De plus, nous utilisons le script \lstinline{convert.pl} pour convertir les entités HTML en caractères Unicode.
 
 \begin{lstlisting}
 ./td1.pl BULLETINS/*.htm | perl convert.pl > output.xml
@@ -91,4 +92,7 @@ Nous avons également utilisé quelques commandes Unix supplémentaires dans le 
 
 Ce n'est cependant pas la meilleure technique puisque nous réutilisons les mêmes \textit{regex} que celles utilisées dans notre script Perl.\\
 Une meilleure solution consisterait à compter toutes les balises image dans les fichiers et à soustraire le nombre d'images qui ne font pas partie des articles (celles sur les côtés par exemple).
-% pour l'index, parler de la granularité (bulletin, article) (question 1.1)
+
+\section{Code source}
+
+L'intégralité du code source de ce TD1, commenté, est trouvable en annexes.
