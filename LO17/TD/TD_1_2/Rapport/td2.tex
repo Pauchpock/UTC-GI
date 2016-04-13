@@ -155,8 +155,76 @@ Puis, à l'aide du script fourni n°2, nous pouvons créer un script Perl qui su
 \fakeshell
 \begin{lstlisting}
 # Create script to remove words
-rm -f removeWordsFromXML.pl; ./newcreeFiltre.pl stoplist.txt > removeWordsFromXML.pl && chmod +x removeWordsFromXML.pl
+./newcreeFiltre.pl stoplist.txt > removeWordsFromXML.pl && chmod +x removeWordsFromXML.pl
 
 # Create new XML without the words from the stop list
-rm -f newOutput.xml; ./removeWordsFromXML.pl corpus.xml > newOutput.xml
+./removeWordsFromXML.pl corpus.xml > newOutput.xml
 \end{lstlisting}
+
+\section{Création des lemmes et remplacement des mots}
+
+Il convient ensuite des créer les lemmes. Pour cela, nous allons utiliser les scripts fournis n°3.a et 3.b, en prénant soin de toujours retirer les mots contenants des chiffres avec \lstinline{sed}:
+
+\fakeshell
+\begin{lstlisting}
+# Create the successors and remove lines containing at least one number
+cat newOutput.xml| ./segmente_TT.pl | sort -u | sed '/[0-9]/d' | ./successeurs_P16.pl > successeurs.txt
+
+# Create the lemmes
+./filtronc_P16.pl -v successeurs.txt successeurs.filtered.txt
+\end{lstlisting}
+
+Au regard des résultats, on constate que tout n'est pas parfait. Bien souvent, certains mots ayant la même racine n'obtiennent pas le même lemme (la taille des mots peut expliquer les différences), par exemple :
+
+\begin{lstlisting}
+mange    mange
+mangent  mangent
+mangeons mangeons
+manger   manger
+mangeur  mangeur
+mangeurs mangeur
+\end{lstlisting}
+
+\medskip
+
+La prochaine étape est simplement le remplacement des mots par leur lemmes dans le corpus XML modifié précédemment. Il nous faut pour cela créer un script Perl à l'aide du script fourni n°2 :
+
+\begin{lstlisting}
+# Create the script to replace the words with their lemmes in the XML
+./newcreeFiltre.pl successeurs.filtered.txt > replaceLemmesInXML.pl && chmod +x replaceLemmesInXML.pl
+
+# Run the script
+./replaceLemmesInXML.pl ./newOutput.xml > lemmes.xml
+\end{lstlisting}
+
+\section{Création des fichiers inverses}
+
+La dernière étape est maintenant de créer des fichiers inverses. Nous avons pour cela à disposition les scripts n°4 et 5. Nous prendrons encore le soin de retirer les mots contenants des chiffres.
+
+\subsection{Créer un fichier inverse sur la date à l'aide du script \lstinline{index.pl}}
+
+\fakeshell
+\begin{lstlisting}
+cat lemmes.xml| ./index.pl "date" > reverse.date.txt
+\end{lstlisting}
+
+Nous aurions pu choisir un autre critère que la date (comme la rubrique par exemple).
+
+\subsection{Créer un fichier inverse sur le mot à l'aide du script \lstinline{indexText.pl}}
+
+\begin{lstlisting}[literate={°}{\textdegree}1]
+cat ./lemmes.xml| ./segmente_TT.pl -f -n -r | sed -r '/^(\w*?)[0-9]+.*\.htm/d' | sort -u |./indexTexte.pl|sort > rev.mot.txt
+\end{lstlisting}
+
+\noindent Exemple tronqué d'\textit{output} :
+\begin{lstlisting}
+absorption  en direct des laboratoires  73436.htm   282 focus   72631.htm   279
+abstrai     focus                       70161.htm   270 focus   72932.htm   280
+abstr       au coeur des régions        69817.htm   269 focus   70420.htm   271
+absurde     focus                       73684.htm   283
+abusent     a lire                      72401.htm   278
+\end{lstlisting}
+
+\section{Code source}
+
+L'intégralité du code source de ce TD2, commenté, est trouvable en annexes.
