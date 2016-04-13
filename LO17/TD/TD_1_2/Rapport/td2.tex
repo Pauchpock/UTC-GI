@@ -1,6 +1,6 @@
 \chapter{TD2: Indexation}
 
-Le but de ce second TD est d'utiliser le fichier XML que nous avons produit lors du TD1 afin de créer des index (des fichiers inverses). Pour cela, nous avons à notre disposition plusieurs scripts Perl.
+Le but de ce second TD est d'utiliser le fichier XML que nous avons produit lors du TD1 afin de créer des index (des fichiers inverses). Pour cela, nous avons à notre disposition plusieurs scripts Perl :
 
 \begin{enumerate}
   \item \textbf{segmente\_TT.pl}: permet, à partir d'un fichier XML, d'extraire tous les mots individuellement contenus entre les balises \lstinline{<titre>} ou \lstinline{<texte>}.
@@ -8,16 +8,24 @@ Le but de ce second TD est d'utiliser le fichier XML que nous avons produit lors
   \item \textbf{successeurs.pl} et \textbf{filtronc.pl} ; ces deux scripts s'utilisent de pair, afin de :
   \begin{enumerate}
     \item Générer la liste des succésseurs pour chaque lettre des mots d'une liste de mots.
-    \item Créer à partir des résultats obtenus à un fichier à deux colonnes associant un mot à un lemme.
+    \item Créer, à partir des résultats obtenus avec \textbf{successeurs.pl}, un fichier à deux colonnes associant un mot à un lemme.
   \end{enumerate}
   \item \textbf{index.pl}: permet de créer à partir d'un corpus (XML) un fichier inverse sur une balise donnée en argument
   \item \textbf{indexText.pl} ; permet de créer un fichier inverse à partir d'un flux de données (entrée standard) de la forme ``mot rubrique fichier numéro''.
 \end{enumerate}
 
-\section{Obtenir les tf}
+\section{Choix de l'unité documentaire}
+
+L'unité documentaire choisie est \textbf{un document = un article}. Cela nous permettra de considérer que nous avons 326 documents (N = 326, dans le calcul de \textbf{idf}), en ne prenant en compte que le titre et le texte. Selon nous, cela nous permet d'avoir un c\oe{}fficient plus précis au regard de l'ensemble des articles.
+
+\section{Choix des mots à conserver}
 \fakeshell
 
-Grâce au premier script, nous sommes capable d'obtenir la liste des mots contenus dans les textes et titres de tous les documents HTML. Puis, à l'aide des commandes Unix telles que \lstinline{sort} et \lstinline{uniq} (avec l'argument \lstinline{-c}), nous obtenons pour chaque mot son \textbf{tf} (nombre d'occurences).
+Pour toute la suite, nous avons décidé de ne traîter que des ``vrais'' mots, c'est-à-dire composés uniquement de lettres. Ainsi, dans les commandes à venir, nous exclurons \textbf{tous les mots contenant au moins un chiffre} grâce à la commande \lstinline{sed}. Effectivement, ces mots n'ont généralement aucun intérêt (par exemple ``100ème'').
+
+\section{Obtenir les tf}
+
+Grâce au premier script, nous sommes capable d'obtenir la liste des mots contenus dans les textes et titres de tous les documents HTML. Puis, à l'aide des commandes Unix telles que \lstinline{sort} et \lstinline{uniq} (avec l'argument \lstinline{-c}, pour compter le nombre d'occurences de chaque mot), nous obtenons pour chaque mot son \textbf{tf} (nombre d'occurences d'un mot dans un document donné).
 
 \begin{lstlisting}
 cat ../TD1/output.xml| ./segmente_TT.pl -f | sort | uniq -c | sed -e 's/^\s*//' > tf.txt
@@ -25,19 +33,41 @@ cat ../TD1/output.xml| ./segmente_TT.pl -f | sort | uniq -c | sed -e 's/^\s*//' 
 
 La commande \lstinline{sed} nous permet de supprimer les espaces inutiles en début de chaîne, qui sont automatiquement générés par les commandes.
 
+\medskip
+
+\noindent Exemple tronqué d'\textit{output} :
+\begin{lstlisting}
+5 a  67068.htm
+16 à 67068.htm
+2 a  67071.htm
+7 à  67071.htm
+8 a  67383.htm
+12 à 67383.htm
+\end{lstlisting}
+
 \section{Obtenir les df}
 
-Ensuite, pour obtenir les \textbf{idf} (nombre de fichiers dans lesquel un mot apparaît), nous avons deux possibilités: réutiliser le fichier \textbf{tf.txt} directement ou repartir du fichier XML produit lors du TD1. Voici comment faire à partir du fichier \textbf{tf.txt}:
+Ensuite, pour obtenir les \textbf{df} (nombre de docuemnts dans lesquel un mot apparaît), nous avons deux possibilités: réutiliser le fichier \textbf{tf.txt} directement ou repartir du fichier XML produit lors du TD1. Voici comment faire à partir du fichier \textbf{tf.txt}:
 
 \begin{lstlisting}
 cat tf.txt | cut -d' ' -f2 | cut -f1 | sort | uniq -c | sed -e 's/^\s*//' > df.txt
 \end{lstlisting}
 
-Ici à nouveau nous retirons les espaces en début de chaine. La commande \lstinline{cut} nous permet de sélectionner uniquement certaines ``colonnes'' de notre fichier source.
+Ici à nouveau nous retirons les espaces en début de chaine. La commande \lstinline{cut} nous permet de sélectionner uniquement certaines ``colonnes'' de notre fichier source (ici, le chaînement des deux \lstinline{cut} nous permet de récupérer uniquement la deuxième colonne, c'est-à-dire les mots).
+
+\medskip
+\noindent Exemple tronqué d'\textit{output} :
+\begin{lstlisting}
+244 a
+326 à
+1 aarhus
+1 abandonnées
+2 abandonner
+\end{lstlisting}
 
 \section{idf}
 
-Ensuite, nous devons calculer les \textbf{idf} des mots. Cela implique notamment de calculer un logarithme 10. Nous avons donc créer un script Perl qui prend en argument notre fichier texte contenant les df. Le sortie standard de ce script est redirigée vers un fichier \lstinline{idf.txt}.
+Ensuite, nous devons calculer les \textbf{idf} des mots. Cela implique notamment de calculer un logarithme 10. Nous avons donc créé un script Perl qui prend en argument notre fichier texte contenant les \textbf{df}. Le sortie standard de ce script est redirigée vers un fichier \textbf{idf.txt}.
 
 \perl
 \begin{lstlisting}
@@ -52,9 +82,20 @@ while (<>) {
 }
 \end{lstlisting}
 
+\medskip
+
+\noindent Exemple tronqué d'\textit{output} :
+\begin{lstlisting}
+a           0.12582777372921
+à           0
+aarhus      2.51321760006794
+abandonnées 2.51321760006794
+abandonner  2.21218760440396
+\end{lstlisting}
+
 \section{tf*idf}
 
-La dernière étape avant de passer aux stop-lists est de caculer le quotient \textbf{tf*idf}. Cela se fait très facilement grâce à un script Perl utilisant un tableau associatif. Le script traite d'abord un fichier texte contenant les idf, en les stockant dans ce tableau. Ensuite, le script traire le fichier concernant les tf: c'est la que la multiplication est faite et que le résultat est affiché sur la sortie standard (que l'on va bien sûr rediriger vers un fichier).
+La dernière étape avant de passer aux stop-lists est de caculer le quotient \textbf{tf*idf}. Cela se fait très facilement grâce à un script Perl utilisant un tableau associatif. Le script traite d'abord un fichier texte contenant les \textbf{idf}, en les stockant dans ce tableau. Ensuite, le script traire le fichier concernant les \textbf{tf}: c'est la que la multiplication est faite et que le résultat est affiché sur la sortie standard (que l'on va bien sûr rediriger vers un fichier).
 
 \begin{lstlisting}
 # Usage: perl % idf.txt tf.txt
@@ -77,9 +118,20 @@ while (<>) {
 \end{lstlisting}
 \fakeshell
 
+\medskip
+
+\noindent Exemple tronqué d'\textit{output} :
+\begin{lstlisting}
+67068.htm	à	0
+67068.htm	de	0
+67068.htm	et	0
+67068.htm	l	0
+\end{lstlisting}
+
+
 \section{Stop-liste}
 
-Maintenant, il s'agit de générer une stoplist afin de filtrer le fichier XML généré lors du TD1. Nous avons choisi un seuil en dessous duquel les mots seront ajoutés à la stop liste car considérés comme n'apportant rien au document (par exemple des déterminantes, des mots de liaison, etc.). Une script Perl nous permet de faire cela :
+Maintenant, il s'agit de générer une stoplist afin de filtrer le fichier XML généré lors du TD1. Nous avons choisi un seuil (0.79189260882435 nous a semblé correct, au regard du fichier régéré auparavant) en dessous duquel les mots seront ajoutés à la stop liste car considérés comme n'apportant rien au document (par exemple des déterminantes, des mots de liaison, etc.). Un script Perl nous permet de faire cela :
 
 \perl
 \begin{lstlisting}
@@ -108,6 +160,3 @@ rm -f removeWordsFromXML.pl; ./newcreeFiltre.pl stoplist.txt > removeWordsFromXM
 # Create new XML without the words from the stop list
 rm -f newOutput.xml; ./removeWordsFromXML.pl corpus.xml > newOutput.xml
 \end{lstlisting}
-
-
-% pour l'index, parler de la granularité (bulletin, article) (question 1.1)
