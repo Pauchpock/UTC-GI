@@ -212,6 +212,8 @@ Nous aurions pu choisir un autre critère que la date (comme la rubrique par exe
 
 \subsection{Créer un fichier inverse sur le mot à l'aide du script \lstinline{indexText.pl}}
 
+Il sera important ici de n'avoir que des lignes uniques pour ne pas créer de problème (un mot qui apparaît plusieurs fois dans un même fichier ne doit donner lieu qu'à une seule ligne).
+
 \begin{lstlisting}[literate={°}{\textdegree}1]
 cat ./lemmes.xml| ./segmente_TT.pl -f -n -r | sed -r '/^(\w*?)[0-9]+.*\.htm/d' | sort -u |./indexTexte.pl|sort > rev.mot.txt
 \end{lstlisting}

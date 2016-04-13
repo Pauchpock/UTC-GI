@@ -1,4 +1,4 @@
-% Usage: ./commands.sh corpus.xml
+# Usage: ./commands.sh corpus.xml
 
 # Create tf.txt and remove leading spaces and remove lines containing at least one number
 rm -f tf.txt idf.txt; cat $1| ./segmente_TT.pl -f | sort | uniq -c | sed 's/^\s*//' | sed -r '/.*?\s.*?[0-9].*?\s.*/d' > tf.txt
