@@ -95,7 +95,7 @@ abandonner  2.21218760440396
 
 \section{tf*idf}
 
-La dernière étape avant de passer aux stop-lists est de caculer le quotient \textbf{tf*idf}. Cela se fait très facilement grâce à un script Perl utilisant un tableau associatif. Le script traite d'abord un fichier texte contenant les \textbf{idf}, en les stockant dans ce tableau. Ensuite, le script traire le fichier concernant les \textbf{tf}: c'est la que la multiplication est faite et que le résultat est affiché sur la sortie standard (que l'on va bien sûr rediriger vers un fichier).
+La dernière étape avant de passer aux stop-listes est de caculer le quotient \textbf{tf*idf}. Cela se fait très facilement grâce à un script Perl utilisant un tableau associatif. Le script traite d'abord un fichier texte contenant les \textbf{idf}, en les stockant dans ce tableau. Ensuite, le script traite le fichier concernant les \textbf{tf}: c'est là que la multiplication est faite et que le résultat est affiché sur la sortie standard (que l'on va bien sûr rediriger vers un fichier).
 
 \begin{lstlisting}
 # Usage: perl % idf.txt tf.txt
@@ -131,7 +131,7 @@ while (<>) {
 
 \section{Stop-liste}
 
-Maintenant, il s'agit de générer une stoplist afin de filtrer le fichier XML généré lors du TD1. Nous avons choisi un seuil (0.79189260882435 nous a semblé correct, au regard du fichier régéré auparavant) en dessous duquel les mots seront ajoutés à la stop liste car considérés comme n'apportant rien au document (par exemple des déterminantes, des mots de liaison, etc.). Un script Perl nous permet de faire cela :
+Maintenant, il s'agit de générer une stop liste afin de filtrer le fichier XML généré lors du TD1. Nous avons choisi un seuil (0.79189260882435 nous a semblé correct, au regard du fichier régéré auparavant) en dessous duquel les mots seront ajoutés à la stop liste car considérés comme n'apportant rien au document (par exemple des déterminantes, des mots de liaison, etc.). Un script Perl que nous avons écrit nous permet de faire cela :
 
 \perl
 \begin{lstlisting}
