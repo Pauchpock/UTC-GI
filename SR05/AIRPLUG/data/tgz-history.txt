@@ -1,4 +1,0 @@
-tgz-pub dans /home/abuisset/Airplug/data sur pccaremba01 le mardi 30 juin 2009 à 11h59:48
-tgz-pub dans /home/ducourth/SOURCES/IVC/OCT10/data sur mouette le jeudi 07 octobre 2010 à 18h05:45
-tgz-dev dans /home/ducourth/SOURCES/IVC/OCT10/data sur mouette le jeudi 07 octobre 2010 à 18h05:50
-tgz-skl dans /home/ducourth/SOURCES/IVC/OCT10/data sur mouette le jeudi 07 octobre 2010 à 18h05:53
