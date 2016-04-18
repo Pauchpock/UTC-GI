@@ -1,8 +1,14 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Main {
 
 	public static void main(String[] args) {
+		if (args.length < 1) {
+			System.err.println("Missing argument: file (corpus XML)");
+			System.exit(1);
+		}
+		
 		System.out.println("Reading the lexique file...");
 		Cat c = new Cat(args[0]);
 		ArrayList<String> read = c.read();
@@ -23,18 +29,24 @@ public class Main {
 		Saisie s = new Saisie(System.in);
 		s.prompt();
 		
-		String prompt = Lexique.toLowerCase(s.getChaine());
+		String prompt = s.getChaine().toLowerCase();
 		String tokens[] = prompt.split("\\s+");
 		
 		for (String str : tokens) {
 			String lemme = lex.getLemme(str);
 			if (lemme != null) {
-				System.out.println("Lemme trouvé pour le mot "+str+" : "+lemme);
+				System.out.println("Lemme found for the word: "+str+" : "+lemme);
 			}
 			else {
-				System.out.println("No lemme found for the word: "+str);
-				for (String ss :lex.findBestLemmes(str)) {
-					System.out.println("Found this lemme as an alternative: "+ss);
+				System.out.println("No lemme found for the word: "+str+", searching candidates...");
+				HashSet<String> bestLemmes = lex.findBestLemmes(str);
+				if (bestLemmes.size() == 0) {
+					System.err.println("No lemme found in the lexique for this word");
+				}
+				else {
+					for (String ss : bestLemmes) {
+						System.out.println("Found this lemme as an alternative: "+ss);
+					}
 				}
 			}
 		}

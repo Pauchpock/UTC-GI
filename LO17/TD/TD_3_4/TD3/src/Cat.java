@@ -1,6 +1,11 @@
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Read a file
+ * @author romain
+ *
+ */
 class Cat{
 	private String in;
 	
