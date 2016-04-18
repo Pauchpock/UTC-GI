@@ -53,6 +53,7 @@ public class Main {
 				for (String ss : bestLemmes) {
 					System.out.println("Levenshtein: "+ss);
 				}
+				System.out.println("Best match: "+lex.closestMacht(str, lex.getWords()));
 			}
 		}
 	}

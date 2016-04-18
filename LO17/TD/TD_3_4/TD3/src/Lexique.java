@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
+
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 public class Lexique {
 	private HashMap<String, String> lexique;
@@ -127,5 +130,37 @@ public class Lexique {
  		}
 		
 		return res;
+	}
+	
+	public Set<String> getWords() {
+		return this.lexique.keySet();
+	}
+	
+	/**
+	 * Ce n'était pas demandé mais si on tape "grnade" on doit logiquement trouver "grande" et là ca marche
+	 * avec cet algo.
+	 * @param mot
+	 * @param l
+	 * @return
+	 */
+	public String closestMacht(String mot, Set<String> l) {
+		int highest = 0;
+		String ret = null; 
+		for (String s: l) {
+			int tmp = 0;
+			for (int i = 0; i < mot.length(); i++) {
+				if (s.contains(Character.toString(mot.charAt(i)))) {
+					tmp++;
+				}
+			}
+			tmp -= Math.abs(s.length() - mot.length());
+			//System.out.println("Testing "+s+"/"+tmp);
+			if (tmp > highest || ret == null) {
+				ret = s;
+				highest = tmp;
+			}
+		}
+		
+		return getLemme(ret);
 	}
 }
