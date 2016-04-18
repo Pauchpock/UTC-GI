@@ -53,7 +53,10 @@ public class Lexique {
 			while ((i < Math.min(l1, l2))&& mot1.charAt(i) == mot2.charAt(i)) {
 				i++;
 			}
-			return (i * 100)/ (Math.max(l1, l2)); 
+			double ret = (double)((i * 100)/ (Math.max(l1, l2)));
+			if (ret > 65.0)
+				return ret;
+			else return 0.0;
 		}
 	}
 	
@@ -63,7 +66,7 @@ public class Lexique {
 		
 		for (String s : lexique.keySet()) {
 			double tmp = prox(mot, s);
-			if (tmp >= highestscore) {
+			if (tmp >= highestscore && tmp != 0.0) {
 				if (tmp > highestscore) {
 					res.clear();
 				}
