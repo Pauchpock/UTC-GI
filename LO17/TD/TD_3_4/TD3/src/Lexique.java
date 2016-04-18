@@ -39,7 +39,7 @@ public class Lexique {
 	 * @param mot2
 	 * @return Distance
 	 */
-	public double prox(String mot1,String mot2) {
+	private double prox(String mot1,String mot2) {
 		int l1 = mot1.length(), l2 = mot2.length();
 		
 		if (l1 < SEUIL_MIN || l2 < SEUIL_MIN) {
@@ -68,6 +68,55 @@ public class Lexique {
 					res.clear();
 				}
 				highestscore = tmp;
+				res.add(this.getLemme(s));
+			}
+ 		}
+		
+		return res;
+	}
+	
+	private int cout(Character a, Character b) {
+		if (a == null || b == null) {
+			return 1;
+		}
+		if (a.equals(b)) return 0;
+		return 1;
+	}
+	 
+	private int levenshteinDistance(String motA, String motB) {
+		int i, j,
+			dist[][] = new int[motA.length() + 1][motB.length() + 1];
+		
+		// Initialisation
+		dist[0][0] = 0;
+		for (i = 1; i < motA.length(); i++) {
+			dist[i][0] = i;
+			dist[0][i] = i;
+		}
+		
+		for (i = 0; i < motA.length(); i++) {
+			for (j = 1; j < motB.length(); j++) {
+				int d1 = dist[i - 1][j - 1] + cout(motA.charAt(i), motB.charAt(j));
+				int d2 = dist[i - 1][j] + cout(motA.charAt(i), null);
+				int d3 = dist[i][j - 1] + cout(null, motB.charAt(j));
+				dist[i][j] = Math.min(d3, Math.min(d1, d2));
+			}
+		}
+		return dist[motA.length()][motB.length()];
+	}
+	
+	public HashSet<String> findLemmesLevenshtein(String mot) {
+		HashSet<String> res = new HashSet<String>(); // liste de lemmes candidats
+		
+		double lowestscore = 0.0;
+		
+		for (String s : lexique.keySet()) {
+			double tmp = this.levenshteinDistance(mot, s);
+			if (tmp <= lowestscore) {
+				if (tmp < lowestscore) {
+					res.clear();
+				}
+				lowestscore = tmp;
 				res.add(this.getLemme(s));
 			}
  		}

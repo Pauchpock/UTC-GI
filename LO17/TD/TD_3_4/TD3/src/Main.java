@@ -41,12 +41,15 @@ public class Main {
 				System.out.println("No lemme found for the word: "+str+", searching candidates...");
 				HashSet<String> bestLemmes = lex.findBestLemmes(str);
 				if (bestLemmes.size() == 0) {
-					System.err.println("No lemme found in the lexique for this word");
-				}
-				else {
-					for (String ss : bestLemmes) {
-						System.out.println("Found this lemme as an alternative: "+ss);
+					System.err.println("No lemme found in the lexique for this word. Trying Levenshtein...");
+					bestLemmes = lex.findLemmesLevenshtein(str);
+					if (bestLemmes.size() == 0) {
+						System.err.println("Giving up, nothing found.");
+						return;
 					}
+				}
+				for (String ss : bestLemmes) {
+					System.out.println("Found this lemme as an alternative: "+ss);
 				}
 			}
 		}
