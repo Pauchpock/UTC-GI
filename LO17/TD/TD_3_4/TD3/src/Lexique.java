@@ -89,16 +89,18 @@ public class Lexique {
 		
 		// Initialisation
 		dist[0][0] = 0;
-		for (i = 1; i < motA.length(); i++) {
+		for (i = 0; i < motA.length(); i++) {
 			dist[i][0] = i;
+		}
+		for (i = 0; i < motB.length(); i++) {
 			dist[0][i] = i;
 		}
 		
-		for (i = 0; i < motA.length(); i++) {
-			for (j = 1; j < motB.length(); j++) {
-				int d1 = dist[i - 1][j - 1] + cout(motA.charAt(i), motB.charAt(j));
-				int d2 = dist[i - 1][j] + cout(motA.charAt(i), null);
-				int d3 = dist[i][j - 1] + cout(null, motB.charAt(j));
+		for (i = 1; i <= motA.length(); i++) {
+			for (j = 1; j <= motB.length(); j++) {
+				int d1 = dist[i - 1][j - 1] + cout(motA.charAt(i-1), motB.charAt(j-1));
+				int d2 = dist[i - 1][j] + cout(motA.charAt(i-1), null);
+				int d3 = dist[i][j - 1] + cout(null, motB.charAt(j-1));
 				dist[i][j] = Math.min(d3, Math.min(d1, d2));
 			}
 		}
@@ -108,16 +110,16 @@ public class Lexique {
 	public HashSet<String> findLemmesLevenshtein(String mot) {
 		HashSet<String> res = new HashSet<String>(); // liste de lemmes candidats
 		
-		double lowestscore = 0.0;
+		int lowestscore = 1000;
 		
 		for (String s : lexique.keySet()) {
-			double tmp = this.levenshteinDistance(mot, s);
+			int tmp = this.levenshteinDistance(mot, s);
 			if (tmp <= lowestscore) {
 				if (tmp < lowestscore) {
 					res.clear();
 				}
 				lowestscore = tmp;
-				res.add(this.getLemme(s));
+				res.add(this.getLemme(s).concat(" (cout: "+String.valueOf(tmp))+")");
 			}
  		}
 		

@@ -40,7 +40,7 @@ public class Main {
 			else {
 				System.out.println("No lemme found for the word: "+str+", searching candidates...");
 				HashSet<String> bestLemmes = lex.findBestLemmes(str);
-				if (bestLemmes.size() == 0) {
+				if (bestLemmes.size() == 0 || true) {
 					System.err.println("No lemme found in the lexique for this word. Trying Levenshtein...");
 					bestLemmes = lex.findLemmesLevenshtein(str);
 					if (bestLemmes.size() == 0) {
