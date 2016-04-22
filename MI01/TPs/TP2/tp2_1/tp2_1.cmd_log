@@ -1,0 +1,47 @@
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc carte_tp.ucf -p xc3s200-tq144-5 tp2_1.ngc tp2_1.ngd  
+map -intstyle ise -p xc3s200-tq144-5 -cm area -ir off -pr off -c 100 -o tp2_1_map.ncd tp2_1.ngd tp2_1.pcf 
+par -w -intstyle ise -ol high -t 1 tp2_1_map.ncd tp2_1.ncd tp2_1.pcf 
+trce -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml tp2_1.twx tp2_1.ncd -o tp2_1.twr tp2_1.pcf -ucf carte_tp.ucf 
+bitgen -intstyle ise -f tp2_1.ut tp2_1.ncd 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc carte_tp.ucf -p xc3s200-tq144-5 tp2_1.ngc tp2_1.ngd  
+map -intstyle ise -p xc3s200-tq144-5 -cm area -ir off -pr off -c 100 -o tp2_1_map.ncd tp2_1.ngd tp2_1.pcf 
+par -w -intstyle ise -ol high -t 1 tp2_1_map.ncd tp2_1.ncd tp2_1.pcf 
+trce -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml tp2_1.twx tp2_1.ncd -o tp2_1.twr tp2_1.pcf -ucf carte_tp.ucf 
+bitgen -intstyle ise -f tp2_1.ut tp2_1.ncd 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc carte_tp.ucf -p xc3s200-tq144-5 tp2_1.ngc tp2_1.ngd  
+map -intstyle ise -p xc3s200-tq144-5 -cm area -ir off -pr off -c 100 -o tp2_1_map.ncd tp2_1.ngd tp2_1.pcf 
+par -w -intstyle ise -ol high -t 1 tp2_1_map.ncd tp2_1.ncd tp2_1.pcf 
+bitgen -intstyle ise -f tp2_1.ut tp2_1.ncd 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc carte_tp.ucf -p xc3s200-tq144-5 tp2_1.ngc tp2_1.ngd  
+map -intstyle ise -p xc3s200-tq144-5 -cm area -ir off -pr off -c 100 -o tp2_1_map.ncd tp2_1.ngd tp2_1.pcf 
+par -w -intstyle ise -ol high -t 1 tp2_1_map.ncd tp2_1.ncd tp2_1.pcf 
+trce -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml tp2_1.twx tp2_1.ncd -o tp2_1.twr tp2_1.pcf -ucf carte_tp.ucf 
+bitgen -intstyle ise -f tp2_1.ut tp2_1.ncd 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc carte_tp.ucf -p xc3s200-tq144-5 tp2_1.ngc tp2_1.ngd  
+map -intstyle ise -p xc3s200-tq144-5 -cm area -ir off -pr off -c 100 -o tp2_1_map.ncd tp2_1.ngd tp2_1.pcf 
+par -w -intstyle ise -ol high -t 1 tp2_1_map.ncd tp2_1.ncd tp2_1.pcf 
+trce -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml tp2_1.twx tp2_1.ncd -o tp2_1.twr tp2_1.pcf -ucf carte_tp.ucf 
+bitgen -intstyle ise -f tp2_1.ut tp2_1.ncd 
+xst -intstyle ise -ifn "Z:/tp2_1/tp2_1.xst" -ofn "Z:/tp2_1/tp2_1.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc carte_tp.ucf -p xc3s200-tq144-5 tp2_1.ngc tp2_1.ngd  
+map -intstyle ise -p xc3s200-tq144-5 -cm area -ir off -pr off -c 100 -o tp2_1_map.ncd tp2_1.ngd tp2_1.pcf 
+par -w -intstyle ise -ol high -t 1 tp2_1_map.ncd tp2_1.ncd tp2_1.pcf 
+trce -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml tp2_1.twx tp2_1.ncd -o tp2_1.twr tp2_1.pcf -ucf carte_tp.ucf 
+bitgen -intstyle ise -f tp2_1.ut tp2_1.ncd 

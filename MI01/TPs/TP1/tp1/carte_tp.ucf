@@ -1,0 +1,221 @@
+##############################################################################
+# Fichier de contraintes (User Contraint File) pour la carte 
+# APF9328/Xilinx Spartan3 XC3S200 et carte d'entrées/sorties pour les TP
+#
+# Ce fichier établit entre autres la correspondance entre les signaux
+# définis dans le code VHDL et les signaux physiques du FPGA : a chaque signal
+# VHDL est associé une broche spécifique du FPGA (P???) ainsi que les niveaux
+# de signaux acceptables.
+#
+##############################################################################
+
+# ****************************************************************************
+# ****************************** IMPORTANT ***********************************
+#
+# Par défaut, toutes les entrées sont commentées par un #. Décommenter 
+# uniquement les entrées qui correspondent aux signaux utilisés dans 
+# le code VHDL!
+# ****************************************************************************
+
+##############################################################################
+# Horloge externe, 96MHz
+# Décommenter les trois lignes suivantes si l'horloge est utilisée.
+
+#NET "Clk100MHz"     LOC = "P55"     | IOSTANDARD = LVCMOS33;
+#NET "Clk100MHz"     TNM_NET = "Clk100MHz";
+#TIMESPEC "TS_Clk100MHz" = PERIOD "Clk100MHz" 10 ns HIGH 50%;
+
+##############################################################################
+# Afficheurs 7 segments
+#
+
+# Anodes séparées SEG_A, SEG_B, ..., SEG_DP
+#NET "SEG_A"        LOC = "P122"     | IOSTANDARD = LVCMOS33;
+#NET "SEG_B"        LOC = "P124"     | IOSTANDARD = LVCMOS33;
+#NET "SEG_C"        LOC = "P127"     | IOSTANDARD = LVCMOS33;
+#NET "SEG_D"        LOC = "P102"     | IOSTANDARD = LVCMOS33;
+#NET "SEG_E"        LOC = "P99"      | IOSTANDARD = LVCMOS33;
+#NET "SEG_F"        LOC = "P95"      | IOSTANDARD = LVCMOS33;
+#NET "SEG_G"        LOC = "P97"      | IOSTANDARD = LVCMOS33;
+#NET "SEG_DP"       LOC = "P140"     | IOSTANDARD = LVCMOS33;
+
+# Vecteurs des segments
+#NET "SEG<0>"       LOC = "P122"     | IOSTANDARD = LVCMOS33;
+#NET "SEG<1>"       LOC = "P124"     | IOSTANDARD = LVCMOS33;
+#NET "SEG<2>"       LOC = "P127"     | IOSTANDARD = LVCMOS33;
+#NET "SEG<3>"       LOC = "P102"     | IOSTANDARD = LVCMOS33;
+#NET "SEG<4>"       LOC = "P99"      | IOSTANDARD = LVCMOS33;
+#NET "SEG<5>"       LOC = "P95"      | IOSTANDARD = LVCMOS33;
+#NET "SEG<6>"       LOC = "P97"      | IOSTANDARD = LVCMOS33;
+#NET "SEG<7>"       LOC = "P140"     | IOSTANDARD = LVCMOS33;
+
+# Cathodes séparées DPY_EN_0, DPY_EN_1,... , DPY_EN_3
+#NET "DPY_EN_0"      LOC = "P118"    | IOSTANDARD = LVCMOS33;
+#NET "DPY_EN_1"      LOC = "P92"     | IOSTANDARD = LVCMOS33;
+#NET "DPY_EN_2"      LOC = "P112"    | IOSTANDARD = LVCMOS33;
+#NET "DPY_EN_3"      LOC = "P89"     | IOSTANDARD = LVCMOS33;
+
+# Vecteur des cathodes
+#NET "DPY_EN<0>"     LOC = "P118"    | IOSTANDARD = LVCMOS33;
+#NET "DPY_EN<1>"     LOC = "P92"     | IOSTANDARD = LVCMOS33;
+#NET "DPY_EN<2>"     LOC = "P112"    | IOSTANDARD = LVCMOS33;
+#NET "DPY_EN<3>"     LOC = "P89"     | IOSTANDARD = LVCMOS33;
+
+##############################################################################
+# LEDS
+#
+
+# Bits séparés LED_0, LED_1, ..., LED_7
+NET "LED_0"         LOC = "P44"     | IOSTANDARD = LVCMOS33;
+#NET "LED_1"         LOC = "P51"     | IOSTANDARD = LVCMOS33;
+#NET "LED_2"         LOC = "P73"     | IOSTANDARD = LVCMOS33;
+#NET "LED_3"         LOC = "P104"    | IOSTANDARD = LVCMOS33;
+#NET "LED_4"         LOC = "P87"     | IOSTANDARD = LVCMOS33;
+#NET "LED_5"         LOC = "P107"    | IOSTANDARD = LVCMOS33;
+#NET "LED_6"         LOC = "P76"     | IOSTANDARD = LVCMOS33;
+#NET "LED_7"         LOC = "P80"     | IOSTANDARD = LVCMOS33;
+
+# Vecteur de 8 bits LED (décommenter tout le groupe)
+#NET "LED<0>"        LOC = "P44"     | IOSTANDARD = LVCMOS33;
+#NET "LED<1>"        LOC = "P51"     | IOSTANDARD = LVCMOS33;
+#NET "LED<2>"        LOC = "P73"     | IOSTANDARD = LVCMOS33;
+#NET "LED<3>"        LOC = "P104"    | IOSTANDARD = LVCMOS33;
+#NET "LED<4>"        LOC = "P87"     | IOSTANDARD = LVCMOS33;
+#NET "LED<5>"        LOC = "P107"    | IOSTANDARD = LVCMOS33;
+#NET "LED<6>"        LOC = "P76"     | IOSTANDARD = LVCMOS33;
+#NET "LED<7>"        LOC = "P80"     | IOSTANDARD = LVCMOS33;
+
+# Vecteur de 4 bits LED (décommenter par groupe de 4)
+#NET "LED_3210<0>"   LOC = "P44"     | IOSTANDARD = LVCMOS33;
+#NET "LED_3210<1>"   LOC = "P51"     | IOSTANDARD = LVCMOS33;
+#NET "LED_3210<2>"   LOC = "P73"     | IOSTANDARD = LVCMOS33;
+#NET "LED_3210<3>"   LOC = "P104"    | IOSTANDARD = LVCMOS33;
+#NET "LED_7654<0>"   LOC = "P87"     | IOSTANDARD = LVCMOS33;
+#NET "LED_7654<1>"   LOC = "P107"    | IOSTANDARD = LVCMOS33;
+#NET "LED_7654<2>"   LOC = "P76"     | IOSTANDARD = LVCMOS33;
+#NET "LED_7654<3>"   LOC = "P80"     | IOSTANDARD = LVCMOS33;
+
+# Vecteur de 2 bits LED (décommenter par groupe de 2)
+#NET "LED_10<0>"     LOC = "P44"     | IOSTANDARD = LVCMOS33;
+#NET "LED_10<1>"     LOC = "P51"     | IOSTANDARD = LVCMOS33;
+#NET "LED_32<0>"     LOC = "P73"     | IOSTANDARD = LVCMOS33;
+#NET "LED_32<1>"     LOC = "P104"    | IOSTANDARD = LVCMOS33;
+#NET "LED_54<0>"     LOC = "P87"     | IOSTANDARD = LVCMOS33;
+#NET "LED_54<1>"     LOC = "P107"    | IOSTANDARD = LVCMOS33;
+#NET "LED_76<0>"     LOC = "P76"     | IOSTANDARD = LVCMOS33;
+#NET "LED_76<1>"     LOC = "P80"     | IOSTANDARD = LVCMOS33;
+
+
+
+##############################################################################
+# Interrupteurs SPDT
+#
+
+# Bits séparés SW_0, SW_1, ..., SW_7
+NET "SW_0"          LOC = "P130"    | IOSTANDARD = LVCMOS33;
+NET "SW_1"          LOC = "P132"    | IOSTANDARD = LVCMOS33;
+#NET "SW_2"          LOC = "P137"    | IOSTANDARD = LVCMOS33;
+#NET "SW_3"          LOC = "P46"     | IOSTANDARD = LVCMOS33;
+#NET "SW_4"          LOC = "P52"     | IOSTANDARD = LVCMOS33;
+#NET "SW_5"          LOC = "P74"     | IOSTANDARD = LVCMOS33;
+#NET "SW_6"          LOC = "P79"     | IOSTANDARD = LVCMOS33;
+#NET "SW_7"          LOC = "P84"     | IOSTANDARD = LVCMOS33;
+
+# Vecteur de 8 bits SW (décommenter tout le groupe)
+#NET "SW<0>"         LOC = "P130"    | IOSTANDARD = LVCMOS33;
+#NET "SW<1>"         LOC = "P132"    | IOSTANDARD = LVCMOS33;
+#NET "SW<2>"         LOC = "P137"    | IOSTANDARD = LVCMOS33;
+#NET "SW<3>"         LOC = "P46"     | IOSTANDARD = LVCMOS33;
+#NET "SW<4>"         LOC = "P52"     | IOSTANDARD = LVCMOS33;
+#NET "SW<5>"         LOC = "P74"     | IOSTANDARD = LVCMOS33;
+#NET "SW<6>"         LOC = "P79"     | IOSTANDARD = LVCMOS33;
+#NET "SW<7>"         LOC = "P84"     | IOSTANDARD = LVCMOS33;
+
+# Vecteurs de 4 bits SW_xxxx (décommenter par groupe de 4)
+#NET "SW_3210<0>"    LOC = "P130"    | IOSTANDARD = LVCMOS33;
+#NET "SW_3210<1>"    LOC = "P132"    | IOSTANDARD = LVCMOS33;
+#NET "SW_3210<2>"    LOC = "P137"    | IOSTANDARD = LVCMOS33;
+#NET "SW_3210<3>"    LOC = "P46"     | IOSTANDARD = LVCMOS33;
+#NET "SW_7654<0>"    LOC = "P52"     | IOSTANDARD = LVCMOS33;
+#NET "SW_7654<1>"    LOC = "P74"     | IOSTANDARD = LVCMOS33;
+#NET "SW_7654<2>"    LOC = "P79"     | IOSTANDARD = LVCMOS33;
+#NET "SW_7654<3>"    LOC = "P84"     | IOSTANDARD = LVCMOS33;
+
+# Vecteurs de 2 bits SW_xxxx (décommenter par groupe de 2)
+#NET "SW_10<0>"      LOC = "P130"    | IOSTANDARD = LVCMOS33;
+#NET "SW_10<1>"      LOC = "P132"    | IOSTANDARD = LVCMOS33;
+#NET "SW_32<0>"      LOC = "P137"    | IOSTANDARD = LVCMOS33;
+#NET "SW_32<1>"      LOC = "P46"     | IOSTANDARD = LVCMOS33;
+#NET "SW_54<0>"      LOC = "P52"     | IOSTANDARD = LVCMOS33;
+#NET "SW_54<1>"      LOC = "P74"     | IOSTANDARD = LVCMOS33;
+#NET "SW_76<0>"      LOC = "P79"     | IOSTANDARD = LVCMOS33;
+#NET "SW_76<1>"      LOC = "P84"     | IOSTANDARD = LVCMOS33;
+
+##############################################################################
+# Interrupteurs SPNO
+#
+
+# Bits séparés PB_0, PB_1, PB_2, PB_3
+#NET "PB_0"          LOC = "P128"    | IOSTANDARD = LVCMOS33 | CLOCK_DEDICATED_ROUTE = FALSE;
+#NET "PB_1"          LOC = "P141"    | IOSTANDARD = LVCMOS33 | CLOCK_DEDICATED_ROUTE = FALSE;
+#NET "PB_2"          LOC = "P100"    | IOSTANDARD = LVCMOS33 | CLOCK_DEDICATED_ROUTE = FALSE;
+#NET "PB_3"          LOC = "P103"    | IOSTANDARD = LVCMOS33 | CLOCK_DEDICATED_ROUTE = FALSE;
+
+# Vecteur de 4 bits PB (décommenter tout le groupe)
+#NET "PB<0>"         LOC = "P128"    | IOSTANDARD = LVCMOS33 | CLOCK_DEDICATED_ROUTE = FALSE;
+#NET "PB<1>"         LOC = "P141"    | IOSTANDARD = LVCMOS33 | CLOCK_DEDICATED_ROUTE = FALSE;
+#NET "PB<2>"         LOC = "P100"    | IOSTANDARD = LVCMOS33 | CLOCK_DEDICATED_ROUTE = FALSE;
+#NET "PB<3>"         LOC = "P103"    | IOSTANDARD = LVCMOS33 | CLOCK_DEDICATED_ROUTE = FALSE;
+
+##############################################################################
+# Sorties TTL
+#
+
+# Bits séparés OUT_1, OUT_2, OUT_3 et OUT_4
+#NET "OUT_0"         LOC = "P130"    | IOSTANDARD = LVCMOS33;
+#NET "OUT_1"         LOC = "P132"    | IOSTANDARD = LVCMOS33;
+#NET "OUT_2"         LOC = "P137"    | IOSTANDARD = LVCMOS33;
+#NET "OUT_3"         LOC = "P46"     | IOSTANDARD = LVCMOS33;
+
+# Vecteur de 8 bits OUT (décommenter tout le groupe)
+#NET "OUT<0>"        LOC = "P130"    | IOSTANDARD = LVCMOS33;
+#NET "OUT<1>"        LOC = "P132"    | IOSTANDARD = LVCMOS33;
+#NET "OUT<2>"        LOC = "P137"    | IOSTANDARD = LVCMOS33;
+#NET "OUT<3>"        LOC = "P46"     | IOSTANDARD = LVCMOS33;
+
+
+##############################################################################
+# Interface mémoire SRAM 32kX8 AS7C3256A
+#
+
+# Signaux de contrôle
+#NET "SRAM_CE"       LOC = "P41"     | IOSTANDARD = LVCMOS33;
+#NET "SRAM_OE"       LOC = "P135"    | IOSTANDARD = LVCMOS33;
+#NET "SRAM_WR"       LOC = "113"     | IOSTANDARD = LVCMOS33;
+
+# Bus de données sur 8 bits (décommenter tout le groupe)
+#NET "SRAM_BD<0>"    LOC = "P82"     | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BD<1>"    LOC = "P105"    | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BD<2>"    LOC = "P77"     | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BD<3>"    LOC = "P108"    | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BD<4>"    LOC = "P56"     | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BD<5>"    LOC = "P86"     | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BD<6>"    LOC = "P50"     | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BD<7>"    LOC = "P85"     | IOSTANDARD = LVCMOS33;
+
+# Bus d'adresse sur 15 bits (décommenter tout le groupe)
+#NET "SRAM_BA<0>"    LOC = "P78"     | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BA<1>"    LOC = "P83"     | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BA<2>"    LOC = "P116"    | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BA<3>"    LOC = "P98"     | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BA<4>"    LOC = "P125"    | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BA<5>"    LOC = "P96"     | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BA<6>"    LOC = "P123"    | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BA<7>"    LOC = "P93"     | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BA<8>"    LOC = "P40"     | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BA<9>"    LOC = "P131"    | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BA<10>"   LOC = "P53"     | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BA<11>"   LOC = "P47"     | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BA<12>"   LOC = "P119"    | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BA<13>"   LOC = "P129"    | IOSTANDARD = LVCMOS33;
+#NET "SRAM_BA<14>"   LOC = "P90"     | IOSTANDARD = LVCMOS33;

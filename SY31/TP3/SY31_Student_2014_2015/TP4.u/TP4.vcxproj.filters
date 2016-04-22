@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\cluster.cpp">
+      <Filter>Clustering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cluster-component.cpp">
+      <Filter>Clustering</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\cluster.hpp">
+      <Filter>Clustering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cluster-component.hpp">
+      <Filter>Clustering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vec.hpp">
+      <Filter>Clustering</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Clustering">
+      <UniqueIdentifier>{4a5c27c9-b898-42a5-8541-e9e568173dc9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -o "Z:/tp1_2/exo2_isim_beh.exe" -prj "Z:/tp1_2/exo2_beh.prj" "work.exo2" 

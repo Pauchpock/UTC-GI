@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\odometry-component.cpp">
+      <Filter>Odometry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wifibot.cpp">
+      <Filter>Odometry</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\odometry-component.hpp">
+      <Filter>Odometry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wifibot.hpp">
+      <Filter>Odometry</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Odometry">
+      <UniqueIdentifier>{5c84e65a-4d0e-4d13-9725-91d6ddf7872a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

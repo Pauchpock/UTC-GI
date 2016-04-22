@@ -1,0 +1,6 @@
+xst -intstyle ise -ifn "Z:/tp1_2/exo2.xst" -ofn "Z:/tp1_2/exo2.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc carte_tp.ucf -p xc3s200-tq144-5 exo2.ngc exo2.ngd  
+map -intstyle ise -p xc3s200-tq144-5 -cm area -ir off -pr off -c 100 -o exo2_map.ncd exo2.ngd exo2.pcf 
+par -w -intstyle ise -ol high -t 1 exo2_map.ncd exo2.ncd exo2.pcf 
+trce -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml exo2.twx exo2.ncd -o exo2.twr exo2.pcf -ucf carte_tp.ucf 
+bitgen -intstyle ise -f exo2.ut exo2.ncd 

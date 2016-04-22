@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>C:\Program Files\Microsoft SDKs\Kinect\v1.0\inc;C:\data\wifibot\Code\external\SDL\include;C:\data\wifibot\Code\external\opencv\include;C:\data\wifibot\Code\external\urg\include\cpp;C:\data\wifibot\Code\wifibot-components\wifibot_modules.u\src;C:\data\wifibot\Code\wifibot-components\wifibot_sensors.u\src;C:\data\wifibot\Code\wifibot-components\wifibot_tools.u\src;C:\data\wifibot\Code\structures\;C:\data\wifibot\Code\external\vectornav\include;C:\data\wifibot\Code\external\threespace\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LibraryPath>C:\data\wifibot\Code\external\threespace\lib;C:\Program Files\Microsoft SDKs\Kinect\v1.0\lib\x86;C:\data\wifibot\Code\external\opencv\lib;C:\data\wifibot\Code\external\SDL\lib;C:\data\wifibot\Code\external\urg\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

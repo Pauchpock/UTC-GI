@@ -1,0 +1,13 @@
+//! **************************************************************************
+// Written by: Map P.20131013 on Mon Oct 06 18:49:29 2014
+//! **************************************************************************
+
+SCHEMATIC START;
+COMP "PB_0" LOCATE = SITE "P128" LEVEL 1;
+PIN PB_0_pin<0> = BEL "PB_0" PINNAME PAD;
+PIN "PB_0_pin<0>" CLOCK_DEDICATED_ROUTE = FALSE;
+COMP "SW_0" LOCATE = SITE "P130" LEVEL 1;
+COMP "LED_0" LOCATE = SITE "P44" LEVEL 1;
+NET "PB_0_BUFGP/IBUFG" BEL "PB_0_BUFGP/BUFG.GCLKMUX" USELOCALCONNECT;
+SCHEMATIC END;
+

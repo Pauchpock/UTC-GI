@@ -1,0 +1,25 @@
+\chapter{Introduction}
+\section{Résumé}
+L'objectif de ce TP est d'écrire un programme en C qui utilisera les propriétés des arbres binaires de recherche dans le but d'implémenter un exemple d'indexation et de recherche sur un fichier contenant un texte quelconque.
+
+\medskip
+
+\noindent L'arbre binaire contiendra tous les mots présents dans le texte.
+\begin{itemize}
+  \item chaque n\oe ud de l'arbre contient un mot, ainsi que la liste des positions du mot dans le texte
+  \item une position correspond à un numéro de ligne, un ordre \textbf{dans la phrase} (1 pour le premier mot de la phrase, 2 pour le deuxième mot, etc...), un numéro de phrase
+  \item le texte ne contient que des majuscules, des minuscules et des points (séparateur de phrases)
+\end{itemize}
+
+\section{Structuration du projet}
+Nous avons choisi de structuer notre projet en 7 fichiers pour une meilleure clarté :
+
+\begin{itemize}
+  \item \textbf{main.c} : le fichier source contenant le programme principal
+  \item \textbf{liste.h et liste.c} : les fichiers contenant les structures et fonctions propres aux listes de positions des mots
+  \item \textbf{outils.h et outils.c} : les fichiers contenant les fonctions de lecture du fichier (ajout d'un mot dans l'arbre,) et les fonctions qui permettent des créer des listes chaînées de \lstinline{struct phrase} et des listes chaînées de \lstinline{struct mot}, utilisées pour retrouver les phrases contenant deux mots choisis par l'utilisateur (option 6. du menu proposé à l'utilisateur)
+  \item \textbf{arbre.h et arbre.c} : les fichiers contenant les structures et fonctions propres aux arbres et aux n\oe uds.
+\end{itemize}
+
+\section{Code source}
+Le code source est fourni dans l'archive ZIP contenant ce rapport.

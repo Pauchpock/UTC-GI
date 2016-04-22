@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<RTMapsDiagram xmlns="http://schemas.intempora.com/RTMaps/2011/RTMapsFiles" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" EngineVersion="4.0" version="4.0" xsi:schemaLocation="http://schemas.intempora.com/RTMaps/2011/RTMapsFiles http://www.intempora.com/schemas/RTMaps/2011/RTMapsDiagram.xsd http://schemas.intempora.com/RTMaps/2011/RTMapsFiles http://www.intempora.com/schemas/RTMaps/2011/RTMapsDiagram_RTBoardView.xsd">
+  <RequiredPackages>
+    <File><![CDATA[D:/wifibot/Code/SY31_Student_2014_2015/packages/TP4.pck]]>
+      <Relative><![CDATA[%RTMAPS_DIAGRAMDIR%/../SY31_Student_2014_2015/packages/TP4.pck]]></Relative>
+    </File>
+    <File><![CDATA[D:/wifibot/Code/component_package1/wifibot_tools.pck]]>
+      <Relative><![CDATA[%RTMAPS_DIAGRAMDIR%/wifibot_tools.pck]]></Relative>
+    </File>
+    <File><![CDATA[D:/wifibot/Code/component_package1/wifibot_sensors.pck]]>
+      <Relative><![CDATA[%RTMAPS_DIAGRAMDIR%/wifibot_sensors.pck]]></Relative>
+    </File>
+  </RequiredPackages>
+  <RequiredMacroPackages/>
+  <MacroComponentDefinitions/>
+  <EngineProperties>
+    <Property LongName="Engine.startTimespeed" Type="1">1000</Property>
+    <Property LongName="Engine.startTime" Type="1">0</Property>
+    <Property LongName="Engine.session" Type="3"><![CDATA[unspecified]]></Property>
+    <Property LongName="Engine.recordingAtStart" Type="0">true</Property>
+    <Property LongName="Engine.recording" Type="0">true</Property>
+    <Property LongName="Engine.sequentialStart" Type="0">false</Property>
+    <Property LongName="Engine.autoDetectStartTime" Type="0">true</Property>
+    <Property LongName="Engine.coreFunctionsToSaveInDiag" Type="4"><![CDATA[0|-1]]></Property>
+  </EngineProperties>
+  <ClocksManagement>
+    <Property LongName="ClocksManagement.activeClock" Type="4"><![CDATA[1|0|RTMaps_standard_clock]]></Property>
+  </ClocksManagement>
+  <Component InstanceName="ClusterComponent_1" Model="ClusterComponent" x="352" y="64" z="0">
+    <Input LongName="ClusterComponent_1.Angles" Name="Angles">
+      <Property LongName="ClusterComponent_1.Angles.readerType" Type="1">0</Property>
+      <Property LongName="ClusterComponent_1.Angles.subsampling" Type="1">1</Property>
+    </Input>
+    <Input LongName="ClusterComponent_1.Distances" Name="Distances">
+      <Property LongName="ClusterComponent_1.Distances.readerType" Type="1">0</Property>
+      <Property LongName="ClusterComponent_1.Distances.subsampling" Type="1">1</Property>
+    </Input>
+    <Output LongName="ClusterComponent_1.ClustersSize" Name="ClustersSize">
+      <Property LongName="ClusterComponent_1.ClustersSize.subsampling" Type="1">1</Property>
+      <Property LongName="ClusterComponent_1.ClustersSize.fifosize" Type="1">16</Property>
+      <Property LongName="ClusterComponent_1.ClustersSize.periodic" Type="0">false</Property>
+    </Output>
+    <Output LongName="ClusterComponent_1.ClustersData" Name="ClustersData">
+      <Property LongName="ClusterComponent_1.ClustersData.subsampling" Type="1">1</Property>
+      <Property LongName="ClusterComponent_1.ClustersData.fifosize" Type="1">16</Property>
+      <Property LongName="ClusterComponent_1.ClustersData.periodic" Type="0">false</Property>
+    </Output>
+    <Property LongName="ClusterComponent_1.threaded" Type="0">true</Property>
+    <Property LongName="ClusterComponent_1.priority" Type="1">128</Property>
+    <Property LongName="ClusterComponent_1.autoStart" Type="0">true</Property>
+  </Component>
+  <Component InstanceName="ClusterViewer_2" Model="ClusterViewer" x="600" y="64" z="0">
+    <Input LongName="ClusterViewer_2.ClustersSize" Name="ClustersSize">
+      <Property LongName="ClusterViewer_2.ClustersSize.readerType" Type="1">0</Property>
+      <Property LongName="ClusterViewer_2.ClustersSize.subsampling" Type="1">1</Property>
+    </Input>
+    <Input LongName="ClusterViewer_2.ClustersData" Name="ClustersData">
+      <Property LongName="ClusterViewer_2.ClustersData.readerType" Type="1">0</Property>
+      <Property LongName="ClusterViewer_2.ClustersData.subsampling" Type="1">1</Property>
+    </Input>
+    <Property LongName="ClusterViewer_2.threaded" Type="0">true</Property>
+    <Property LongName="ClusterViewer_2.priority" Type="1">128</Property>
+    <Property LongName="ClusterViewer_2.autoStart" Type="0">true</Property>
+  </Component>
+  <Component InstanceName="HokuyoComponent_3" Model="HokuyoComponent" x="160" y="24" z="0">
+    <Output LongName="HokuyoComponent_3.Distance" Name="Distance">
+      <Property LongName="HokuyoComponent_3.Distance.subsampling" Type="1">1</Property>
+      <Property LongName="HokuyoComponent_3.Distance.fifosize" Type="1">16</Property>
+      <Property LongName="HokuyoComponent_3.Distance.periodic" Type="0">false</Property>
+    </Output>
+    <Output LongName="HokuyoComponent_3.Intensity" Name="Intensity">
+      <Property LongName="HokuyoComponent_3.Intensity.subsampling" Type="1">1</Property>
+      <Property LongName="HokuyoComponent_3.Intensity.fifosize" Type="1">16</Property>
+      <Property LongName="HokuyoComponent_3.Intensity.periodic" Type="0">false</Property>
+    </Output>
+    <Output LongName="HokuyoComponent_3.Angle" Name="Angle">
+      <Property LongName="HokuyoComponent_3.Angle.subsampling" Type="1">1</Property>
+      <Property LongName="HokuyoComponent_3.Angle.fifosize" Type="1">16</Property>
+      <Property LongName="HokuyoComponent_3.Angle.periodic" Type="0">false</Property>
+    </Output>
+    <Property LongName="HokuyoComponent_3.mode" Type="4"><![CDATA[2|1|ethernet|serial]]></Property>
+    <Property LongName="HokuyoComponent_3.ip_or_com" Type="3"><![CDATA[COM12]]></Property>
+    <Property LongName="HokuyoComponent_3.port_or_baudrate" Type="1">19200</Property>
+    <Property LongName="HokuyoComponent_3.NbPoint" Type="1">680</Property>
+    <Property LongName="HokuyoComponent_3.threaded" Type="0">true</Property>
+    <Property LongName="HokuyoComponent_3.priority" Type="1">128</Property>
+    <Property LongName="HokuyoComponent_3.autoStart" Type="0">true</Property>
+  </Component>
+  <Connection Input="ClusterComponent_1.Angles" Output="HokuyoComponent_3.Angle"/>
+  <Connection Input="ClusterComponent_1.Distances" Output="HokuyoComponent_3.Distance"/>
+  <Connection Input="ClusterViewer_2.ClustersSize" Output="ClusterComponent_1.ClustersSize"/>
+  <Connection Input="ClusterViewer_2.ClustersData" Output="ClusterComponent_1.ClustersData"/>
+<RTBoardView ID="JavaStudio1.0">
+    <Description/>
+    <ComponentBox InstanceName="HokuyoComponent_3" reversed="false">
+      <Description/>
+      <OutputInfos Name="Distance">
+        <Description/>
+      </OutputInfos>
+      <OutputInfos Name="Intensity">
+        <Description/>
+      </OutputInfos>
+      <OutputInfos Name="Angle">
+        <Description/>
+      </OutputInfos>
+    </ComponentBox>
+    <ComponentBox InstanceName="ClusterComponent_1" reversed="false">
+      <Description/>
+      <InputInfos Name="Angles">
+        <Description/>
+      </InputInfos>
+      <InputInfos Name="Distances">
+        <Description/>
+      </InputInfos>
+      <OutputInfos Name="ClustersSize">
+        <Description/>
+      </OutputInfos>
+      <OutputInfos Name="ClustersData">
+        <Description/>
+      </OutputInfos>
+    </ComponentBox>
+    <ComponentBox InstanceName="ClusterViewer_2" reversed="false">
+      <Description/>
+      <InputInfos Name="ClustersSize">
+        <Description/>
+      </InputInfos>
+      <InputInfos Name="ClustersData">
+        <Description/>
+      </InputInfos>
+    </ComponentBox>
+    <ConnectionShape InstanceName="ClusterComponent_1.Angles" color="0"/>
+    <ConnectionShape InstanceName="ClusterComponent_1.Distances" color="0"/>
+    <ConnectionShape InstanceName="ClusterViewer_2.ClustersSize" color="0"/>
+    <ConnectionShape InstanceName="ClusterViewer_2.ClustersData" color="0"/>
+  </RTBoardView>
+</RTMapsDiagram>

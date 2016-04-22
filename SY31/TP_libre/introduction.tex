@@ -1,0 +1,21 @@
+\chapter{Introduction}
+
+Pour ce TP, dont le but est de faire un mini-projet en s'inspirant des travaux effectués lors des précédents TP, nous voulions initialement faire du Wifibot un robot suiveur. Nous voulions pouvoir mettre un objet très rouge devant la caméra du robot et faire en sorte que celui-ci suive cet objet selon la distance qui le séparait de l'objet, à l'aide du Lidar. Cela nous aurait permis de réutiliser les connaissances acquises lors de deux TP différents.
+
+\bigskip
+
+Après réflexion et après avoir mis nos idées sur papier, nous sommes partis dans l'idée de d'abord détecter l'objet sur la caméra, avant de nous occuper de la distance. Après avoir commencé à coder quelque chose en récupérant notre code du TP5, nous nous sommes heurté à un problème : \textbf{la structure d'image de sortie \lstinline{MAPS::IplImage} n'était pas la même qu'en entrée}. Nous avons perdu plusieurs minutes à essayer d'obtenir en sortie une image en couleurs, avec les contours de l'objet rouge bien identifiés, mais sans succès. C'est pourquoi nous avons décidé de changer notre projet pour quelque chose de plus accessible.
+
+\bigskip
+
+Nous avons donc choisi de n'utiliser que la caméra et de réutiliser ce qui a été fait lors du TP5. Ainsi, nous allons développer un module RTMaps qui permet de :
+\begin{itemize}
+  \item Afficher une image en noir et blanc classique (selon 256 niveaux de gris, de 0 à 255)
+  \item Afficher une image en noir et blanc selon 5 niveaux de gris
+  \item Afficher une image en noir et blanc classique et \og en miroir\fg{} (inversée)
+  \item Afficher une image en noir et blanc selon 5 niveaux de gris et \og en miroir\fg{}
+\end{itemize}
+
+\bigskip
+
+Finalement, lors de la troisième séance, nous sommes parvenus à afficher en sortie une image en couleurs. Ainsi, nous avons été à même d'afficher une image en couleurs founrie par la webcam ainsi qu'une image en couleur dont chaque pixel affiche uniquement la composante prédominante (soit rouge, soit bleu ou soit vert).

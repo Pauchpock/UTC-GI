@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -o "Z:/tp1/vhdl_module_isim_beh.exe" -prj "Z:/tp1/vhdl_module_beh.prj" "work.vhdl_module" 

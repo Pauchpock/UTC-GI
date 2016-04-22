@@ -1,0 +1,10 @@
+//! **************************************************************************
+// Written by: Map P.20131013 on Mon Sep 29 17:30:07 2014
+//! **************************************************************************
+
+SCHEMATIC START;
+COMP "SW_0" LOCATE = SITE "P130" LEVEL 1;
+COMP "SW_1" LOCATE = SITE "P132" LEVEL 1;
+COMP "LED_0" LOCATE = SITE "P44" LEVEL 1;
+SCHEMATIC END;
+

@@ -1,0 +1,21 @@
+xst -intstyle ise -ifn "Z:/tp1_3/ex3.xst" -ofn "Z:/tp1_3/ex3.syr" 
+xst -intstyle ise -ifn "Z:/tp1_3/ex3.xst" -ofn "Z:/tp1_3/ex3.syr" 
+xst -intstyle ise -ifn "Z:/tp1_3/ex3.xst" -ofn "Z:/tp1_3/ex3.syr" 
+xst -intstyle ise -ifn "Z:/tp1_3/ex3.xst" -ofn "Z:/tp1_3/ex3.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc carte_tp.ucf -p xc3s200-tq144-5 ex3.ngc ex3.ngd  
+map -intstyle ise -p xc3s200-tq144-5 -cm area -ir off -pr off -c 100 -o ex3_map.ncd ex3.ngd ex3.pcf 
+par -w -intstyle ise -ol high -t 1 ex3_map.ncd ex3.ncd ex3.pcf 
+trce -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml ex3.twx ex3.ncd -o ex3.twr ex3.pcf -ucf carte_tp.ucf 
+bitgen -intstyle ise -f ex3.ut ex3.ncd 
+xst -intstyle ise -ifn "Z:/tp1_3/ex3.xst" -ofn "Z:/tp1_3/ex3.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc carte_tp.ucf -p xc3s200-tq144-5 ex3.ngc ex3.ngd  
+map -intstyle ise -p xc3s200-tq144-5 -cm area -ir off -pr off -c 100 -o ex3_map.ncd ex3.ngd ex3.pcf 
+par -w -intstyle ise -ol high -t 1 ex3_map.ncd ex3.ncd ex3.pcf 
+trce -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml ex3.twx ex3.ncd -o ex3.twr ex3.pcf -ucf carte_tp.ucf 
+bitgen -intstyle ise -f ex3.ut ex3.ncd 
+xst -intstyle ise -ifn "Z:/tp1_3/ex3.xst" -ofn "Z:/tp1_3/ex3.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc carte_tp.ucf -p xc3s200-tq144-5 ex3.ngc ex3.ngd  
+map -intstyle ise -p xc3s200-tq144-5 -cm area -ir off -pr off -c 100 -o ex3_map.ncd ex3.ngd ex3.pcf 
+par -w -intstyle ise -ol high -t 1 ex3_map.ncd ex3.ncd ex3.pcf 
+trce -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml ex3.twx ex3.ncd -o ex3.twr ex3.pcf -ucf carte_tp.ucf 
+bitgen -intstyle ise -f ex3.ut ex3.ncd 

@@ -1,0 +1,6 @@
+xst -intstyle ise -ifn "Z:/tp1/vhdl_module.xst" -ofn "Z:/tp1/vhdl_module.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc carte_tp.ucf -p xc3s200-tq144-5 vhdl_module.ngc vhdl_module.ngd  
+map -intstyle ise -p xc3s200-tq144-5 -cm area -ir off -pr off -c 100 -o vhdl_module_map.ncd vhdl_module.ngd vhdl_module.pcf 
+par -w -intstyle ise -ol high -t 1 vhdl_module_map.ncd vhdl_module.ncd vhdl_module.pcf 
+trce -intstyle ise -v 3 -s 5 -n 3 -fastpaths -xml vhdl_module.twx vhdl_module.ncd -o vhdl_module.twr vhdl_module.pcf -ucf carte_tp.ucf 
+bitgen -intstyle ise -f vhdl_module.ut vhdl_module.ncd 

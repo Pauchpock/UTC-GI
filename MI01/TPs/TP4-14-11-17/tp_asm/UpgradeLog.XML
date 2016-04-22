@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="tp_asm">
+</Property><Property Name="Fichier solution" Value="F:\tp_asm\tp_asm.sln">
+</Property><Property Name="Fichier d'options utilisateur" Value="F:\tp_asm\tp_asm.suo">
+</Property><Property Name="Date" Value="samedi 29 novembre 2014">
+</Property><Property Name="Time" Value="15:27">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="tp_asm.sln" Description="Fichier correctement sauvegardé en tant que F:\tp_asm\tp_asm.sln.old">
+</Event><Event ErrorLevel="0" Project="" Source="tp_asm.suo" Description="Fichier correctement sauvegardé en tant que F:\tp_asm\tp_asm.suo.old">
+</Event><Event ErrorLevel="0" Project="tp_asm" Source="tp_asm.vcproj" Description="Converting project file 'F:\tp_asm\tp_asm.vcproj'.">
+</Event><Event ErrorLevel="1" Project="tp_asm" Source="tp_asm.vcproj" Description="This application has been updated to include settings related to the User Account Control (UAC) feature of Windows Vista. By default, when run on Windows Vista with UAC enabled, this application is marked to run with the same privileges as the process that launched it. This marking also disables the application from running with virtualization. You can change UAC related settings from the Property Pages of the project.">
+</Event><Event ErrorLevel="1" Project="tp_asm" Source="tp_asm.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="tp_asm" Source="tp_asm.vcproj" Description="Attribute 'Detect64BitPortabilityProblems' of 'VCCLCompilerTool' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="0" Project="tp_asm" Source="tp_asm.vcproj" Description="Web deployment to the local IIS server is no longer supported. The Web Deployment build tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="tp_asm" Source="tp_asm.vcproj" Description="Attribute 'Detect64BitPortabilityProblems' of 'VCCLCompilerTool' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="0" Project="tp_asm" Source="tp_asm.vcproj" Description="Done converting to new project file 'F:\tp_asm\tp_asm.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="tp_asm" Source="tp_asm.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="tp_asm.sln" Description="Solution correctement convertie">
+</Event><Event ErrorLevel="3" Project="" Source="tp_asm.sln" Description="Converted">
+</Event></UpgradeLog>

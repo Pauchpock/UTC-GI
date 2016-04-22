@@ -1,0 +1,8 @@
+\chapter{Conclusion}
+Lors du TP 5, nous avions remarqué que pour certains types de traitement de données (ici d'une image) l'optimisation du code en assembleur offrait un réel gain en performance par rapport au code écrit en C. Ici, nous avons pu constater que \textbf{le jeu d'instructions MMX} conçu pour les microprocesseurs de type x86 \textbf{offre un impressionnant gain de performances par rapport au jeu d'instructions assembleur classique, dès lors que certains traitements sont parallélisés} (comme le traitement de deux pixels \og en même temps\fg{}). C'est d'ailleurs la raison pour laquelle MMX a été créé : accélérer certaines opérations répétitives dans des domaines tels que le traitement de l'image 2D, du son et des communications (source : \href{http://fr.wikipedia.org/wiki/MMX\_\%28jeu\_d\%27instructions\%29}{Wikipédia}).
+
+\appendix
+\chapter{Code complet du traitement de deux pixels par itération fonctionnant avec un nombre impair de pixels}
+
+\lstset{inputencoding=latin1}
+\lstinputlisting{CODE_FINAL.txt}

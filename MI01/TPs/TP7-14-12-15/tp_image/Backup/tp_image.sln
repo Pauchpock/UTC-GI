@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tp_image", "tp_image.vcproj", "{BEF74886-52DE-48E8-9421-A4CA31E1A28E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BEF74886-52DE-48E8-9421-A4CA31E1A28E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BEF74886-52DE-48E8-9421-A4CA31E1A28E}.Debug|Win32.Build.0 = Debug|Win32
+		{BEF74886-52DE-48E8-9421-A4CA31E1A28E}.Release|Win32.ActiveCfg = Release|Win32
+		{BEF74886-52DE-48E8-9421-A4CA31E1A28E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
