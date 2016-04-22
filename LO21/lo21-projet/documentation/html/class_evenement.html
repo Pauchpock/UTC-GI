@@ -1,0 +1,927 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>ProjectCalendar: Référence de la classe Evenement</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">ProjectCalendar
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">Projet de LO21</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.6 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="namespaces.html"><span>Espaces&#160;de&#160;nommage</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Liste&#160;des&#160;classes</span></a></li>
+      <li><a href="classes.html"><span>Index&#160;des&#160;classes</span></a></li>
+      <li><a href="hierarchy.html"><span>Hiérarchie&#160;des&#160;classes</span></a></li>
+      <li><a href="functions.html"><span>Membres&#160;de&#160;classe</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('class_evenement.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Espaces de nommage</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Valeurs énumérées</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="#pri-attribs">Attributs privés</a> &#124;
+<a href="class_evenement-members.html">Liste de tous les membres</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence de la classe Evenement</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Un événement de l'agenda (classique ou tâche)  
+ <a href="class_evenement.html#details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="evenement_8h_source.html">evenement.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr class="memitem:a93b45aa17aa18de972a2ddecc0ef406a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a93b45aa17aa18de972a2ddecc0ef406a">Evenement</a> (int <a class="el" href="class_evenement.html#a3f90a64a77837a821463422608603b88">id</a>, const QString &amp;m_titre, const QString &amp;m_lieu, const QDate &amp;m_dateDebut, const QTime &amp;m_heureDebut, const QDate &amp;m_dateFin, const QTime &amp;<a class="el" href="class_evenement.html#a1241f0a3f87cdab49602d85f395a5b12">heureFin</a>, const QString &amp;m_description)</td></tr>
+<tr class="memdesc:a93b45aa17aa18de972a2ddecc0ef406a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur d'<a class="el" href="class_evenement.html" title="Un événement de l&#39;agenda (classique ou tâche) ">Evenement</a>.  <a href="#a93b45aa17aa18de972a2ddecc0ef406a">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a93b45aa17aa18de972a2ddecc0ef406a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d48e3c09cd6a062cb552858f60f2871"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a2d48e3c09cd6a062cb552858f60f2871">Evenement</a> (const <a class="el" href="class_evenement.html">Evenement</a> &amp;autre)</td></tr>
+<tr class="memdesc:a2d48e3c09cd6a062cb552858f60f2871"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_evenement.html" title="Un événement de l&#39;agenda (classique ou tâche) ">Evenement</a> constructeur de recopie d'<a class="el" href="class_evenement.html" title="Un événement de l&#39;agenda (classique ou tâche) ">Evenement</a>.  <a href="#a2d48e3c09cd6a062cb552858f60f2871">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a2d48e3c09cd6a062cb552858f60f2871"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15de89652d5416b1c63488bc97d8cd58"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a15de89652d5416b1c63488bc97d8cd58">~Evenement</a> ()</td></tr>
+<tr class="memdesc:a15de89652d5416b1c63488bc97d8cd58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructeur d'<a class="el" href="class_evenement.html" title="Un événement de l&#39;agenda (classique ou tâche) ">Evenement</a>.  <a href="#a15de89652d5416b1c63488bc97d8cd58">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a15de89652d5416b1c63488bc97d8cd58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28a67eded4a392879afc44c6a37a6c94"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a28a67eded4a392879afc44c6a37a6c94">getId</a> () const </td></tr>
+<tr class="memdesc:a28a67eded4a392879afc44c6a37a6c94"><td class="mdescLeft">&#160;</td><td class="mdescRight">accesseurs en lecture  <a href="#a28a67eded4a392879afc44c6a37a6c94">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a28a67eded4a392879afc44c6a37a6c94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4146ea4eb1ddcd8d1f0bfad0e033a904"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a4146ea4eb1ddcd8d1f0bfad0e033a904">getTitre</a> () const </td></tr>
+<tr class="separator:a4146ea4eb1ddcd8d1f0bfad0e033a904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d239d718b52eeb935e4fcf767268343"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a2d239d718b52eeb935e4fcf767268343">getLieu</a> () const </td></tr>
+<tr class="separator:a2d239d718b52eeb935e4fcf767268343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96e64e433655bb6e88d99cd41b0e84d5"><td class="memItemLeft" align="right" valign="top">QDate&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a96e64e433655bb6e88d99cd41b0e84d5">getDateDebut</a> () const </td></tr>
+<tr class="separator:a96e64e433655bb6e88d99cd41b0e84d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac074727ddd93918aefa27626870a47c6"><td class="memItemLeft" align="right" valign="top">QTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#ac074727ddd93918aefa27626870a47c6">getHeureDebut</a> () const </td></tr>
+<tr class="separator:ac074727ddd93918aefa27626870a47c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6964f6bc617b58c5ad95bfceacf1732c"><td class="memItemLeft" align="right" valign="top">QDate&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a6964f6bc617b58c5ad95bfceacf1732c">getDateFin</a> () const </td></tr>
+<tr class="separator:a6964f6bc617b58c5ad95bfceacf1732c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88c836ee05c207059fbb91f71e8311ab"><td class="memItemLeft" align="right" valign="top">QTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a88c836ee05c207059fbb91f71e8311ab">getHeureFin</a> () const </td></tr>
+<tr class="separator:a88c836ee05c207059fbb91f71e8311ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f7bf4fc694e537657ac7dd9dd553291"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a6f7bf4fc694e537657ac7dd9dd553291">getDescription</a> () const </td></tr>
+<tr class="separator:a6f7bf4fc694e537657ac7dd9dd553291"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab31f3329f23ae52ceb73a8e6f0533761"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tache.html">Tache</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#ab31f3329f23ae52ceb73a8e6f0533761">getTacheAssociee</a> () const </td></tr>
+<tr class="separator:ab31f3329f23ae52ceb73a8e6f0533761"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a679a667edccaf63e88192086334ac93a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a679a667edccaf63e88192086334ac93a">setId</a> (int it)</td></tr>
+<tr class="memdesc:a679a667edccaf63e88192086334ac93a"><td class="mdescLeft">&#160;</td><td class="mdescRight">accesseurs en ecriture  <a href="#a679a667edccaf63e88192086334ac93a">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a679a667edccaf63e88192086334ac93a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12cc86559a68f4df227ca8ba2597a2e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a12cc86559a68f4df227ca8ba2597a2e3">setTitre</a> (const QString &amp;m_titre)</td></tr>
+<tr class="separator:a12cc86559a68f4df227ca8ba2597a2e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a390b48db3ac03728504b4fa4e1ce46b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a390b48db3ac03728504b4fa4e1ce46b6">setLieu</a> (const QString &amp;m_lieu)</td></tr>
+<tr class="separator:a390b48db3ac03728504b4fa4e1ce46b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b98f36a909c75e1e800bb3a0b1cb255"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a1b98f36a909c75e1e800bb3a0b1cb255">setDateDebut</a> (QDate m_dateDebut)</td></tr>
+<tr class="separator:a1b98f36a909c75e1e800bb3a0b1cb255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bd20e7f39642621ea5a0aad79aaf498"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a1bd20e7f39642621ea5a0aad79aaf498">setHeureDebut</a> (QTime m_heureDebut)</td></tr>
+<tr class="separator:a1bd20e7f39642621ea5a0aad79aaf498"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0df849095e9647c2a71083a104072a89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a0df849095e9647c2a71083a104072a89">setDateFin</a> (QDate m_dateFin)</td></tr>
+<tr class="separator:a0df849095e9647c2a71083a104072a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab228a4a478c6fa03a252a820bb2e3e52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#ab228a4a478c6fa03a252a820bb2e3e52">setHeureFin</a> (QTime m_heureFin)</td></tr>
+<tr class="separator:ab228a4a478c6fa03a252a820bb2e3e52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6382667f68bb64c44bd42e0e2619bfee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a6382667f68bb64c44bd42e0e2619bfee">setDescription</a> (const QString &amp;m_description)</td></tr>
+<tr class="separator:a6382667f68bb64c44bd42e0e2619bfee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c4e1fde85eb17cb8cdcc2ac3fd2032b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a4c4e1fde85eb17cb8cdcc2ac3fd2032b">setTacheAssociee</a> (<a class="el" href="class_tache.html">Tache</a> *t)</td></tr>
+<tr class="separator:a4c4e1fde85eb17cb8cdcc2ac3fd2032b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Attributs privés</h2></td></tr>
+<tr class="memitem:a3f90a64a77837a821463422608603b88"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a3f90a64a77837a821463422608603b88">id</a></td></tr>
+<tr class="separator:a3f90a64a77837a821463422608603b88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e3e95ca2853b020205a607d3f8d254b"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a5e3e95ca2853b020205a607d3f8d254b">titre</a></td></tr>
+<tr class="separator:a5e3e95ca2853b020205a607d3f8d254b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9446465c04a4b234b703ee883d9f9ac1"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a9446465c04a4b234b703ee883d9f9ac1">lieu</a></td></tr>
+<tr class="separator:a9446465c04a4b234b703ee883d9f9ac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a240b056fed8bf95945e27957693bd5e3"><td class="memItemLeft" align="right" valign="top">QDate&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a240b056fed8bf95945e27957693bd5e3">dateDebut</a></td></tr>
+<tr class="separator:a240b056fed8bf95945e27957693bd5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ee5b11b2495856127191a9fa5e3340d"><td class="memItemLeft" align="right" valign="top">QTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a3ee5b11b2495856127191a9fa5e3340d">heureDebut</a></td></tr>
+<tr class="separator:a3ee5b11b2495856127191a9fa5e3340d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37019f7655fb51040a8233d09ba74345"><td class="memItemLeft" align="right" valign="top">QDate&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a37019f7655fb51040a8233d09ba74345">dateFin</a></td></tr>
+<tr class="separator:a37019f7655fb51040a8233d09ba74345"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1241f0a3f87cdab49602d85f395a5b12"><td class="memItemLeft" align="right" valign="top">QTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a1241f0a3f87cdab49602d85f395a5b12">heureFin</a></td></tr>
+<tr class="separator:a1241f0a3f87cdab49602d85f395a5b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafe3654b3769799457ccf6f093b74503"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#aafe3654b3769799457ccf6f093b74503">description</a></td></tr>
+<tr class="separator:aafe3654b3769799457ccf6f093b74503"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b401d492d4ec1304473c492a37b1134"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_tache.html">Tache</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_evenement.html#a3b401d492d4ec1304473c492a37b1134">tache_ref</a> = nullptr</td></tr>
+<tr class="separator:a3b401d492d4ec1304473c492a37b1134"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Un événement de l'agenda (classique ou tâche) </p>
+</div><h2 class="groupheader">Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="a93b45aa17aa18de972a2ddecc0ef406a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Evenement::Evenement </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>m_titre</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>m_lieu</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QDate &amp;&#160;</td>
+          <td class="paramname"><em>m_dateDebut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QTime &amp;&#160;</td>
+          <td class="paramname"><em>m_heureDebut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QDate &amp;&#160;</td>
+          <td class="paramname"><em>m_dateFin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QTime &amp;&#160;</td>
+          <td class="paramname"><em>heureFin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>m_description</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructeur d'<a class="el" href="class_evenement.html" title="Un événement de l&#39;agenda (classique ou tâche) ">Evenement</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2d48e3c09cd6a062cb552858f60f2871"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Evenement::Evenement </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_evenement.html">Evenement</a> &amp;&#160;</td>
+          <td class="paramname"><em>autre</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="class_evenement.html" title="Un événement de l&#39;agenda (classique ou tâche) ">Evenement</a> constructeur de recopie d'<a class="el" href="class_evenement.html" title="Un événement de l&#39;agenda (classique ou tâche) ">Evenement</a>. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">autre</td><td>evenement à recopier </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a15de89652d5416b1c63488bc97d8cd58"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Evenement::~Evenement </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destructeur d'<a class="el" href="class_evenement.html" title="Un événement de l&#39;agenda (classique ou tâche) ">Evenement</a>. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des fonctions membres</h2>
+<a class="anchor" id="a96e64e433655bb6e88d99cd41b0e84d5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QDate Evenement::getDateDebut </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6964f6bc617b58c5ad95bfceacf1732c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QDate Evenement::getDateFin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6f7bf4fc694e537657ac7dd9dd553291"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString Evenement::getDescription </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac074727ddd93918aefa27626870a47c6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QTime Evenement::getHeureDebut </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a88c836ee05c207059fbb91f71e8311ab"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QTime Evenement::getHeureFin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a28a67eded4a392879afc44c6a37a6c94"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Evenement::getId </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>accesseurs en lecture </p>
+
+</div>
+</div>
+<a class="anchor" id="a2d239d718b52eeb935e4fcf767268343"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString Evenement::getLieu </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab31f3329f23ae52ceb73a8e6f0533761"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_tache.html">Tache</a>* Evenement::getTacheAssociee </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4146ea4eb1ddcd8d1f0bfad0e033a904"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString Evenement::getTitre </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1b98f36a909c75e1e800bb3a0b1cb255"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Evenement::setDateDebut </td>
+          <td>(</td>
+          <td class="paramtype">QDate&#160;</td>
+          <td class="paramname"><em>m_dateDebut</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0df849095e9647c2a71083a104072a89"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Evenement::setDateFin </td>
+          <td>(</td>
+          <td class="paramtype">QDate&#160;</td>
+          <td class="paramname"><em>m_dateFin</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6382667f68bb64c44bd42e0e2619bfee"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Evenement::setDescription </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>m_description</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1bd20e7f39642621ea5a0aad79aaf498"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Evenement::setHeureDebut </td>
+          <td>(</td>
+          <td class="paramtype">QTime&#160;</td>
+          <td class="paramname"><em>m_heureDebut</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab228a4a478c6fa03a252a820bb2e3e52"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Evenement::setHeureFin </td>
+          <td>(</td>
+          <td class="paramtype">QTime&#160;</td>
+          <td class="paramname"><em>m_heureFin</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a679a667edccaf63e88192086334ac93a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Evenement::setId </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>it</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>accesseurs en ecriture </p>
+
+</div>
+</div>
+<a class="anchor" id="a390b48db3ac03728504b4fa4e1ce46b6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Evenement::setLieu </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>m_lieu</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4c4e1fde85eb17cb8cdcc2ac3fd2032b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Evenement::setTacheAssociee </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_tache.html">Tache</a> *&#160;</td>
+          <td class="paramname"><em>t</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a12cc86559a68f4df227ca8ba2597a2e3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Evenement::setTitre </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>m_titre</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des données membres</h2>
+<a class="anchor" id="a240b056fed8bf95945e27957693bd5e3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QDate Evenement::dateDebut</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a37019f7655fb51040a8233d09ba74345"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QDate Evenement::dateFin</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aafe3654b3769799457ccf6f093b74503"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString Evenement::description</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3ee5b11b2495856127191a9fa5e3340d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QTime Evenement::heureDebut</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1241f0a3f87cdab49602d85f395a5b12"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QTime Evenement::heureFin</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3f90a64a77837a821463422608603b88"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Evenement::id</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9446465c04a4b234b703ee883d9f9ac1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString Evenement::lieu</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3b401d492d4ec1304473c492a37b1134"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_tache.html">Tache</a>* Evenement::tache_ref = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5e3e95ca2853b020205a607d3f8d254b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString Evenement::titre</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>/home/romain/git/lo21-projet/code/ProjectCalendar/<a class="el" href="evenement_8h_source.html">evenement.h</a></li>
+<li>/home/romain/git/lo21-projet/code/ProjectCalendar/<a class="el" href="evenement_8cpp.html">evenement.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="class_evenement.html">Evenement</a></li>
+    <li class="footer">Généré le Dimanche 14 Juin 2015 23:52:56 pour ProjectCalendar par
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
+  </ul>
+</div>
+</body>
+</html>

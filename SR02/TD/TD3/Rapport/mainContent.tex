@@ -1,0 +1,182 @@
+\clanguage
+
+\part{Séance 1}
+
+\chapter{Segment de mémoire partagée}
+
+\section{Question 1}
+
+Lorsque le processus père imprime pour la première fois le \lstinline{tab2[]}, le résultat est différent du fils car au moment du \lstinline{fork()}, le fils a dupliqué l'espace mémoire du père. Ainsi, lorsque le fils a modifié \lstinline{tab2[]}, il a en fait modifié une copie du tableau du père, située dans l'espace mémoire propre au fils.
+
+\medskip
+
+Ensuite, le fils a copié ce tableau \lstinline{tab2[]} dans l'espace mémoire partagé entre le processus fils et père. Enfin, le père a copié cet espace mémoire partagé dans son propre espace mémoire (à la place de \lstinline{tab2[]}). C'est pour cela que son \lstinline{tab2[]} était à la fin identique à celui du fils.
+
+\medskip
+Voici la fonction qui permet de copier un tableau vers un segment de mémoire partagé, et vice-versa :
+\begin{lstlisting}
+...
+void copie(int* src, int* dst, int nb) {
+    int i;
+    for (i = 0; i < nb; i++) {
+        dst[i] = src[i];
+    }
+}
+...
+int main() {
+  int tab2[10];
+  int shmid;
+  int *adr;
+  ...
+  shmid = shmget(IPC_PRIVATE,100,IPC_CREAT|0666); // Création d'un espace de mémoire partagé de taille 100 bytes
+  adr = (int*) shmat(shmid,NULL,0); // Shell memory attachment
+  ...
+  copie(adr,tab2,10); // adr -> tab2
+  ...
+}
+\end{lstlisting}
+
+\section{Question 2}
+
+Le principe ici est exactement le même sauf qu'au lieu d'un \lstinline{fork()}, nous utilisons deux programmes séparés (donc deux \lstinline{int main()}). Le programme shrpte.c crée le segment de mémoire partagée, écrit dedans et détruit le segment après avoir attendu 30s (laps de temps pendant lequel l'autre programme lit le segment de mémoire partagée et l'affiche).
+
+\medskip
+
+Il nous a seulement fallu changer quelques arguments fournis à certaines fonctions systèmes.
+
+\textcode{Fichier shrmem\_e.c}
+\begin{lstlisting}
+#define CLE 123456
+...
+shmid = shmget(CLE,100,IPC_CREAT|0666); // Création d'un espace de mémoire partagé de taille 100 bytes
+adr = (int*) shmat(shmid,NULL,0); // Shell memory attachment
+...
+\end{lstlisting}
+
+\textcode{Fichier shrmem\_r.c}
+\begin{lstlisting}
+#define CLE 123456
+...
+shmid = shmget(CLE,100,0666); // Accès à espace de mémoire partagé de taille 100 bytes
+adr = (int*) shmat(shmid,NULL,0); // Shell memory attachment
+...
+\end{lstlisting}
+
+\section{Question 3}
+
+L'execution du programme shrpte.c déclenche une \textit{segmentation fault}. Cela est totalement logique puisque ce programme obtient, grâce à la mémoire partagée (et au tableau de 5 pointeurs qui s'y trouve), les adresses des vecteurs d'entiers propres au programme strpte.c. En voulant aller lire ces variables, \textbf{l'OS refuse l'accès à cette partie de la mémoire au programme.}
+
+\medskip
+
+Pour que cela fonctionne, il faudrait mettre les vecteurs d'entier dans le segment de mémoire partagée propre aux deux programmes, au lieu d'en faire des variables propres à un seul programme.
+
+\part{Séance 2}
+
+\chapter{Utilisation de la directive mmap(2)}
+
+\section{Question 1}
+
+À partir du code fourni, nous avons créé deux programmes : inific.c qui initialise le fichier \og{}titi.dat\fg{}, et un programme lirfic.c qui imprime sur la sortie standard le contenu de \og{}titi.dat\fg{}.
+
+\textcode{inific.c}
+\begin{lstlisting}
+#include <fcntl.h>
+
+main() {
+    int tab[10] = {11,22,33,44,55,66,77,88,99,1000};
+    int fd;
+    fd=open("titi.dat",O_RDWR|O_CREAT|O_TRUNC,0666);
+    write (fd,tab,10*sizeof(int));
+    close(fd);
+    return 0;
+}
+\end{lstlisting}
+\textcode{lirfic.c}
+\begin{lstlisting}
+#include <stdio.h>
+#include <fcntl.h>
+
+main() {
+    int i,fd, taille = 10;
+    int tab2[taille];
+
+    fd=open("titi.dat",O_RDWR,0666);
+    read(fd,tab2,taille*sizeof(int));
+    close(fd);
+
+    for (i=0;i<taille;i++)
+        printf("%d\n",tab2[i]);
+
+    return 0;
+}
+\end{lstlisting}
+
+\section{Question 2}
+
+Nous avons réutilisé les deux fichiers créés précedemment. Nous avons créés les deux nouveaux demandés :
+
+\textcode{modfic.c}
+\begin{lstlisting}
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+
+main() {
+    int *adr;
+    int fd, stdin;
+
+    fd=open("titi.dat",O_RDWR,0666);
+    adr = (int *) mmap(NULL,10*sizeof(int),PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
+    if (adr == MAP_FAILED) {
+        perror("mmap");
+        exit(0);
+    }
+    while(1) {
+        printf("Entrer un nombre (modifiera le tableau): ");
+        scanf("%d",&stdin);
+        while (getchar()!='\n'); // vide buffer
+        if (stdin > 99 || stdin < 0) continue;
+        if (stdin == 99)
+            exit(0);
+        adr[stdin]++;
+        printf("Modifié!\n");
+    }
+    close(fd);
+    return 0;
+}
+\end{lstlisting}
+
+\textcode{showfic.c}
+\begin{lstlisting}
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+
+main() {
+    int *adr;
+    int fd, stdin, i;
+
+    fd=open("titi.dat",O_RDWR,0666);
+    adr = (int *) mmap(NULL,10*sizeof(int),PROT_READ, MAP_SHARED, fd, 0);
+    if (adr == MAP_FAILED) {
+        perror("mmap");
+        exit(0);
+    }
+    while(1) {
+        printf("Entrer un nombre (affichera le tableau): ");
+        scanf("%d",&stdin);
+        while (getchar()!='\n'); // vide buffer
+        if (stdin > 99 || stdin < 0) continue;
+        if (stdin == 99)
+            exit(0);
+        for (i=0;i<10;i++)
+            printf("%d:\t%d\n",i,adr[i]);
+    }
+    close(fd);
+    return 0;
+}
+\end{lstlisting}
+
+L'exécution de ces 4 programmes dans deux fenêtres (terminaux) séparés se déroule bien, lirfic.c affiche le fichier final modifié grâce à modfic.c.

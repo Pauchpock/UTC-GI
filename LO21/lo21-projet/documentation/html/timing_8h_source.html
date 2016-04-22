@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>ProjectCalendar:  Fichier source de /home/romain/git/lo21-projet/code/ProjectCalendar/timing.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">ProjectCalendar
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">Projet de LO21</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.6 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="namespaces.html"><span>Espaces&#160;de&#160;nommage</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Membres&#160;de&#160;fichier</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('timing_8h_source.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Espaces de nommage</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Valeurs énumérées</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">timing.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="timing_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#if !defined(CTIME)</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define CTIME</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include&lt;iostream&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include&lt;iomanip&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="namespace_t_i_m_e.html">    7</a></span>&#160;<span class="keyword">namespace </span>TIME {</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="class_t_i_m_e_1_1_time_exception.html">   11</a></span>&#160;    <span class="keyword">class </span><a class="code" href="class_t_i_m_e_1_1_time_exception.html">TimeException</a>{</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="class_t_i_m_e_1_1_time_exception.html#a08502d82065dd79b27cd954b45f4d5c7">   14</a></span>&#160;        <a class="code" href="class_t_i_m_e_1_1_time_exception.html#a08502d82065dd79b27cd954b45f4d5c7">TimeException</a>(<span class="keyword">const</span> std::string&amp; m):<a class="code" href="class_t_i_m_e_1_1_time_exception.html#a2d6a6b0270d9e4958f0dc9443f0d5565">info</a>(m){}</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="class_t_i_m_e_1_1_time_exception.html#ad86c212253ea1b8654f4cae34611d634">   15</a></span>&#160;        <span class="keyword">const</span> std::string&amp; <a class="code" href="class_t_i_m_e_1_1_time_exception.html#ad86c212253ea1b8654f4cae34611d634">GetInfo</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="class_t_i_m_e_1_1_time_exception.html#a2d6a6b0270d9e4958f0dc9443f0d5565">info</a>; } <span class="comment">//&lt;! Retourne l&#39;information stockée dans la classe</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="class_t_i_m_e_1_1_time_exception.html#a2d6a6b0270d9e4958f0dc9443f0d5565">   17</a></span>&#160;        std::string <a class="code" href="class_t_i_m_e_1_1_time_exception.html#a2d6a6b0270d9e4958f0dc9443f0d5565">info</a>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    };</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="class_t_i_m_e_1_1_duree.html">   27</a></span>&#160;    <span class="keyword">class </span><a class="code" href="class_t_i_m_e_1_1_duree.html">Duree</a>{</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="class_t_i_m_e_1_1_duree.html#ae0532a0d60dbc31773f038967dfe220e">   33</a></span>&#160;        <a class="code" href="class_t_i_m_e_1_1_duree.html#ae0532a0d60dbc31773f038967dfe220e">Duree</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> h, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> m):<a class="code" href="class_t_i_m_e_1_1_duree.html#aefcad6b1ecdddd565d33b00be58777ec">nb_minutes</a>(h*60+m) {<span class="keywordflow">if</span> (m&gt;59) <span class="keywordflow">throw</span> <a class="code" href="class_t_i_m_e_1_1_time_exception.html">TimeException</a>(<span class="stringliteral">&quot;erreur: initialisation duree invalide&quot;</span>);}</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="class_t_i_m_e_1_1_duree.html#a0f99878e52fad2f9e0643301c70d9ef7">   37</a></span>&#160;        <a class="code" href="class_t_i_m_e_1_1_duree.html#a0f99878e52fad2f9e0643301c70d9ef7">Duree</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> m=0):<a class="code" href="class_t_i_m_e_1_1_duree.html#aefcad6b1ecdddd565d33b00be58777ec">nb_minutes</a>(m) {}</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="class_t_i_m_e_1_1_duree.html#aabba3e357861f21faa8419339f7b7176">   38</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_t_i_m_e_1_1_duree.html#aabba3e357861f21faa8419339f7b7176">setDuree</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> heures, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> minutes) { <span class="keywordflow">if</span> (minutes&gt;59) <span class="keywordflow">throw</span> <a class="code" href="class_t_i_m_e_1_1_time_exception.html">TimeException</a>(<span class="stringliteral">&quot;erreur: initialisation duree invalide&quot;</span>); <a class="code" href="class_t_i_m_e_1_1_duree.html#aefcad6b1ecdddd565d33b00be58777ec">nb_minutes</a>=heures*60+minutes; }</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="class_t_i_m_e_1_1_duree.html#a279f4e902ddea9d2305b56f00e9296d4">   39</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_t_i_m_e_1_1_duree.html#a279f4e902ddea9d2305b56f00e9296d4">setDuree</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> minutes) {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <a class="code" href="class_t_i_m_e_1_1_duree.html#aabba3e357861f21faa8419339f7b7176">setDuree</a>(minutes/60,minutes%60);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        }</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="class_t_i_m_e_1_1_duree.html#a1e47fb5f0734ec562e2f9dba32db45f4">   42</a></span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="class_t_i_m_e_1_1_duree.html#a1e47fb5f0734ec562e2f9dba32db45f4">getDureeEnMinutes</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="class_t_i_m_e_1_1_duree.html#aefcad6b1ecdddd565d33b00be58777ec">nb_minutes</a>; } <span class="comment">//&lt;!Retourne la duree en minutes</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="class_t_i_m_e_1_1_duree.html#afb11d106fc1f6761a68f486dc7a17564">   43</a></span>&#160;        <span class="keywordtype">double</span> <a class="code" href="class_t_i_m_e_1_1_duree.html#afb11d106fc1f6761a68f486dc7a17564">getDureeEnHeures</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> double(<a class="code" href="class_t_i_m_e_1_1_duree.html#aefcad6b1ecdddd565d33b00be58777ec">nb_minutes</a>)/60; } <span class="comment">//&lt;!Retourne la duree en heures</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="class_t_i_m_e_1_1_duree.html#ad957a58f8bc103857f3e494bab5f60e1">   44</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="class_t_i_m_e_1_1_duree.html#ad957a58f8bc103857f3e494bab5f60e1">afficher</a>(std::ostream&amp; f=std::cout)<span class="keyword"> const </span>{ f&lt;&lt;std::setfill(<span class="charliteral">&#39;0&#39;</span>)&lt;&lt;std::setw(2)&lt;&lt;<a class="code" href="class_t_i_m_e_1_1_duree.html#aefcad6b1ecdddd565d33b00be58777ec">nb_minutes</a>/60&lt;&lt;<span class="stringliteral">&quot;H&quot;</span>&lt;&lt;std::setw(2)&lt;&lt;<a class="code" href="class_t_i_m_e_1_1_duree.html#aefcad6b1ecdddd565d33b00be58777ec">nb_minutes</a>%60&lt;&lt;std::setfill(<span class="charliteral">&#39; &#39;</span>); } <span class="comment">//&lt;!Affiche la duree sous le format hhHmm</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_t_i_m_e_1_1_duree.html#aefcad6b1ecdddd565d33b00be58777ec">   46</a></span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="class_t_i_m_e_1_1_duree.html#aefcad6b1ecdddd565d33b00be58777ec">nb_minutes</a>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    };</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;std::ostream&amp; <a class="code" href="timing_8h.html#ae1f6c691e21b37d44214d6d4b0ad86ab">operator&lt;&lt;</a>(std::ostream&amp; f, <span class="keyword">const</span> <a class="code" href="class_t_i_m_e_1_1_duree.html">TIME::Duree</a> &amp; d);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;std::istream&amp; <a class="code" href="timing_8h.html#ae9c16fb88eebdd4a4cf7bfc49c9e6f31">operator&gt;&gt;</a>(std::istream&amp;, <a class="code" href="class_t_i_m_e_1_1_duree.html">TIME::Duree</a>&amp;); <span class="comment">//lecture format hhHmm</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor"></span></div>
+<div class="ttc" id="class_t_i_m_e_1_1_duree_html_aefcad6b1ecdddd565d33b00be58777ec"><div class="ttname"><a href="class_t_i_m_e_1_1_duree.html#aefcad6b1ecdddd565d33b00be58777ec">TIME::Duree::nb_minutes</a></div><div class="ttdeci">unsigned int nb_minutes</div><div class="ttdef"><b>Definition:</b> timing.h:46</div></div>
+<div class="ttc" id="class_t_i_m_e_1_1_duree_html_aabba3e357861f21faa8419339f7b7176"><div class="ttname"><a href="class_t_i_m_e_1_1_duree.html#aabba3e357861f21faa8419339f7b7176">TIME::Duree::setDuree</a></div><div class="ttdeci">void setDuree(unsigned int heures, unsigned int minutes)</div><div class="ttdef"><b>Definition:</b> timing.h:38</div></div>
+<div class="ttc" id="class_t_i_m_e_1_1_duree_html_a1e47fb5f0734ec562e2f9dba32db45f4"><div class="ttname"><a href="class_t_i_m_e_1_1_duree.html#a1e47fb5f0734ec562e2f9dba32db45f4">TIME::Duree::getDureeEnMinutes</a></div><div class="ttdeci">unsigned int getDureeEnMinutes() const </div><div class="ttdef"><b>Definition:</b> timing.h:42</div></div>
+<div class="ttc" id="timing_8h_html_ae1f6c691e21b37d44214d6d4b0ad86ab"><div class="ttname"><a href="timing_8h.html#ae1f6c691e21b37d44214d6d4b0ad86ab">operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;f, const TIME::Duree &amp;d)</div><div class="ttdef"><b>Definition:</b> timing.cpp:7</div></div>
+<div class="ttc" id="class_t_i_m_e_1_1_duree_html_afb11d106fc1f6761a68f486dc7a17564"><div class="ttname"><a href="class_t_i_m_e_1_1_duree.html#afb11d106fc1f6761a68f486dc7a17564">TIME::Duree::getDureeEnHeures</a></div><div class="ttdeci">double getDureeEnHeures() const </div><div class="ttdef"><b>Definition:</b> timing.h:43</div></div>
+<div class="ttc" id="class_t_i_m_e_1_1_duree_html_a279f4e902ddea9d2305b56f00e9296d4"><div class="ttname"><a href="class_t_i_m_e_1_1_duree.html#a279f4e902ddea9d2305b56f00e9296d4">TIME::Duree::setDuree</a></div><div class="ttdeci">void setDuree(unsigned int minutes)</div><div class="ttdef"><b>Definition:</b> timing.h:39</div></div>
+<div class="ttc" id="class_t_i_m_e_1_1_time_exception_html"><div class="ttname"><a href="class_t_i_m_e_1_1_time_exception.html">TIME::TimeException</a></div><div class="ttdoc">Classe permettant de gérer les exceptions des classes du namespace TIME. </div><div class="ttdef"><b>Definition:</b> timing.h:11</div></div>
+<div class="ttc" id="class_t_i_m_e_1_1_time_exception_html_a2d6a6b0270d9e4958f0dc9443f0d5565"><div class="ttname"><a href="class_t_i_m_e_1_1_time_exception.html#a2d6a6b0270d9e4958f0dc9443f0d5565">TIME::TimeException::info</a></div><div class="ttdeci">std::string info</div><div class="ttdef"><b>Definition:</b> timing.h:17</div></div>
+<div class="ttc" id="class_t_i_m_e_1_1_time_exception_html_ad86c212253ea1b8654f4cae34611d634"><div class="ttname"><a href="class_t_i_m_e_1_1_time_exception.html#ad86c212253ea1b8654f4cae34611d634">TIME::TimeException::GetInfo</a></div><div class="ttdeci">const std::string &amp; GetInfo() const </div><div class="ttdef"><b>Definition:</b> timing.h:15</div></div>
+<div class="ttc" id="class_t_i_m_e_1_1_duree_html_a0f99878e52fad2f9e0643301c70d9ef7"><div class="ttname"><a href="class_t_i_m_e_1_1_duree.html#a0f99878e52fad2f9e0643301c70d9ef7">TIME::Duree::Duree</a></div><div class="ttdeci">Duree(unsigned int m=0)</div><div class="ttdoc">Constructeur à partir de minute. </div><div class="ttdef"><b>Definition:</b> timing.h:37</div></div>
+<div class="ttc" id="class_t_i_m_e_1_1_duree_html_ae0532a0d60dbc31773f038967dfe220e"><div class="ttname"><a href="class_t_i_m_e_1_1_duree.html#ae0532a0d60dbc31773f038967dfe220e">TIME::Duree::Duree</a></div><div class="ttdeci">Duree(unsigned int h, unsigned int m)</div><div class="ttdoc">Constructeur à partir de heure et minute. </div><div class="ttdef"><b>Definition:</b> timing.h:33</div></div>
+<div class="ttc" id="class_t_i_m_e_1_1_time_exception_html_a08502d82065dd79b27cd954b45f4d5c7"><div class="ttname"><a href="class_t_i_m_e_1_1_time_exception.html#a08502d82065dd79b27cd954b45f4d5c7">TIME::TimeException::TimeException</a></div><div class="ttdeci">TimeException(const std::string &amp;m)</div><div class="ttdoc">Constructeur à partir d&#39;une string. </div><div class="ttdef"><b>Definition:</b> timing.h:14</div></div>
+<div class="ttc" id="timing_8h_html_ae9c16fb88eebdd4a4cf7bfc49c9e6f31"><div class="ttname"><a href="timing_8h.html#ae9c16fb88eebdd4a4cf7bfc49c9e6f31">operator&gt;&gt;</a></div><div class="ttdeci">std::istream &amp; operator&gt;&gt;(std::istream &amp;, TIME::Duree &amp;)</div><div class="ttdef"><b>Definition:</b> timing.cpp:8</div></div>
+<div class="ttc" id="class_t_i_m_e_1_1_duree_html"><div class="ttname"><a href="class_t_i_m_e_1_1_duree.html">TIME::Duree</a></div><div class="ttdoc">Classe permettant de manipuler des durees L&#39;utilisation de cette classe nécessite des dates valides a...</div><div class="ttdef"><b>Definition:</b> timing.h:27</div></div>
+<div class="ttc" id="class_t_i_m_e_1_1_duree_html_ad957a58f8bc103857f3e494bab5f60e1"><div class="ttname"><a href="class_t_i_m_e_1_1_duree.html#ad957a58f8bc103857f3e494bab5f60e1">TIME::Duree::afficher</a></div><div class="ttdeci">void afficher(std::ostream &amp;f=std::cout) const </div><div class="ttdef"><b>Definition:</b> timing.h:44</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_050edd66366d13764f98250ef6db77f6.html">code</a></li><li class="navelem"><a class="el" href="dir_1988fe95b983e0fa0f996618c0297ae0.html">ProjectCalendar</a></li><li class="navelem"><a class="el" href="timing_8h.html">timing.h</a></li>
+    <li class="footer">Généré le Dimanche 14 Juin 2015 23:52:56 pour ProjectCalendar par
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
+  </ul>
+</div>
+</body>
+</html>

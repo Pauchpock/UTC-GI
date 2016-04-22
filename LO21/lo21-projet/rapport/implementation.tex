@@ -1,0 +1,76 @@
+\chapter{Implémentation}
+
+\section{Classes métiers}
+
+Ayant un UML à disposition, nous avons par la suite commencé le projet en créant les classes métiers, qui sont en fait les implémentations des entités UML. Par rapport à l'UML, nous avons ajouté les constructeurs, les \textit{getters} et \textit{setters}, les attributs implicites sur l'UML (par exemple, un \lstinline{std::vector} pour les compositions), etc. Voici un extrait de la classe \lstinline{Projet} :
+
+\code{projet.h}{C++}
+\begin{lstlisting}
+class Projet {
+    QString nom;
+    QDate dateDisponibilite;
+    vector<Tache*> taches;
+
+public:
+    Projet(QString m_nom, QDate m_dispo): nom(m_nom), dateDisponibilite(m_dispo){}
+
+    void ajouterTache(Tache *t);
+
+    /**
+     * @brief getEcheance permet de connaitre l'échéance du projet
+     * @return la date d'échéance la plus éloignée, de l'ensemble des tâches du projet
+     */
+    QDate getEcheance() const;
+
+    // Getters
+    QString getNom() const {return nom;}
+    QDate getDispo() const {return dateDisponibilite;}
+
+    // Setters
+    void setNom(const QString& m_nom) {nom = m_nom;}
+    void setDispo(const QDate& m_dateDispo) {dateDisponibilite  = m_dateDispo;}
+
+    ~Projet();
+};
+\end{lstlisting}
+
+Nous avons choisi d'utiliser \textbf{trois singletons} pour les tâches, les projets et les événements (programmations) de l'agenda. Ces trois types d'entités seront respectivement contenu dans des \lstinline{TacheManage}, \lstinline{ProjetManager} et \lstinline{EvenementManager}. Cela permet d'accéder aux même objets, depuis n'importe quelle classe de l'application.
+
+\section{Classes des interfaces graphiques}
+Lors de la création des interfaces graphiques avec Qt, les classes minimales sont générées (constructeur et destructeur). Nous avons donc rajouté des méthodes pour effectuer certaines actions, comme par exemple :
+\begin{itemize}
+  \item Des signaux et slots pour réagir à des clics sur des éléments graphiques
+  \item Des méthodes qui rafraîchissent l'ensemble de l'interface graphique
+\end{itemize}
+
+\section{Fonction \lstinline{main()}}
+Notre fonction \lstinline{main()} joue un rôle très important dans l'application. Voici dans l'ordre ce qu'elle fait :
+\begin{enumerate}
+  \item \textbf{Instanciation des trois singletons.}
+  \item \textbf{Création (si non présent) du fichier de la base SQLite dans un sous-répertoire propre à notre application, dans le répertoire de l'utilisateur.}
+  \item \textbf{Connexion à la base et vérification que les tables nécessaires existent, sinon la table est \og re-initiliasée\fg{}.} Pour pouvoir faire évoluer l'application et la base facilement, il conviendrait d'avoir une table qui contient le numéro de version de l'application. Ainsi, lors des mises à jour de l'application, il serait aisé de savoir s'il faut recréer la base de données ou non.
+  \item \textbf{Chargement dans les trois singletons des projets, tâches et événements contenus en base de données.}
+  \item \textbf{Affichage de la fenêtre graphique.}
+\end{enumerate}
+
+\bigskip
+
+Les différentes exceptions qui peuvent survenir sont gérées par des blocs \lstinline{try/catch} avec affichage des messages d'erreurs à l'utilisateur via une \textit{pop-up}. Par exemple :
+
+\code{main.cpp}{C++}
+\begin{lstlisting}
+try {
+    em->setDatabase(&sdb); // em = EvenementManager::getInstance()
+    em->loadEvents();
+} catch (EvenementManagerException& e) {
+    fenetre.showError("Project Calendar", e.getInfo());
+    app.exit(0);
+    return 0;
+}
+\end{lstlisting}
+\code{mainwindow/h}{C++}
+\begin{lstlisting}
+void showError(QString titre, QString description) {
+    QMessageBox::warning(this, titre, description);
+}
+\end{lstlisting}

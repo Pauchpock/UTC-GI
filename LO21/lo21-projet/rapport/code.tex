@@ -1,0 +1,22 @@
+\chapter{Code}
+
+\section{Design Pattern}
+\noindent Nous avons utilisé les \textit{patterns} suivants dans notre projet :
+\begin{itemize}
+  \item Iterator (sur des \lstinline{std::vector})
+  \item Singleton (pour \lstinline{Tache}, \lstinline{Projet} et \lstinline{Evenement})
+  \item Composite (une tâche composite contient d'autre tâches, composites ou unitaires)
+  \item Factory (seul \lstinline{TacheManager} peut créer des \lstinline{Tache}, les constructeurs sont privés)
+  \item Adapter (autour de \lstinline{std::vector})
+\end{itemize}
+
+\section{Évolutivité}
+Nous n'avons pas trouvé l'usage des \textit{templates}, étant donné que nous utilisons la classe abstraite \lstinline{Tache}, qui contient des méthodes virtuelles pures, et dont toutes les tâches héritent. En cela, l'application peut être difficilement maintenable sur certains aspects.
+
+\medskip
+
+Nous aurions pu utiliser des \textit{templates} pour une classe-mère \lstinline{Manager<T>}, dont nos trois managers auraient hérités. Cette classe auraient contenus les méthodes abstraites \lstinline{load()} et \lstinline{saveToDB()} (que nous utilisons déjà dans nos trois managers). Le fait d'être un Singleton aurait alors été géré par cette classe-mère.
+
+\bigskip
+
+En revanche, nous avons bien segmenté nos classes et notre code de manière générale, regroupant d'un côté les classes métiers, de l'autres les classes applicatives (gérant l'interface utilisateur par exemple).

@@ -1,0 +1,209 @@
+\clanguage
+
+\chapter{Création d'une bibliothèque P(), V()}
+
+\section{Question 1}
+
+\subsection{\lstinline{int init\_semaphore(void)}}
+
+Le but de cette fonction est de créer un ensemble de \lstinline{N_SEM} sémaphores, qui pourront être utilisés dans le cadre de processus père-fils (suite à un \lstinline{fork()}) uniquement, à cause de l'utilisation d'\lstinline{IPC_PRIVATE} comme clé lors de la création. Dans le cas où notre \lstinline{semid}, représentant notre groupement, ne vaut ni -2 (aucune création), ou -1 (erreur lors d'une précédente création), on retourne -1. Dans le cas d'une erreur lors de la création, un message d'erreur est envoyé et on retourne -2.
+Dans les autres cas, on instancie une variable de type \lstinline{union semun} qui servira à l'initialisation des sémaphores grâce au flag SETALL. On retourne 0.
+
+\textcode{sem\_pv.c}
+\begin{lstlisting}
+int init_semaphore(void) {
+    if (semid != -2 && semid != -1) {
+        fprintf(stderr, "Déjà créé.\n");
+        return -1; // Erreur récupérable avec errno
+    }
+    else if((semid = semget(IPC_PRIVATE, N_SEM, 0666)) == -1) { // crée un ou des sémaphores, alternative : semget(CLE, N_SEM, IPC_CREAT|IPC_EXCL|0666)
+        fprintf(stderr, "Erreur lors de la création du groupe de sémaphores.\n");
+        return -2; // Erreur récupérable avec errno
+    }
+    union semun bla; //Création de la structure union
+    short val[1] = {0}; //Affectation de la valeur 0
+    bla.array = val;
+    semctl(semid,0,SETALL,bla); //initialisation de la valeur 0 pour chaque semaphore du groupement
+    return 0;
+}
+\end{lstlisting}
+
+\subsection{\lstinline{int detruire\_semaphore(void)}}
+
+Cette fonction permet de détruire le groupement de sémaphore précédemment créé. Dans le cas où une erreur est survenue lors de la création, ou que celle-ci n'a jamais été faite, la fonction retourne -1. Autrement, elle retourne la valeur renvoyée par \lstinline{semctl}. Le second argument de la fonction est ignoré, le flag \lstinline{IPC_RMID} ne prenant pas en compte l'argument.
+
+\textcode{sem\_pv.c}
+\begin{lstlisting}
+int detruire_semaphore(void) {
+    if (semid == -2 || semid == -1) {
+        fprintf(stderr, "Le groupe de sémaphores ne peut être détruit, il n'a jamais été créé.\n");
+        return -1;
+    }
+
+    return semctl(semid,0,IPC_RMID); // supprime completement le groupe de sémaphores, le deuxieme argument est ignoré
+}
+\end{lstlisting}
+
+\subsection{\lstinline{int val\_sem(int sem, int val)}}
+
+Cette fonction permet d'attribuer une valeur particulière \lstinline{val} à un semaphore \lstinline{sem} indiqué en paramètre. Si le numéro du sémaphore n'est pas compris entre 0 et le nombre de sémaphores, alors la fonction retourne -2 après avoir envoyé un message d'erreur. Si aucun groupement de sémaphores n'a été créé, alors la fonction retourne -1. La fonction instancie le champs \lstinline{val} d'un \lstinline{union semun} afin d'utiliser l'opération \lstinline{setval}. La fonction retourne la valeur renvoyée par \lstinline{semctl}.
+
+\textcode{sem\_pv.c}
+\begin{lstlisting}
+int val_sem(int sem, int val) {
+    if (semid == -2 || semid == -1) {
+        fprintf(stderr, "Le groupe de sémaphores n'existe pas.\n");
+        return -1;
+    }
+    else if (sem < 0 || sem >= N_SEM) {
+        fprintf(stderr, "Mauvais numéro de sémaphore.\n");
+        return -2;
+    }
+
+    union semun bla;
+    bla.val = val;
+    return semctl(semid,sem,SETVAL,bla);
+}
+\end{lstlisting}
+
+\subsection{\lstinline{int P(int sem)}}
+
+Les primitives P et V sont deux opérations de bases sur les sémaphores. Elles doivent être atomiques.
+
+\medskip
+
+L'opération P permet de demander un accès à une section critique (le sémaphore est décrémenté s'il est supérieur à 0). Si l'accès n'est pas possible (car déjà égal à 0), on va attendre que le(s) processus utilisant la section critique libère la place (en incrémentant le sémaphore).
+
+\medskip
+
+La fonction P prend comme argument le numero du sémaphore sur lequel réaliser l'opération. Elle utilise un tableau de structure \lstinline{sembuf} (ici d'une seule case, car nous ne touchons qu'à un seul sémaphore). Cette structure se compose de trois éléments: \lstinline{sem_num} qui correspond au numero du sémaphore sur lequel on applique l'opération, \lstinline{sem_op} qui indique quelle opération effectuer et \lstinline{sem_flag}, qui ne nous intéresse pas ici. Suivant la valeur que prend le champ \lstinline{sem_op}, soit on décrémente la valeur du sémaphore, soit on l'incrémente, soit un effectue l'opération Z.
+
+\medskip
+
+Afin d'appliquer l'opération, on utilise la fonction \lstinline{semop}, qui prend en paramètre l'identifiant du groupement de sémaphores, notre tableau de structure, ainsi que le nombre de cases du tableau qu'il faut utiliser (ici 1). On retourne la valeur de \lstinline{semop}. Si \lstinline{init_semaphore} n'a pas été appelé avant on retourne -1, si le numero du sémaphore est incorrect on retourne -2.
+
+\textcode{sem\_pv.c}
+\begin{lstlisting}
+int P(int sem) {
+    if(sem<0 || sem>N_SEM) return -2;
+    if(semid==-2 || semid==-1) reeturn -1;
+    struct sembuf sops[1];
+    sops[0].sem_num = sem; // sémaphore sur lequel on agit
+    sops[0].sem_op = -1; // >0 incrémentation de la valeur, <0 decremente de la valeur, =0 opération (on attend)
+    sops[0].sem_flg = 0; // IPC_NOWAIT, SEM_UNDO ou 0 (ne veut rien dire)
+    return semop(semid, sops, 1); // 1 = nb de cases du tableau sops
+}
+\end{lstlisting}
+
+\subsection{\lstinline{int V(int sem)}}
+
+Cette fonction libère un sémaphore (l'incrémente de 1) et donc débloque les autres processus en attente. La réalisation de la fonction V est en grande partie identique à celle de l'opération P. La différence se fait au niveau du champ \lstinline{sem_op} qui prend une valeur positive afin d'incrémenter la valeur du sémaphore, tandis que pour l'opération P on utilisait une valeur négative.
+
+\textcode{sem\_pv.c}
+\begin{lstlisting}
+int V(int sem) {
+    if(sem<0 || sem>N_SEM) return -2;
+    if(semid==-2 || semid==-1) reeturn -1;
+    struct sembuf sops[1] = {{sem, 1, 0}};
+    return semop(semid, sops, 1); // 1 = nb de cases du tableau sops
+}
+\end{lstlisting}
+
+\section{Question 2}
+L'utilisation de la commande \lstinline{gcc -c sem_pv.c} permet d'obtenir l'objet.
+
+\textcode{ls}
+\begin{lstlisting}
+sem_pv.c sem_pv.h sem_pv.o
+\end{lstlisting}
+
+\section{Question 3}
+
+L'utilisation de la commande \lstinline{ar rvs libsempv.a sem_pv.o} permet donc d'ajouter les fonctions qui nous avons créés dans la bibliothèque libsempv.a . Si celle-ci existe déjà, alors les fonctions seront mises à jour. Le listage des fonctions grâce à la commande \lstinline{nm -s libsempv.a} nous permet de vérifier si nos fonctions sont belle et bien présentes.
+
+\textcode{ar rvs libsempv.a sem\_pv.o}
+\begin{lstlisting}
+ar: création de libsempv.a
+a - sem_pv.o
+\end{lstlisting}
+
+\textcode{nm -s libsempv.a}
+\begin{lstlisting}
+Indexe de l'archive:
+semid in sem_pv.o
+init_semaphore in sem_pv.o
+detruire_semaphore in sem_pv.o
+val_sem in sem_pv.o
+P in sem_pv.o
+V in sem_pv.o
+
+sem_pv.o:
+00000000000000eb T detruire_semaphore
+                 U fwrite
+0000000000000000 T init_semaphore
+00000000000001eb T P
+                 U semctl
+                 U semget
+0000000000000000 D semid
+                 U semop
+                 U __stack_chk_fail
+                 U stderr
+0000000000000277 T V
+0000000000000148 T val_sem
+\end{lstlisting}
+
+\section{Question 4}
+Voici le code du programme utilisant la bibliothèque créée auparavant. Il n'est pas nécessaire d'inclure les fichiers précédents, étant donné que la bibliothèque est prise en charge automatiquement par les programmes.
+
+\textcode{sem1.c}
+\begin{lstlisting}
+#include<stdio.h>
+
+int main() {
+    init_semaphore(); //initialisation du groupement de sémaphores
+    val_sem(2,1); //initialisation de la valeur du sémaphore numéro 2 avec la valeur 1.
+    P(2); //Demande d'accès à la section critique en utilisant le semaphore 2.
+    sleep(30); // Attente du programme pendant 30 secondes.
+    V(2); //On libère le sémaphore
+    detruire_semaphore(); //destruction du groupement de sémaphores.
+    return 0;
+}
+\end{lstlisting}
+
+\section{Question 5}
+Dans le cadre de la création de notre bibliothèque, nous avons défini \lstinline{N_SEM} à 5. Nous créons donc un groupement de 5 sémaphores. Afin de visualiser la création et la destruction des sémaphores, nous exécutons le programme \lstinline{sem1.c} en arrière-plan et utilisons la commande \lstinline{ipcs -s} afin de visualiser tous les sémaphores. Une fois le programme terminé nous réexécutons la commande afin de voir si notre groupement a bel est bien été détruit.
+
+\textcode{ipcs -s [pendant exécution]}
+\begin{lstlisting}
+------ Tableaux de sémaphores --------
+clef       semid      propriétaire perms      nsems     
+0x0052e2c1 0          postgres   600        17        
+0x0052e2c2 32769      postgres   600        17        
+0x0052e2c3 65538      postgres   600        17        
+0x0052e2c4 98307      postgres   600        17        
+0x0052e2c5 131076     postgres   600        17        
+0x0052e2c6 163845     postgres   600        17        
+0x0052e2c7 196614     postgres   600        17        
+0x0052e2c8 229383     postgres   600        17        
+0xcbc384f8 294920     anais      600        1         
+0x00000000 393225     anais      666        5 
+\end{lstlisting}
+
+Comme nous pouvons le constater nous avons bien un groupement de 5 sémaphores créé, il s'agit de celui dont le semid est 393225.
+
+\textcode{ipcs -s [après exécution]}
+\begin{lstlisting}
+------ Tableaux de sémaphores --------
+clef       semid      propriétaire perms      nsems     
+0x0052e2c1 0          postgres   600        17        
+0x0052e2c2 32769      postgres   600        17        
+0x0052e2c3 65538      postgres   600        17        
+0x0052e2c4 98307      postgres   600        17        
+0x0052e2c5 131076     postgres   600        17        
+0x0052e2c6 163845     postgres   600        17        
+0x0052e2c7 196614     postgres   600        17        
+0x0052e2c8 229383     postgres   600        17        
+0xcbc384f8 294920     anais      600        1 
+\end{lstlisting} 
+
+Nous voyons donc qu'à la fin de notre programme, le groupement de sémaphores est détruit. Il n'y a pas de problèmes de \og cores\fg{} dans le programme. Si nous n'avions pas fait appel à \lstinline{detruire_semaphore()} dans notre programme, le groupement aurait persisté, auquel cas nous aurions du le supprimer manuellement.

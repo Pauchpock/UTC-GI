@@ -1,0 +1,595 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>ProjectCalendar: Référence de la classe ProjetManager</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">ProjectCalendar
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">Projet de LO21</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.6 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="namespaces.html"><span>Espaces&#160;de&#160;nommage</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Liste&#160;des&#160;classes</span></a></li>
+      <li><a href="classes.html"><span>Index&#160;des&#160;classes</span></a></li>
+      <li><a href="hierarchy.html"><span>Hiérarchie&#160;des&#160;classes</span></a></li>
+      <li><a href="functions.html"><span>Membres&#160;de&#160;classe</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('class_projet_manager.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Espaces de nommage</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Valeurs énumérées</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-methods">Fonctions membres publiques</a> &#124;
+<a href="#pub-static-methods">Fonctions membres publiques statiques</a> &#124;
+<a href="#pri-methods">Fonctions membres privées</a> &#124;
+<a href="#pri-attribs">Attributs privés</a> &#124;
+<a href="class_projet_manager-members.html">Liste de tous les membres</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence de la classe ProjetManager</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle les différentes Projets.  
+ <a href="class_projet_manager.html#details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="projetmanager_8h_source.html">projetmanager.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager_1_1iterator.html">iterator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classe permettant de parcourir les tâches de la classe <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a>.  <a href="class_projet_manager_1_1iterator.html#details">Plus de détails...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Fonctions membres publiques</h2></td></tr>
+<tr class="memitem:a3568dc2a77900111c3052c0a445dab9e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#a3568dc2a77900111c3052c0a445dab9e">clearAll</a> ()</td></tr>
+<tr class="memdesc:a3568dc2a77900111c3052c0a445dab9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">clearAll permet de supprimer tous les projets du <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a>  <a href="#a3568dc2a77900111c3052c0a445dab9e">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a3568dc2a77900111c3052c0a445dab9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fa4a25ad75560be98a256dc20a40fb6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_projet.html">Projet</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#a6fa4a25ad75560be98a256dc20a40fb6">ajouterProjet</a> (QString id=QString(&quot;-1&quot;), QDate dispo=QDate::currentDate())</td></tr>
+<tr class="memdesc:a6fa4a25ad75560be98a256dc20a40fb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">ajouterProjet permet d'ajouter un nouveau projet au <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a>  <a href="#a6fa4a25ad75560be98a256dc20a40fb6">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a6fa4a25ad75560be98a256dc20a40fb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9399a30b76b2fd878cbb59d24ccfcba1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_projet.html">Projet</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#a9399a30b76b2fd878cbb59d24ccfcba1">trouverProjet</a> (const QString &amp;id) const </td></tr>
+<tr class="memdesc:a9399a30b76b2fd878cbb59d24ccfcba1"><td class="mdescLeft">&#160;</td><td class="mdescRight">trouverProjet permet de trouver un projet dans le <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a>  <a href="#a9399a30b76b2fd878cbb59d24ccfcba1">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a9399a30b76b2fd878cbb59d24ccfcba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24e144b5d514fb1f0e8d97167a307cc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#a24e144b5d514fb1f0e8d97167a307cc5">setDatabase</a> (QSqlDatabase *<a class="el" href="class_projet_manager.html#a1e9a0f4d6ab9b38a3affebe0ad0d4dfb">sdb</a>)</td></tr>
+<tr class="memdesc:a24e144b5d514fb1f0e8d97167a307cc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">setDatabase permet d'assigner une base de donnée à l'attribut sdb  <a href="#a24e144b5d514fb1f0e8d97167a307cc5">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a24e144b5d514fb1f0e8d97167a307cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3fb93126191745c6345f45e69722aa2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#ab3fb93126191745c6345f45e69722aa2">loadProjets</a> ()</td></tr>
+<tr class="memdesc:ab3fb93126191745c6345f45e69722aa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">loadProjets permet de charger les projets depuis la base de données SQLite  <a href="#ab3fb93126191745c6345f45e69722aa2">Plus de détails...</a><br/></td></tr>
+<tr class="separator:ab3fb93126191745c6345f45e69722aa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70cb640fc566bd24d4b9791a249a46cb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#a70cb640fc566bd24d4b9791a249a46cb">saveToDB</a> () const </td></tr>
+<tr class="memdesc:a70cb640fc566bd24d4b9791a249a46cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">saveToDB permet d'enregistrer les projets du <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a> dans la base de données  <a href="#a70cb640fc566bd24d4b9791a249a46cb">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a70cb640fc566bd24d4b9791a249a46cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a512ff1bbbd6d47a1c8b5584084906e6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_projet_manager_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#a512ff1bbbd6d47a1c8b5584084906e6e">begin</a> ()</td></tr>
+<tr class="memdesc:a512ff1bbbd6d47a1c8b5584084906e6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">begin permet de créer un itérateur sur le 1er projet du tableau de <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a>  <a href="#a512ff1bbbd6d47a1c8b5584084906e6e">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a512ff1bbbd6d47a1c8b5584084906e6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6150743f51317539a8b036ffb4067c87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_projet_manager_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#a6150743f51317539a8b036ffb4067c87">end</a> ()</td></tr>
+<tr class="memdesc:a6150743f51317539a8b036ffb4067c87"><td class="mdescLeft">&#160;</td><td class="mdescRight">end permet de créer un itérateur sur le dernier projet du tableau de <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a>  <a href="#a6150743f51317539a8b036ffb4067c87">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a6150743f51317539a8b036ffb4067c87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Fonctions membres publiques statiques</h2></td></tr>
+<tr class="memitem:a5e860cf72f19ced719ed2d0f5aa90d61"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_projet_manager.html">ProjetManager</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#a5e860cf72f19ced719ed2d0f5aa90d61">getInstance</a> ()</td></tr>
+<tr class="memdesc:a5e860cf72f19ced719ed2d0f5aa90d61"><td class="mdescLeft">&#160;</td><td class="mdescRight">getInstance crée un pointeur sur un objet <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a> (singleton)  <a href="#a5e860cf72f19ced719ed2d0f5aa90d61">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a5e860cf72f19ced719ed2d0f5aa90d61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Fonctions membres privées</h2></td></tr>
+<tr class="memitem:a98d8ba59bd9bc6eec2ec5285102ac9a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#a98d8ba59bd9bc6eec2ec5285102ac9a1">ProjetManager</a> ()</td></tr>
+<tr class="separator:a98d8ba59bd9bc6eec2ec5285102ac9a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff836b685a48e06530d7efe4b61537b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#aff836b685a48e06530d7efe4b61537b1">addItem</a> (<a class="el" href="class_projet.html">Projet</a> *p)</td></tr>
+<tr class="separator:aff836b685a48e06530d7efe4b61537b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a294060f817acad13dc31b48217817522"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#a294060f817acad13dc31b48217817522">ProjetManager</a> (const <a class="el" href="class_projet_manager.html">ProjetManager</a> &amp;um)=delete</td></tr>
+<tr class="separator:a294060f817acad13dc31b48217817522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6af25e86e1784ac71d4b50d975350b57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_projet_manager.html">ProjetManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#a6af25e86e1784ac71d4b50d975350b57">operator=</a> (const <a class="el" href="class_projet_manager.html">ProjetManager</a> &amp;um)=delete</td></tr>
+<tr class="separator:a6af25e86e1784ac71d4b50d975350b57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5a44cde2f8d92f05bb7e52a18aa883a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#af5a44cde2f8d92f05bb7e52a18aa883a">~ProjetManager</a> ()</td></tr>
+<tr class="separator:af5a44cde2f8d92f05bb7e52a18aa883a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Attributs privés</h2></td></tr>
+<tr class="memitem:a1e9a0f4d6ab9b38a3affebe0ad0d4dfb"><td class="memItemLeft" align="right" valign="top">QSqlDatabase *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#a1e9a0f4d6ab9b38a3affebe0ad0d4dfb">sdb</a></td></tr>
+<tr class="separator:a1e9a0f4d6ab9b38a3affebe0ad0d4dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac637a0c9735b789983c7d0be002a9710"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="class_projet.html">Projet</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_projet_manager.html#ac637a0c9735b789983c7d0be002a9710">projets</a></td></tr>
+<tr class="separator:ac637a0c9735b789983c7d0be002a9710"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle les différentes Projets. </p>
+</div><h2 class="groupheader">Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="a98d8ba59bd9bc6eec2ec5285102ac9a1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ProjetManager::ProjetManager </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a294060f817acad13dc31b48217817522"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ProjetManager::ProjetManager </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_projet_manager.html">ProjetManager</a> &amp;&#160;</td>
+          <td class="paramname"><em>um</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af5a44cde2f8d92f05bb7e52a18aa883a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ProjetManager::~ProjetManager </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des fonctions membres</h2>
+<a class="anchor" id="aff836b685a48e06530d7efe4b61537b1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProjetManager::addItem </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_projet.html">Projet</a> *&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6fa4a25ad75560be98a256dc20a40fb6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_projet.html">Projet</a> &amp; ProjetManager::ajouterProjet </td>
+          <td>(</td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>id</em> = <code>QString(&quot;-1&quot;)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QDate&#160;</td>
+          <td class="paramname"><em>dispo</em> = <code>QDate::currentDate()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ajouterProjet permet d'ajouter un nouveau projet au <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a> </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>titre du nouveau projet </td></tr>
+    <tr><td class="paramname">dispo</td><td>date de disponibilité de la nouvelle tâche </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>une référence sur le projet ajouté </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a512ff1bbbd6d47a1c8b5584084906e6e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_projet_manager_1_1iterator.html">iterator</a> ProjetManager::begin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>begin permet de créer un itérateur sur le 1er projet du tableau de <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a> </p>
+<dl class="section return"><dt>Renvoie</dt><dd>un itérateur </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3568dc2a77900111c3052c0a445dab9e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProjetManager::clearAll </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>clearAll permet de supprimer tous les projets du <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a> </p>
+
+</div>
+</div>
+<a class="anchor" id="a6150743f51317539a8b036ffb4067c87"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_projet_manager_1_1iterator.html">iterator</a> ProjetManager::end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>end permet de créer un itérateur sur le dernier projet du tableau de <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a> </p>
+<dl class="section return"><dt>Renvoie</dt><dd>un itérateur </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5e860cf72f19ced719ed2d0f5aa90d61"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_projet_manager.html">ProjetManager</a>* ProjetManager::getInstance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>getInstance crée un pointeur sur un objet <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a> (singleton) </p>
+<dl class="section return"><dt>Renvoie</dt><dd>un pointeur sur la classe singleton </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab3fb93126191745c6345f45e69722aa2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProjetManager::loadProjets </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>loadProjets permet de charger les projets depuis la base de données SQLite </p>
+
+</div>
+</div>
+<a class="anchor" id="a6af25e86e1784ac71d4b50d975350b57"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_projet_manager.html">ProjetManager</a>&amp; ProjetManager::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_projet_manager.html">ProjetManager</a> &amp;&#160;</td>
+          <td class="paramname"><em>um</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a70cb640fc566bd24d4b9791a249a46cb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ProjetManager::saveToDB </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>saveToDB permet d'enregistrer les projets du <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a> dans la base de données </p>
+<dl class="section return"><dt>Renvoie</dt><dd>True si ça a fonctionné, False sinon </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a24e144b5d514fb1f0e8d97167a307cc5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProjetManager::setDatabase </td>
+          <td>(</td>
+          <td class="paramtype">QSqlDatabase *&#160;</td>
+          <td class="paramname"><em>sdb</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>setDatabase permet d'assigner une base de donnée à l'attribut sdb </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sdb</td><td>la base de donnée à assigner </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a9399a30b76b2fd878cbb59d24ccfcba1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_projet.html">Projet</a> * ProjetManager::trouverProjet </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>trouverProjet permet de trouver un projet dans le <a class="el" href="class_projet_manager.html" title="Classe de type singleton permettant de manipuler le manager de Projets Le manager de Projets controle...">ProjetManager</a> </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>le titre du projet </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>un pointeur sur le projet recherché </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des données membres</h2>
+<a class="anchor" id="ac637a0c9735b789983c7d0be002a9710"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;<a class="el" href="class_projet.html">Projet</a>*&gt; ProjetManager::projets</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1e9a0f4d6ab9b38a3affebe0ad0d4dfb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QSqlDatabase* ProjetManager::sdb</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>/home/romain/git/lo21-projet/code/ProjectCalendar/<a class="el" href="projetmanager_8h_source.html">projetmanager.h</a></li>
+<li>/home/romain/git/lo21-projet/code/ProjectCalendar/<a class="el" href="projetmanager_8cpp.html">projetmanager.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="class_projet_manager.html">ProjetManager</a></li>
+    <li class="footer">Généré le Dimanche 14 Juin 2015 23:52:56 pour ProjectCalendar par
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
+  </ul>
+</div>
+</body>
+</html>

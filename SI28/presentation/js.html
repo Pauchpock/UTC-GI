@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Test</title>
+        <style>
+          body {
+            font-size: 2em;
+          }
+          span {
+            display: inline-block;
+            padding: 20px;
+            font-weight: bold;
+          }
+          #bonjour {
+            margin-top: 150px;
+            text-align: center
+          }
+        </style>
+        <script type="text/javascript">
+          function changerBG() {
+              var red   = Math.floor( Math.random() * 256 ) - 1;
+              var green = Math.floor( Math.random() * 256 ) - 1;
+              var blue  = Math.floor( Math.random() * 256 ) - 1;
+              document.getElementById("prenom").style.backgroundColor='rgb('+red+','+green+','+blue+')';
+              document.getElementById("prenom").style.color='rgb('+(255-red)+','+(255-green)+','+(255-blue)+')';
+          }
+          setInterval("changerBG()", 1000);
+
+          function afficherBonjour(string) {
+            document.getElementById("bonjour").innerHTML = 'Bonjour <span id="prenom">'+string+'</span> !';
+          }
+
+          function direBonjour() {
+            var prenom = document.getElementById("input").value;
+            afficherBonjour(prenom);
+          }
+        </script>
+    </head>
+    <body>
+    <form onsubmit="direBonjour(); return false;">
+      Ton prénom ? <input id="input" type="text" />
+      <button onclick="direBonjour();">Dire bonjour</button>      
+    </form>
+
+    <div id="bonjour"></div>
+
+    </body>
+</html>
