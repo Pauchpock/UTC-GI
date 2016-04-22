@@ -1,16 +1,7 @@
 # utc-gi04
 
-## TODO
+If you find this helpful, do not hesitate to reach out.
 
-### LO17
+## Contributing
 
-#### TD1
-
-- ~~Faire une DTD (faculatif)~~
-- ~~Améliorer la méthode pour vérifier le nombre d'images (ne pas utiliser de regex)~~
-
-#### TD2
-
-- Rapport : Dire si on indexe les nombres (oui ou non) et pourquoi: on ne les indexe pas
-- Rajouter des chop; dans tous NOS scrips perl?
-- ~~Checker pourquoi newOutput.xml contient "° mondiale", ce qui induit un bug dans le script "putAll..." (une ligne en trop, commençant par '° mondiale')~~
+As well, Pull Requests are most welcome.
